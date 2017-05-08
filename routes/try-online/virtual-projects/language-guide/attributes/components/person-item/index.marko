@@ -1,0 +1,36 @@
+/*
+
+    Demonstrates events and parent-child communication
+
+    sends `moveUp` and `moveDown` events to ../../events.marko
+
+*/
+
+class {
+    sendUp(person, index, evt, el) {
+        this.emit('moveUp', person, index); // bubble up event to parent
+    }
+
+    sendDown(person, index) {
+        this.emit('moveDown', person, index); // bubble up event to parent
+    }
+}
+
+<div class="person-item">
+
+    $ var person = data.person || {};
+    $ var index = data.index || 0;
+    $ var max = data.max || 0;
+
+    <div class="name">${person.name}</div>
+    <div class="age">${person.age}</div>
+    <div class="actions">
+
+        <button on-click('sendUp', person, index)
+            disabled=(index === 0)>↑</button>
+
+        <button on-click('sendDown', person, index)
+            disabled=(index === max)>↓</button>
+
+    </div>
+</div>
