@@ -1,0 +1,8 @@
+import formatSlug from '~/util/formatSlug';
+
+<div marko-preserve-whitespace># ${input.title}
+<for(doc in input.docs)>
+- [${doc}](/docs/${formatSlug(doc)}/)
+</for>
+
+</div>

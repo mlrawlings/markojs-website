@@ -52,7 +52,7 @@ body.docs .doc-sidebar {
     transition: transform 0.3s;
 }
 
-.doc-sidebar .section {
+.doc-sidebar .section a {
     font-size:0.75em;
     font-weight: 600;
     color:#d04;

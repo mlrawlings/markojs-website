@@ -3,6 +3,7 @@ const path = require('path');
 const template = require('./index.marko');
 const MarkdownDocument = require('./util/MarkdownDocument');
 const getContributors = require('./util/contributors');
+const generateOverviewDocs = require('./util/generateOverviewDocs');
 const markdownToTemplate = require('./util/markdown').toTemplate;
 
 const docsDir = path.join(process.cwd(), 'node_modules', 'marko', 'docs');
@@ -22,6 +23,9 @@ docFileNames.forEach((docFileName) => {
     });
 });
 
+docNameToMarkdownDocument = Object.assign(docNameToMarkdownDocument,
+    generateOverviewDocs());
+
 exports.path = '/docs/:name/';
 exports.params = Object.keys(docNameToMarkdownDocument).map(docName => ({ name: docName }));
 
@@ -35,5 +39,6 @@ exports.handler = (input, out) => {
     let contributors = getContributors(name);
 
     let $global = { dependencies: doc.getDependencies() };
+
     template.render({ $global, name, doc, toc, contributors }, out);
 };

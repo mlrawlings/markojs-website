@@ -1,15 +1,16 @@
 import structure from 'marko/docs/structure.json';
-
-static function formatSlug(name) {
-    return name.replace(/[^\w\d\s-]/g, '').replace(/\s+/g, '-').toLowerCase();
-}
+import formatSlug from '~/util/formatSlug';
 
 <div.doc-sidebar class=input.class key="sidebar">
     <button.close on-click('hide')>&#10005;</button>
     <h1>Marko <version-switcher/></h1>
     <for(section in structure)>
         <ul.toc-level0>
-            <li.section>${section.title.toUpperCase()}</li>
+            <li.section>
+                $ var title = section.title.toUpperCase();
+                $ var overviewSlug = formatSlug(title);
+                <a href="/docs/${overviewSlug}-overview/">${title}</a>
+            </li>
             <li for(docTitle in section.docs)>
                 $ var docSlug = formatSlug(docTitle);
                 $ var selected = docSlug === input.doc;
