@@ -1,6 +1,30 @@
 import structure from 'marko/docs/structure.json';
 import formatSlug from '~/util/formatSlug';
 
+static function getDocData(doc, section, docTitle) {
+    var docSlug;
+
+    if (typeof docTitle === 'object') {
+        docTitle = docTitle.title;
+
+        var sectionTitleSlug = formatSlug(section.title);
+        var titleSlug = formatSlug(docTitle);
+
+        docSlug = `${sectionTitleSlug}-${titleSlug}-overview`;
+    } else {
+        docSlug = formatSlug(docTitle);
+    }
+
+    var selected = docSlug === doc;
+    docSlug += '/';
+
+    return {
+        docTitle,
+        docSlug,
+        selected
+    };
+}
+
 <div.doc-sidebar class=input.class key="sidebar">
     <button.close on-click('hide')>&#10005;</button>
     <h1>Marko <version-switcher/></h1>
@@ -11,10 +35,9 @@ import formatSlug from '~/util/formatSlug';
                 $ var overviewSlug = formatSlug(title);
                 <a href="/docs/${overviewSlug}-overview/">${title}</a>
             </li>
-            <li for(docTitle in section.docs)>
-                $ var docSlug = formatSlug(docTitle);
-                $ var selected = docSlug === input.doc;
-                <a class={ selected } href="/docs/${docSlug}/">
+            <li for(doc in section.docs)>
+                $ let { docTitle, docSlug, selected } = getDocData(input.doc, section, doc);
+                <a class={ selected } href="/docs/${docSlug}">
                     ${docTitle}
                 </a>
                 <if(selected)>

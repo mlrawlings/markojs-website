@@ -1,8 +1,27 @@
 import formatSlug from '~/util/formatSlug';
 
+static function generateMarkdownBullet(sectionTitle, doc) {
+    let docName;
+    let docTitle;
+
+    if (typeof doc === 'object') {
+        docTitle = doc.title;
+        let docSlug = formatSlug(docTitle);
+        const sectionSlug = formatSlug(sectionTitle);
+        docName = `${sectionSlug}-${docSlug}-overview`;
+    } else {
+        docName = formatSlug(doc);
+        docTitle = doc;
+    }
+    return `[${docTitle}](/docs/${docName}/)`;
+}
+
 <div marko-preserve-whitespace># ${input.title}
 <for(doc in input.docs)>
-- [${doc}](/docs/${formatSlug(doc)}/)
+- ${generateMarkdownBullet(input.title, doc)}<if(typeof doc === 'object')><for(inner in doc.docs)>
+    - [${inner}](/docs/${formatSlug(inner)}/)
+    </for>
+</if>
 </for>
 
 </div>
