@@ -1,5 +1,8 @@
 const https = require('https');
+const ExternalMarkdownFiles = require('./external-markdown-files.json');
 const MarkdownDocument = require('../routes/docs/util/MarkdownDocument');
+
+const DEFAULT_REPO = 'marko-js/marko';
 
 function getMarkdownDocument(doc) {
     return new Promise((resolve, reject) => {
@@ -22,16 +25,9 @@ function getMarkdownDocument(doc) {
     });
 }
 
-const markdownDocsToFetch = [
-    new MarkdownDocument({
-        documentName: 'color-picker.md',
-        repoFilePath: 'README.md',
-        repo: 'marko-js-samples/marko-color-picker',
-        url: 'https://raw.githubusercontent.com/marko-js-samples/marko-color-picker/master/README.md'
-    })
-];
-
-const DEFAULT_REPO = 'marko-js/marko';
+let markdownDocsToFetch = ExternalMarkdownFiles.map((data) => {
+    return new MarkdownDocument(data);
+});
 
 // Map of document name to MarkdownDocument. e.g. 'color-picker'
 let documentNameToMarkdownDocument = {};
