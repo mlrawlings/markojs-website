@@ -1,6 +1,6 @@
 const gh = require('gh-got');
 const path = require('path');
-const { getRepoAndPath } = require('~/util/external-markdown');
+const { getRepoAndPath } = require('~/services/external-markdown');
 
 module.exports = function getContributorsForFile(file) {
     var contributors = {};

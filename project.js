@@ -1,4 +1,4 @@
-const externalMarkdown = require('./util/external-markdown');
+const { startServerTasks, startBuildTasks } = require('./startup-tasks');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -32,13 +32,18 @@ if (isProduction) {
     });
 }
 
+function onStartupError(err) {
+    console.error('Error on startup', err);
+    process.exit(1);
+}
+
 module.exports = require('marko-starter').projectConfig({
     routePathPrefix: '/',
     beforeBuild() {
-        return externalMarkdown.register();
+        return startBuildTasks().catch(onStartupError);
     },
     beforeStartServer() {
-        return externalMarkdown.register();
+        return startServerTasks().catch(onStartupError);
     },
     lassoConfig: {
         bundlingEnabled: isProduction,

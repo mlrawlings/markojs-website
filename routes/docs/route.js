@@ -9,7 +9,7 @@ const markdownToTemplate = require('./util/markdown').toTemplate;
 const docsDir = path.join(process.cwd(), 'node_modules', 'marko', 'docs');
 const docFileNames = fs.readdirSync(docsDir).filter(doc => /\.md$/.test(doc)).map(doc => doc.slice(0, -3));
 
-const documents = require('../../util/external-markdown').getDocuments();
+const documents = require('../../services/external-markdown').getDocuments();
 let docNameToMarkdownDocument = Object.assign({}, documents);
 
 docFileNames.forEach((docFileName) => {
