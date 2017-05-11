@@ -6,7 +6,7 @@
     padding-bottom:6rem;
     top:0; left:0; bottom:0;
     overflow:auto;
-    transform:translateY(4.5em);
+    transform:translateY(4.5em) translateZ(0);
     display:none;
     z-index: 50;
     background-color: #fff;
@@ -44,7 +44,7 @@ body.docs .doc-sidebar {
 }
 
 .doc-sidebar.no-header {
-    transform:translateY(0);
+    transform:translateY(0) translateZ(0);
     bottom:0;
 }
 
