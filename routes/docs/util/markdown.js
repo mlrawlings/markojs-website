@@ -1,8 +1,16 @@
-var fs = require('fs');
-var path = require('path');
-var marko = require('marko');
-var marked = require('marked');
-var TOC = require('./toc');
+const fs = require('fs');
+const path = require('path');
+const marko = require('marko');
+const marked = require('marked');
+const TOC = require('./toc');
+
+// Used for matching against sections of the markdown that should be replaced
+// by a Marko component:
+//
+// <!-- <my-component name="John"/>() -->
+// <img src="./some-img.png"/>
+// <!-- </> -->
+let componentCommentRegex = /<!-- ([\s\S]*?)\(\) -->[\s\S]*?<\/> -->/g;
 
 exports.toTemplate = function renderMarkdown(markdownDocument) {
     let {
@@ -23,6 +31,13 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
                 return linkmatch && (linkmatch[1]+'/') || match;
             }
             return match;
+        })
+        .replace(componentCommentRegex, (match) => {
+            // Find the Marko tag execution instances
+            // e.g. <!-- <my-component name="Austin"/>() -->
+            let component  = componentCommentRegex.exec(match);
+            componentCommentRegex.lastIndex = 0;
+            return component[1];
         });
 
     var markedRenderer = new marked.Renderer();
