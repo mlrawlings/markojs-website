@@ -3,5 +3,15 @@
     "projectName": "Color Picker",
     "type": "module",
     "module": "marko-color-picker"
+  },
+  {
+    "projectName": "Tic-Tac-Toe",
+    "type": "module",
+    "module": "marko-tic-tac-toe"
+  },
+  {
+    "projectName": "TodoMVC",
+    "type": "module",
+    "module": "marko-todomvc"
   }
 ]
