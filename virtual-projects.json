@@ -5,6 +5,11 @@
     "module": "marko-color-picker"
   },
   {
+    "projectName": "Language Guide",
+    "type": "module",
+    "module": "marko-language-guide"
+  },
+  {
     "projectName": "Tic-Tac-Toe",
     "type": "module",
     "module": "marko-tic-tac-toe"

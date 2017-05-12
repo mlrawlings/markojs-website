@@ -1,9 +1,0 @@
-$ var colors = ['red', 'green', 'blue'];
-
-<ul>
-    <li for(color in colors | status-var=loop)>
-        ${loop.getIndex()+1}) ${color}
-        <if(loop.isFirst())>- FIRST</if>
-        <if(loop.isLast())>- LAST</if>
-    </li>
-</ul>
