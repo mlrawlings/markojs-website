@@ -1,28 +1,16 @@
 const https = require('https');
 const ExternalMarkdownFiles = require('./external-markdown-files.json');
+const getUrl = require('../util/getUrl');
 const MarkdownDocument = require('../routes/docs/util/MarkdownDocument');
 
 const DEFAULT_REPO = 'marko-js/marko';
 
 function getMarkdownDocument(doc) {
-    return new Promise((resolve, reject) => {
-        https.get(doc.url, (res) => {
-            res.setEncoding('utf-8');
-
-            let data = '';
-
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            res.on('end', () => {
-                doc.markdown = data;
-                resolve(doc);
-            });
-        }).on('error', (err) => {
-            reject(err);
+    return getUrl(doc.url)
+        .then((data) => {
+            doc.markdown = data;
+            return doc;
         });
-    });
 }
 
 let markdownDocsToFetch = ExternalMarkdownFiles.map((data) => {
@@ -31,6 +19,31 @@ let markdownDocsToFetch = ExternalMarkdownFiles.map((data) => {
 
 // Map of document name to MarkdownDocument. e.g. 'color-picker'
 let documentNameToMarkdownDocument = {};
+
+function getMarkdownDocumentByDocumentName(documentName) {
+    return documentNameToMarkdownDocument[documentName];
+}
+
+function getRepoAndPath(repoFilePath) {
+    const document = getMarkdownDocumentByDocumentName(repoFilePath);
+
+    let repo;
+
+    if (document) {
+        repo = document.repo;
+        repoFilePath = document.repoFilePath;
+    } else {
+        repo = DEFAULT_REPO;
+        repoFilePath = `docs/${repoFilePath}.md`;
+    }
+
+    return { repo, repoFilePath };
+}
+
+function getCompleteFileUrl(filePath) {
+    let { repo, repoFilePath } = getRepoAndPath(filePath);
+    return `https://github.com/${repo}/blob/master/${repoFilePath}`;
+}
 
 exports.register = () => {
     let promises = [];
@@ -52,29 +65,7 @@ exports.register = () => {
 };
 
 exports.getDocuments = () => documentNameToMarkdownDocument;
-
-const getMarkdownDocumentByDocumentName = exports.getMarkdownDocumentByDocumentName = (documentName) => {
-    return documentNameToMarkdownDocument[documentName];
-};
-
-const getRepoAndPath = exports.getRepoAndPath = (repoFilePath) => {
-    const document = getMarkdownDocumentByDocumentName(repoFilePath);
-
-    let repo;
-
-    if (document) {
-        repo = document.repo;
-        repoFilePath = document.repoFilePath;
-    } else {
-        repo = DEFAULT_REPO;
-        repoFilePath = `docs/${repoFilePath}.md`;
-    }
-
-    return { repo, repoFilePath };
-};
-
-exports.getCompleteFileUrl = (filePath) => {
-    let { repo, repoFilePath } = getRepoAndPath(filePath);
-    return `https://github.com/${repo}/blob/master/${repoFilePath}`;
-};
+exports.getMarkdownDocumentByDocumentName = getMarkdownDocumentByDocumentName;
+exports.getRepoAndPath = getRepoAndPath;
+exports.getCompleteFileUrl = getCompleteFileUrl;
 

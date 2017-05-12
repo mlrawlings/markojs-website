@@ -26,6 +26,7 @@
     "lodash.debounce": "^4.0.8",
     "marked": "^0.3.6",
     "marko": "^4.1.2",
+    "marko-color-picker": "0.0.3",
     "marko-prettyprint": "^1.3.1",
     "marko-starter": "^1.0.4",
     "modify-babel-preset": "^3.2.1",

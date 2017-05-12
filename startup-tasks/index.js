@@ -7,7 +7,7 @@ function loadTasks(tasks) {
     let loadedTasks = [];
 
     tasks.forEach((task) => {
-        const filePath = path.resolve(__dirname, `./tasks/${tasks}.js`);
+        const filePath = path.resolve(__dirname, `./tasks/${task}.js`);
         loadedTasks.push(require(filePath));
     });
 
