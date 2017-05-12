@@ -49,6 +49,10 @@ if (typeof window !== 'undefined') {
     };
 
     markoModules.deresolve = function(targetFilename, from) {
+        const ext = path.extname(targetFilename);
+        if (ext === '.js') {
+            targetFilename = targetFilename.slice(0, 0 - ext.length);
+        }
         return targetFilename;
     };
 }
