@@ -25,6 +25,11 @@
     background-image: url('./css.svg');
 }
 
+.tree-view .file.less > span:before {
+    background-size: 14px;
+    background-image: url('./css.svg');
+}
+
 .tree-view .file.json > span:before {
     background-size: 16px;
     background-image: url('./json.svg');

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const marko = require('marko');
+const markoCompiler = require('marko/compiler');
 const marked = require('marked');
 const TOC = require('./toc');
 
@@ -11,6 +12,28 @@ const TOC = require('./toc');
 // <img src="./some-img.png"/>
 // <!-- </> -->
 let componentCommentRegex = /<!-- ([\s\S]*?)\(\) -->[\s\S]*?<\/> -->/g;
+
+const generatedComponentsDir = path.resolve(__dirname, '../../../components-generated');
+
+function createGeneratedComponent(componentDef) {
+    const componentName = componentDef.substr(1, componentDef.indexOf(' ') - 1);
+    const generatedComponentName = `external-component-${componentName}`;
+
+    if (!fs.existsSync(generatedComponentsDir)) {
+        fs.mkdirSync(generatedComponentsDir);
+    }
+
+    const componentPath = path.resolve(generatedComponentsDir, generatedComponentName + '.marko');
+    const code = `<external-component>${componentDef}</external-component>`;
+
+    fs.writeFileSync(componentPath, code);
+
+    // We need to rediscover custom tags because we just generated a new
+    // component on the fly.
+    markoCompiler.clearCaches();
+
+    return `<${generatedComponentName}/>`;
+}
 
 exports.toTemplate = function renderMarkdown(markdownDocument) {
     let {
@@ -33,11 +56,11 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
             return match;
         })
         .replace(componentCommentRegex, (match) => {
-            // Find the Marko tag execution instances
+            // Find the Marko tag execution instance
             // e.g. <!-- <my-component name="Austin"/>() -->
             let component  = componentCommentRegex.exec(match);
             componentCommentRegex.lastIndex = 0;
-            return component[1];
+            return createGeneratedComponent(component[1]);
         });
 
     var markedRenderer = new marked.Renderer();

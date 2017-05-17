@@ -6,7 +6,7 @@ const vfs = require('../browser-shims/fs');
 // Only these files should be registered in our virtual project. External
 // projects may contain additional files (such as dotfiles) that we do not
 // wish to register in our project
-const fileExtensions = ['js', 'css', 'marko', 'json'];
+const fileExtensions = require('../util/file-extensions');
 const ignoreDirs = ['node_modules'];
 
 const virtualProjectHandlers = {

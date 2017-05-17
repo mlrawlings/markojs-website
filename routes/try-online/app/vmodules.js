@@ -115,6 +115,11 @@ let extensions = {
         return {
             exports: {}
         };
+    },
+    '.less': function(src, filePath) {
+        return {
+            exports: {}
+        };
     }
 };
 

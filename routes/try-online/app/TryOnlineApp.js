@@ -7,6 +7,7 @@ const vmodules = require('./vmodules');
 const readVirtualFiles = require('./readVirtualFiles');
 const path = require('path');
 const EventEmitter = require('events-light');
+const fileExtensions = require('~/util/file-extensions');
 
 const projectNameRegExp = /[/]([a-zA-Z0-9_-]+)([/]|$)/;
 
@@ -41,7 +42,6 @@ class TryOnlineApp extends EventEmitter {
         }
 
         let rootDir = vfs.readTreeSync();
-
 
         this.state = {
             rootDir: rootDir,
@@ -365,10 +365,7 @@ class TryOnlineApp extends EventEmitter {
 
         var ext = path.extname(file.name);
 
-        return !(ext === '.css' ||
-            ext === '.js' ||
-            ext === '.marko' ||
-            ext === '.json');
+        return !(fileExtensions.includes(ext));
     }
 }
 

@@ -18,5 +18,10 @@
     "projectName": "TodoMVC",
     "type": "module",
     "module": "marko-todomvc"
+  },
+  {
+    "projectName": "Playground",
+    "type": "module",
+    "module": "ui-components-playground"
   }
 ]

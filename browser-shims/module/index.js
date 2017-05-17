@@ -1,8 +1,8 @@
 'use strict';
-var path = require('path');
-var fs = require('fs');
 
-var extensions = ['.js', '.marko', '.json', '.css', '.less'];
+const path = require('path');
+const fs = require('fs');
+const extensions = require('../../util/file-extensions');
 
 function isAbsolute(path) {
     return path.startsWith('/');
@@ -23,7 +23,6 @@ function nodeModulePaths(dir) {
     return paths;
 }
 
-
 function readPackageSync(filePath) {
     var pkg;
 
@@ -40,7 +39,6 @@ function readPackageSync(filePath) {
 }
 
 function resolveMain(dir) {
-
     var packagePath = path.join(dir, 'package.json');
     var pkg = readPackageSync(packagePath);
 

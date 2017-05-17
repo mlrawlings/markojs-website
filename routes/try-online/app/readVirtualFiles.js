@@ -33,14 +33,19 @@ function readVirtualFiles(vfs, options) {
             file = path.join(dir, file);
             var stat = fs.statSync(file);
             if (stat.isDirectory()) {
-                if (ignoreDirs) {
-                    const basePath = path.parse(file).base;
+                const basePath = path.parse(file).base;
 
+                if (ignoreDirs) {
                     if (ignoreDirs.includes(basePath)) {
                         return;
                     }
                 }
 
+                // Ignore all dot directories.
+                if (basePath.startsWith('.')) {
+                    return;
+                }
+                
                 addDir(file);
             } else {
                 if (fileExtensions && !isValidExtension(file, fileExtensions)) {
