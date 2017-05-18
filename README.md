@@ -11,6 +11,12 @@ npm install
 npm start
 ```
 
+## Publishing
+
+```bash
+npm publish -- -m "My commit message"
+```
+
 ## Contributing
 
 Pull Requests greatly appreciated!
