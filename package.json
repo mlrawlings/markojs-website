@@ -25,7 +25,7 @@
     "lasso-marko": "^2.3.0",
     "lodash.debounce": "^4.0.8",
     "marked": "^0.3.6",
-    "marko": "^4.1.2",
+    "marko": "^4.4.1",
     "marko-color-picker": "github:marko-js-samples/marko-color-picker",
     "marko-language-guide": "github:marko-js-samples/marko-language-guide",
     "marko-prettyprint": "^1.3.1",
@@ -49,6 +49,7 @@
   "scripts": {
     "start": "marko-starter server",
     "build": "marko-starter build",
+    "build-prod": "LASSO_TIMEOUT=200000 NODE_ENV=production npm run build",
     "publish": "LASSO_TIMEOUT=200000 NODE_ENV=production node ./publish-cli.js"
   },
   "static-repo": "git@github.com:mlrawlings/markojs-website.git#gh-pages",

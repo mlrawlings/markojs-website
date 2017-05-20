@@ -1,13 +1,13 @@
 'use strict';
 
-require('marko/runtime/dependencies/vdom');
-
 const vfs = require('~/browser-shims/fs');
 const vmodules = require('./vmodules');
 const readVirtualFiles = require('./readVirtualFiles');
 const path = require('path');
 const EventEmitter = require('events-light');
 const fileExtensions = require('~/util/file-extensions');
+
+require('events');
 
 const projectNameRegExp = /[/]([a-zA-Z0-9_-]+)([/]|$)/;
 
@@ -93,7 +93,7 @@ class TryOnlineApp extends EventEmitter {
 
             if (vfs.existsSync(packageJsonPath)) {
                 let pkg = vmodules.require(packageJsonPath);
-                Object.assign(project, pkg);
+                Object.assign(project, pkg, pkg.tryOnline);
             }
 
             let previewFile;

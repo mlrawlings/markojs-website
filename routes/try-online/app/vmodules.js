@@ -4,7 +4,7 @@ const fs = require('~/browser-shims/fs');
 const path = require('path');
 const resolveFrom = require('resolve-from');
 const nativeRequire = require;
-
+const markoCompiler = require('marko/compiler');
 function virtualRequire(target) {
     // First see if it is a native module
     let resolved;
@@ -22,11 +22,16 @@ function virtualRequire(target) {
 }
 
 function virtualResolveFrom(from, target) {
-    return path.resolve(from, target);
+    if (target.startsWith('.') || target.startsWith('/')) {
+        return path.resolve(from, target);
+    } else {
+        return target;
+    }
+
 }
 
 if (typeof window !== 'undefined') {
-    let markoModules = require('marko/compiler/modules');
+    let markoModules = markoCompiler.modules;
 
     markoModules.require = virtualRequire;
 
@@ -58,7 +63,6 @@ if (typeof window !== 'undefined') {
 }
 
 
-let markoCompiler = require('marko/compiler');
 let READ_OPTIONS = { encoding: 'utf8' };
 
 let extensions = {
