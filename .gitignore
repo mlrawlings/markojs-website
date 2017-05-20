@@ -6,4 +6,5 @@ node_modules
 npm-debug.log
 .DS_Store
 /dist
-/components-generated
+components-generated/*
+!components-generated/.gitkeep
