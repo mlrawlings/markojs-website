@@ -45,7 +45,7 @@ function readVirtualFiles(vfs, options) {
                 if (basePath.startsWith('.')) {
                     return;
                 }
-                
+
                 addDir(file);
             } else {
                 if (fileExtensions && !isValidExtension(file, fileExtensions)) {
@@ -66,6 +66,11 @@ function readVirtualFiles(vfs, options) {
                 vfs.writeFileSync(relativeFile, text);
             }
         });
+    }
+
+    if (!fs.existsSync(rootDir)) {
+        console.error(`Root dir: "${rootDir}" does not exist.`);
+        return;
     }
 
     addDir(rootDir);
