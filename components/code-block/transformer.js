@@ -11,14 +11,21 @@ var highlighter = new Highlights();
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-css/package.json')
 });
+
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-javascript/package.json')
 });
+
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-html/package.json')
 });
+
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-marko/package.json')
+});
+
+highlighter.requireGrammarsSync({
+    modulePath: require.resolve('react/package.json')
 });
 
 module.exports = function(el, context) {
@@ -47,6 +54,8 @@ module.exports = function(el, context) {
         scopeName = 'text.html.basic';
     } else if (lang === 'xml' || lang === 'marko') {
         scopeName = 'text.marko';
+    } else if (lang === 'jsx') {
+        scopeName = 'source.js.jsx';
     }
 
     code = redent(code.replace(/&lt;/g, '<').replace(/&#36;/g, '$').replace(/&amp;/g, '&')).trim();

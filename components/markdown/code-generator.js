@@ -6,22 +6,27 @@ var highlighter = new Highlights();
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-css/package.json')
 });
+
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-javascript/package.json')
 });
+
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-html/package.json')
 });
+
 highlighter.requireGrammarsSync({
     modulePath: require.resolve('language-marko/package.json')
+});
+
+highlighter.requireGrammarsSync({
+    modulePath: require.resolve('react/package.json')
 });
 
 function renderMarkdown(markdown) {
     var markedRenderer = new marked.Renderer();
 
-
     markedRenderer.code = function(code, lang, escaped) {
-
         var scopeName;
 
         if (lang === 'js' || lang === 'javascript' || lang === 'json') {
@@ -32,6 +37,8 @@ function renderMarkdown(markdown) {
             scopeName = 'text.html.basic';
         } else if (lang === 'xml' || lang === 'marko') {
             scopeName = 'text.marko';
+        } else if (lang === 'jsx') {
+            scopeName = 'source.js.jsx';
         }
 
         return highlighter.highlightSync({
