@@ -1,11 +1,21 @@
-const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const ExternalMarkdownFiles = require('./external-markdown-files.json');
 const getUrl = require('../util/getUrl');
 const MarkdownDocument = require('../routes/docs/util/MarkdownDocument');
 
 const DEFAULT_REPO = 'marko-js/marko';
+const DEBUG_LOCAL_MARKDOWN = false;
 
 function getMarkdownDocument(doc) {
+    // READ from the node_modules folder instead of pulling from GitHub
+    if (DEBUG_LOCAL_MARKDOWN) {
+        const repo = doc.repo.split('/')[1];
+        let data = fs.readFileSync(path.resolve(__dirname, `../node_modules/${repo}/README.md`), 'utf8');
+        doc.markdown = data;
+        return Promise.resolve(doc);
+    }
+
     return getUrl(doc.url)
         .then((data) => {
             doc.markdown = data;
@@ -68,4 +78,3 @@ exports.getDocuments = () => documentNameToMarkdownDocument;
 exports.getMarkdownDocumentByDocumentName = getMarkdownDocumentByDocumentName;
 exports.getRepoAndPath = getRepoAndPath;
 exports.getCompleteFileUrl = getCompleteFileUrl;
-
