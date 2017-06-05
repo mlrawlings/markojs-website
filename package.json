@@ -9,6 +9,7 @@
     "codemirror": "^5.23.0",
     "codemirror-atom-modes": "^1.0.1",
     "events-light": "^1.0.5",
+    "flat-colors": "^3.3.7",
     "gh-got": "^5.0.0",
     "headspace": "^0.1.1",
     "highlights": "^1.4.1",
