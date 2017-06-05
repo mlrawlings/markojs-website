@@ -11,7 +11,7 @@ const TOC = require('./toc');
 // <!-- <my-component name="John"/>() -->
 // <img src="./some-img.png"/>
 // <!-- </> -->
-let componentCommentRegex = /<!-- ([\s\S]*?)\(\) -->[\s\S]*?<\/> -->/g;
+let componentCommentRegex = /<!-- (.*?)\(\) -->[\s\S]*?<\/> -->/g;
 
 const generatedComponentsDir = path.resolve(__dirname, '../../../components-generated');
 
