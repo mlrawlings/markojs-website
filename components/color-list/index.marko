@@ -1,0 +1,23 @@
+class {
+    onInput(input) {
+        input.colors = input.colors || [
+          '#ff0000',
+          '#008000',
+          '#0000ff',
+          '#ffa500',
+          '#ffff00'
+        ];
+
+        this.state = {
+            backgroundColor: input.colors[0]
+        };
+    }
+}
+
+<ul>
+    <for(color in input.colors)>
+        <li style={color: color}>
+            ${color}
+        </li>
+    </for>
+</ul>
