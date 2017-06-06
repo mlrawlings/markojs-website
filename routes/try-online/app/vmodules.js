@@ -5,6 +5,8 @@ const path = require('path');
 const resolveFrom = require('resolve-from');
 const nativeRequire = require;
 const markoCompiler = require('marko/compiler');
+const stripJsonComments = require('strip-json-comments');
+
 function virtualRequire(target) {
     // First see if it is a native module
     let resolved;
@@ -103,7 +105,7 @@ let extensions = {
         let parsed;
 
         try {
-            parsed = JSON.parse(src);
+            parsed = JSON.parse(stripJsonComments(src));
         } catch(err) {
             err.friendlyMessage = err.toString();
             return {
