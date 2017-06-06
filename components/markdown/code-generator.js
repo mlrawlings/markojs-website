@@ -23,6 +23,10 @@ highlighter.requireGrammarsSync({
     modulePath: require.resolve('react/package.json')
 });
 
+highlighter.requireGrammarsSync({
+    modulePath: require.resolve('language-shellscript/package.json')
+});
+
 function renderMarkdown(markdown) {
     var markedRenderer = new marked.Renderer();
 
@@ -39,6 +43,8 @@ function renderMarkdown(markdown) {
             scopeName = 'text.marko';
         } else if (lang === 'jsx') {
             scopeName = 'source.js.jsx';
+        } else if (lang === 'bash') {
+            scopeName = 'source.shell';
         }
 
         return highlighter.highlightSync({

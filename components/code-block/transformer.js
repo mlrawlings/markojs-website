@@ -28,6 +28,10 @@ highlighter.requireGrammarsSync({
     modulePath: require.resolve('react/package.json')
 });
 
+highlighter.requireGrammarsSync({
+    modulePath: require.resolve('language-shellscript/package.json')
+});
+
 module.exports = function(el, context) {
     var builder = context.builder;
     var file = el.argument;
@@ -56,6 +60,8 @@ module.exports = function(el, context) {
         scopeName = 'text.marko';
     } else if (lang === 'jsx') {
         scopeName = 'source.js.jsx';
+    } else if (lang === 'bash') {
+        scopeName = 'source.shell';
     }
 
     code = redent(code.replace(/&lt;/g, '<').replace(/&#36;/g, '$').replace(/&amp;/g, '&')).trim();
