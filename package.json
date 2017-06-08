@@ -34,6 +34,7 @@
     "marko-starter": "^1.0.4",
     "marko-tic-tac-toe": "github:marko-js-samples/marko-tic-tac-toe",
     "marko-todomvc": "github:marko-js-samples/marko-todomvc",
+    "md5": "^2.2.1",
     "modify-babel-preset": "^3.2.1",
     "octicons": "^5.0.1",
     "prompt": "^1.0.0",

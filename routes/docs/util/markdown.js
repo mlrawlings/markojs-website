@@ -3,6 +3,7 @@ const path = require('path');
 const marko = require('marko');
 const markoCompiler = require('marko/compiler');
 const marked = require('marked');
+const md5 = require('md5');
 const TOC = require('./toc');
 
 // Used for matching against sections of the markdown that should be replaced
@@ -15,22 +16,56 @@ let componentCommentRegex = /<!-- (.*?)\(\) -->[\s\S]*?<\/> -->/g;
 
 const generatedComponentsDir = path.resolve(__dirname, '../../../components-generated');
 
-function createGeneratedComponent(componentDef) {
-    const componentName = componentDef.substr(1, componentDef.indexOf(' ') - 1);
-    const generatedComponentName = `external-component-${componentName}`;
+/**
+ * Map of element to hash. Used for avoiding hashing that has already been
+ * done for repeat elements
+ *
+ * e.g.
+ *
+ * {
+ *   "<color-picker colors=['#333745','#E63462','#FE5F55','#C7EFCF','#EEF5DB','#00B4A6','#007DB6','#FFE972','#9C7671','#0C192B']/>": "4eecf8ab5cc984070edc41d7c93dbd14"
+ * }
+ */
+let generatedComponentMap = {};
 
-    if (!fs.existsSync(generatedComponentsDir)) {
-        fs.mkdirSync(generatedComponentsDir);
+function createGeneratedComponent(componentDef) {
+    let elementEndIndex = componentDef.indexOf(' ');
+
+    if (elementEndIndex === -1) {
+        elementEndIndex = componentDef.indexOf('/');
     }
 
-    const componentPath = path.resolve(generatedComponentsDir, generatedComponentName + '.marko');
-    const code = `<external-component>${componentDef}</external-component>`;
+    const componentName = componentDef.substr(1, elementEndIndex - 1);
 
-    fs.writeFileSync(componentPath, code);
+    let hash;
+    let foundHash;
 
-    // We need to rediscover custom tags because we just generated a new
-    // component on the fly.
-    markoCompiler.clearCaches();
+    if (generatedComponentMap[componentDef]) {
+        hash = generatedComponentMap[componentDef];
+        foundHash = true;
+    } else {
+        hash = md5(componentDef);
+        generatedComponentMap[componentDef] = hash;
+    }
+
+    const generatedComponentName = `external-component-${componentName}-${hash}`;
+
+    // If the hash was not found in the `generatedComponentMap`, we will go
+    // ahead and create or overwrite the existing file.
+    if (!foundHash) {
+        if (!fs.existsSync(generatedComponentsDir)) {
+            fs.mkdirSync(generatedComponentsDir);
+        }
+
+        const componentPath = path.resolve(generatedComponentsDir, generatedComponentName + '.marko');
+        const code = `<external-component>${componentDef}</external-component>`;
+
+        fs.writeFileSync(componentPath, code);
+
+        // We need to rediscover custom tags because we just generated a new
+        // component on the fly.
+        markoCompiler.clearCaches();
+    }
 
     return `<${generatedComponentName}/>`;
 }
