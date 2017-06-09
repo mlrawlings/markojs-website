@@ -55,6 +55,7 @@
   "scripts": {
     "start": "marko-starter server",
     "build": "marko-starter build",
+    "serve-static": "marko-starter serve-static",
     "build-prod": "LASSO_TIMEOUT=200000 NODE_ENV=production npm run build",
     "publish": "LASSO_TIMEOUT=200000 NODE_ENV=production node ./publish.js"
   },

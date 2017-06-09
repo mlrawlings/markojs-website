@@ -11,6 +11,12 @@ npm install
 npm start
 ```
 
+## Serving a static build
+
+```bash
+npm run serve-static
+```
+
 ## Publishing
 
 ```bash
