@@ -67,7 +67,9 @@ module.exports = {
             });
         });
 
-        var selectedLink = this.el.querySelector('a.selected');
+        // handles nested selected links
+        var selectedLink = slice.call(this.el.querySelectorAll('a.selected')).pop();
+
         selectedLink && this.subscribeTo(selectedLink).on('click', (e) => {
             window.scrollTo(0,0);
             header.reset();
