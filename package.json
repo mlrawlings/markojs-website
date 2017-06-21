@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@pnidem/babel-preset-babili": "0.0.12",
     "argly": "^1.2.0",
+    "babel-preset-babili": "^0.1.4",
     "babel-preset-es2015": "^6.22.0",
     "codemirror": "^5.23.0",
     "codemirror-atom-modes": "^1.0.1",
@@ -27,7 +27,7 @@
     "lasso-marko": "^2.3.0",
     "lodash.debounce": "^4.0.8",
     "marked": "^0.3.6",
-    "marko": "^4.4.1",
+    "marko": "^4.4.16",
     "marko-color-picker": "github:marko-js-samples/marko-color-picker",
     "marko-language-guide": "github:marko-js-samples/marko-language-guide",
     "marko-prettyprint": "^1.3.1",
