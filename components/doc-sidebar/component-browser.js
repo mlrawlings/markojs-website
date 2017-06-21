@@ -64,6 +64,7 @@ module.exports = {
                 header.hide();
                 header.pause();
                 header.resume();
+                this.hide();
             });
         });
 
