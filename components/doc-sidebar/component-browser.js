@@ -99,7 +99,6 @@ module.exports = {
                     document.body.style.overflow = '';
                 } else {
                     this.el.classList.add('show');
-                    document.body.style.overflow = 'hidden';
                 }
             });
 
