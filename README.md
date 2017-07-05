@@ -20,7 +20,7 @@ npm run serve-static
 ## Publishing
 
 ```bash
-npm publish -- -m "My commit message"
+npm run publish
 ```
 
 ## Contributing
