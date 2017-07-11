@@ -8,7 +8,7 @@ function getBabiliConfig() {
             babelOptions: {
                 "presets": [
                     [
-                        require('babel-preset-babili')
+                        require('@pnidem/babel-preset-babili')
                     ]
                 ]
             }
