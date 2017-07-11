@@ -118,7 +118,7 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
 
     markedRenderer.heading = function(text, level) {
         var anchorName = getAnchorName(text, anchorCache);
-        var linkText = text.replace(/\([^\)]+\)/g, '()').replace(/\<\/?code\>/g, '').replace(/&amp;lt;/g, '&lt;');
+        var linkText = text.replace(/\([^\)]+\)/g, '()').replace(/<\/?code\>/g, '').replace(/&amp;lt;/g, '&lt;');
 
         title = title || linkText;
 
@@ -143,6 +143,11 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
         return `<code-block lang="${lang}" lines="${lines}">${code}</code-block>`;
     };
 
+    markedRenderer.image = function(href, title, text) {
+        let imageCode = `<lasso-img src=${JSON.stringify(path.resolve(path.dirname(filePath), href))} alt=${JSON.stringify(text || '')} />`;
+        return imageCode;
+    };
+
     var html = '-----\n' + marked(markdown, {
         renderer: markedRenderer
     }) + '\n-----\n';
@@ -151,8 +156,10 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
     // e.g. ~/markojs-website/webpack.md
     const templateVirtualPath = path.join(process.cwd(), documentName);
 
+    var template;
+
     try {
-        var template = marko.load(templateVirtualPath, html, { writeToDisk:false })
+        template = marko.load(templateVirtualPath, html, { writeToDisk:false });
     } catch(e) {
         console.log(html);
         throw e;
