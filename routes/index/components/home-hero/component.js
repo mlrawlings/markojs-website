@@ -10,12 +10,12 @@ for (let i = 0; i < taglineStatements.length; i++) {
     taglineStatements[i] = `<span class="home-fade-in">${taglineStatements[i]}</span>`;
 }
 
-function setHeaderClassTimer (header) {
+let setHeaderClassTimer = (header) => {
     setTimeout(() => {
         header.classList.remove('home-fade-in');
         header.classList.add('home-fade-out');
     }, 4500);
-}
+};
 
 module.exports = {
     onMount () {
