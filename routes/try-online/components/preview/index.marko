@@ -4,11 +4,8 @@ import fs from 'fs';
 import debounce from 'lodash.debounce';
 import {prettyPrint as htmlPrettyPrint} from 'html';
 
-static function getHtmlCodeFromOutput(output) {
-    var node = output.actualize(document);
-    var containerEl = document.createElement('body');
-    containerEl.appendChild(node);
-    var html = containerEl.innerHTML;
+static function getHtmlCodeFromOutput(renderResult) {
+    var html = renderResult.toString();
     html = htmlPrettyPrint(html);
     return html;
 }
@@ -123,7 +120,7 @@ class {
             template.render()
                 .then((renderResult) => {
                     if (this.currentRender === currentRender) {
-                        let html = getHtmlCodeFromOutput(renderResult.getOutput());
+                        let html = getHtmlCodeFromOutput(renderResult);
                         this.getComponent('editorHTML').setCode(html);
                     }
                 })
