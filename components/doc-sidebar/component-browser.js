@@ -1,7 +1,8 @@
-var getComponentForEl = require('marko/components').getComponentForEl;
+var siteHeaderEvents = require('../site-header/events');
 var forEach = [].forEach;
 var filter = [].filter;
 var slice = [].slice;
+var siteHeaderComponent;
 
 module.exports = {
     onMount() {
@@ -57,13 +58,11 @@ module.exports = {
     },
 
     listenForHeaderChanges() {
-        var header = getComponentForEl(document.querySelector('.site-header'));
-
         forEach.call(this.el.querySelectorAll('a[href^=\\#]'), (a) => {
             this.subscribeTo(a).on('click', () => {
-                header.hide();
-                header.pause();
-                header.resume();
+                siteHeaderComponent.hide();
+                siteHeaderComponent.pause();
+                siteHeaderComponent.resume();
                 this.hide();
             });
         });
@@ -73,11 +72,11 @@ module.exports = {
 
         selectedLink && this.subscribeTo(selectedLink).on('click', (e) => {
             window.scrollTo(0,0);
-            header.reset();
+            siteHeaderComponent.reset();
             e.preventDefault();
         });
 
-        this.subscribeTo(header)
+        this.subscribeTo(siteHeaderEvents)
             .on('reset', () => {
                 this.el.classList.remove('no-header');
                 this.el.classList.remove('fixed');
@@ -100,12 +99,19 @@ module.exports = {
                 } else {
                     this.el.classList.add('show');
                 }
+            })
+            .on('create', (_siteHeaderComponent) => {
+                siteHeaderComponent = _siteHeaderComponent;
+
+                if (window.pageYOffset > siteHeaderComponent.el.offsetHeight) {
+                    this.el.classList.add('no-header');
+                    this.el.classList.add('fixed');
+                }
             });
 
-        if (window.pageYOffset > header.el.offsetHeight) {
-            this.el.classList.add('no-header');
-            this.el.classList.add('fixed');
-        }
+
+
+
     },
 
     preventOverscroll() {

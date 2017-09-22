@@ -1,3 +1,5 @@
+var siteHeaderEvents = require('./events');
+
 var classNames = {
     base: 'headspace',
     fixed: 'headspace--fixed',
@@ -8,6 +10,7 @@ var tolerance = 3;
 
 module.exports = {
     onMount() {
+        siteHeaderEvents.emit('create', this);
         var scrollLast = window.pageYOffset;
         var startOffset = this.el.offsetHeight;
 
@@ -33,16 +36,16 @@ module.exports = {
     reset() {
         this.removeClass(classNames.fixed);
         this.removeClass(classNames.hidden);
-        this.emit('reset');
+        siteHeaderEvents.emit('reset');
     },
     fix() {
         this.addClass(classNames.fixed);
         this.removeClass(classNames.hidden);
-        this.emit('fix');
+        siteHeaderEvents.emit('fix');
     },
     hide() {
         this.addClass(classNames.hidden);
-        this.emit('hide');
+        siteHeaderEvents.emit('hide');
     },
     addClass(cls) {
         this.el.classList.add(cls);
