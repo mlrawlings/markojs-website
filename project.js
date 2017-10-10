@@ -49,11 +49,13 @@ module.exports = require('marko-starter').projectConfig({
         bundlingEnabled: isProduction,
         fingerprintsEnabled: isProduction,
         require: {
+            transforms: requireTransforms
+        },
+        resolver: {
             builtins: {
                 'fs': require.resolve('./browser-shims/fs'),
                 'module': require.resolve('./browser-shims/module')
-            },
-            transforms: requireTransforms
+            }
         },
         minifyJS: false,
         plugins: [
