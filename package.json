@@ -19,7 +19,7 @@
     "language-javascript": "github:atom/language-javascript",
     "language-marko": "github:marko-js/atom-language-marko",
     "language-shellscript": "github:atom/language-shellscript",
-    "lasso": "^3.0.0-beta.6",
+    "lasso": "^3.0.0-beta.7",
     "lasso-babel-transform": "^0.4.0",
     "lasso-babili": "^1.0.0",
     "lasso-cson": "^2.0.0",
