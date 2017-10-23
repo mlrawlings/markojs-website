@@ -1,8 +1,8 @@
-const externalMarkdown = require('../../services/external-markdown');
+const externalMarkdown = require("../../services/external-markdown");
 
 module.exports = {
-    name: 'register-external-markdown',
-    start() {
-        return externalMarkdown.register();
-    }
+  name: "register-external-markdown",
+  start() {
+    return externalMarkdown.register();
+  }
 };

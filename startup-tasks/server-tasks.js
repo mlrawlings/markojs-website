@@ -1,4 +1,4 @@
 module.exports = [
-    'register-external-markdown',
-    'register-external-virtual-projects'
+  "register-external-markdown",
+  "register-external-virtual-projects"
 ];

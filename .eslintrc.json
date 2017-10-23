@@ -1,0 +1,17 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "script",
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-console": "off"
+  }
+}

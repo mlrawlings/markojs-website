@@ -1,72 +1,68 @@
-const { startServerTasks, startBuildTasks } = require('./startup-tasks');
+const { startServerTasks, startBuildTasks } = require("./startup-tasks");
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 
 function getBabiliConfig() {
-    if (isProduction) {
-        return {
-            babelOptions: {
-                "presets": [
-                    [
-                        require('@pnidem/babel-preset-babili')
-                    ]
-                ]
-            }
-        };
-    } else {
-        return {};
-    }
+  if (isProduction) {
+    return {
+      babelOptions: {
+        presets: [[require("@pnidem/babel-preset-babili")]]
+      }
+    };
+  } else {
+    return {};
+  }
 }
 
 var requireTransforms = [];
 
 if (isProduction) {
-    requireTransforms.push({
-        transform: 'lasso-babel-transform',
-        config: {
-            extensions: ['.js', '.es6', '.marko'], // Enabled file extensions. Default: ['.js', '.es6']
-            babelOptions: {
-                presets: [require('./babel-preset')]
-            }
-        }
-    });
+  requireTransforms.push({
+    transform: "lasso-babel-transform",
+    config: {
+      extensions: [".js", ".es6", ".marko"], // Enabled file extensions. Default: ['.js', '.es6']
+      babelOptions: {
+        presets: [require("./babel-preset")]
+      }
+    }
+  });
 }
 
 function onStartupError(err) {
-    console.error('Error on startup', err);
-    process.exit(1);
+  console.error("Error on startup", err);
+  process.exit(1);
 }
 
-module.exports = require('marko-starter').projectConfig({
-    routePathPrefix: '/',
-    beforeBuild() {
-        return startBuildTasks().catch(onStartupError);
+module.exports = require("marko-starter").projectConfig({
+  routePathPrefix: "/",
+  beforeBuild() {
+    return startBuildTasks().catch(onStartupError);
+  },
+  beforeStartServer() {
+    return startServerTasks().catch(onStartupError);
+  },
+  lassoConfig: {
+    bundlingEnabled: isProduction,
+    fingerprintsEnabled: isProduction,
+    require: {
+      transforms: requireTransforms
     },
-    beforeStartServer() {
-        return startServerTasks().catch(onStartupError);
+    resolver: {
+      builtins: {
+        fs: require.resolve("./browser-shims/fs"),
+        module: require.resolve("./browser-shims/module")
+      }
     },
-    lassoConfig: {
-        bundlingEnabled: isProduction,
-        fingerprintsEnabled: isProduction,
-        require: {
-            transforms: requireTransforms
-        },
-        resolver: {
-            builtins: {
-                'fs': require.resolve('./browser-shims/fs'),
-                'module': require.resolve('./browser-shims/module')
-            }
-        },
-        minifyJS: false,
-        plugins: [
-            'lasso-marko',
-            'lasso-cson',
-            'lasso-less',
-            {
-                plugin: 'lasso-babili',
-                config: getBabiliConfig(),
-                enabled: isProduction
-            }
-        ]
-    }
+    minifyJS: false,
+    plugins: [
+      "lasso-marko",
+      "lasso-cson",
+      "lasso-less",
+      {
+        plugin: "lasso-babili",
+        config: getBabiliConfig(),
+        enabled: isProduction
+      }
+    ]
+  }
 });

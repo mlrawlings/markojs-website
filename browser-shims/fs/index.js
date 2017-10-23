@@ -1,3 +1,3 @@
-var VFileSystem = require('./VFileSystem');
+var VFileSystem = require("./VFileSystem");
 
 module.exports = new VFileSystem();

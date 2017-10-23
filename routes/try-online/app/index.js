@@ -1,3 +1,3 @@
-var TryOnlineApp = require('./TryOnlineApp');
+var TryOnlineApp = require("./TryOnlineApp");
 
 module.exports = new TryOnlineApp();

@@ -1,4 +1,4 @@
-const formatSlug = require('~/util/formatSlug');
+const formatSlug = require("~/util/formatSlug");
 
 /**
 * Creates an object where each key is the name of a document, and each value
@@ -16,23 +16,27 @@ module.exports = function createOverviewTree(structure, nestedTitle) {
       const doc = section.docs[j];
 
       // handle nested documents
-      if (typeof doc === 'object') {
-        const overviewTitle = `${formatSlug(section.title)}-${formatSlug(doc.title)}-overview`;
+      if (typeof doc === "object") {
+        const overviewTitle = `${formatSlug(section.title)}-${formatSlug(
+          doc.title
+        )}-overview`;
         const nestedList = createOverviewTree([doc], overviewTitle);
 
         familyTree = Object.assign({}, familyTree, nestedList);
-      } else if (typeof doc === 'string') {
+      } else if (typeof doc === "string") {
         const key = formatSlug(doc.toUpperCase());
         familyTree[key] = {};
 
         if (nestedTitle) {
           familyTree[key][nestedTitle] = true;
         } else {
-          familyTree[key][`${formatSlug(section.title.toUpperCase())}-overview`] = true;
+          familyTree[key][
+            `${formatSlug(section.title.toUpperCase())}-overview`
+          ] = true;
         }
       }
     }
   }
 
   return familyTree;
-}
+};
