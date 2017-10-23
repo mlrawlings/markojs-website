@@ -7,6 +7,7 @@ const gitBranch = "master";
 const buildDir = __dirname + "/dist";
 const publishDir = buildDir + "/__publish";
 const domain = "markojs.com";
+const generateRedirects = require("./generateRedirects");
 
 exec("markoc . --clean");
 exec("rm -rf .cache");
@@ -33,6 +34,7 @@ prompt.get(promptSchema, (err, res) => {
 
   require("./project")
     .build()
+    .then(generateRedirects)
     .then(() => {
       // create publish directory
       exec(`mkdir ${publishDir}`);
