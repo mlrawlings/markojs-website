@@ -5,7 +5,7 @@ const writeFile = util.promisify(fs.writeFile);
 const mkdirp = util.promisify(require("mkdirp"));
 
 var redirects = {
-  docs: "/docs/introduction"
+  docs: "/docs/getting-started"
 };
 
 async function generateRedirectFile(from, to) {
@@ -14,14 +14,14 @@ async function generateRedirectFile(from, to) {
 
   const html = `<html><head><meta http-equiv="refresh" content="0; url=${to}">
 <link rel="canonical" href="${to}"></head></html`;
-
   await writeFile(outFile, html, { encoding: "utf8" });
 }
 
 async function generateRedirects() {
-  Object.keys(redirects).forEach(from => {
-    generateRedirectFile(from, redirects[from]);
-  });
+  for (let from in redirects) {
+    let to = redirects[from];
+    await generateRedirectFile(from, to);
+  }
 }
 
 module.exports = generateRedirects;
