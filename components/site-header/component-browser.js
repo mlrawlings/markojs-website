@@ -62,5 +62,8 @@ module.exports = {
         this.paused = false;
       })
     );
+  },
+  toggleMenu () {
+    siteHeaderEvents.emit('toggle-menu');
   }
 };
