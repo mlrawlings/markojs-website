@@ -12,12 +12,13 @@ module.exports = {
   onMount() {
     siteHeaderEvents.emit("create", this);
     var scrollLast = window.pageYOffset;
-    var startOffset = this.el.offsetHeight;
+    var startOffset = this.getEl('header').offsetHeight;
+    var bannerHeight = (this.getEl('banner') || { offsetHeight:0 }).offsetHeight;
 
     var handleScroll = debounce(() => {
       var scrollCurrent = window.pageYOffset;
 
-      if (scrollCurrent <= 0) {
+      if (scrollCurrent <= bannerHeight) {
         this.reset();
       } else if (!this.paused && scrollCurrent > startOffset) {
         var toleanceReached = Math.abs(scrollCurrent - scrollLast) >= tolerance;
@@ -48,10 +49,10 @@ module.exports = {
     siteHeaderEvents.emit("hide");
   },
   addClass(cls) {
-    this.el.classList.add(cls);
+    this.getEl('header').classList.add(cls);
   },
   removeClass(cls) {
-    this.el.classList.remove(cls);
+    this.getEl('header').classList.remove(cls);
   },
   pause() {
     this.paused = true;

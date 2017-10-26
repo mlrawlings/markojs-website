@@ -1,6 +1,6 @@
 .site-header {
     position:absolute;
-    top:0;
+    top:1.5em;
     left:0;
     right:0;
     flex-direction:row;
@@ -16,7 +16,7 @@
 }
 .site-header.headspace--fixed {
     position:fixed;
-    transform:translate3d(0, -1px, 0);
+    transform:translate3d(0, -1.5em, 0);
 }
 .site-header.headspace--hidden {
     transform:translate3d(0, -4.5em, 0); /* y value should be -1 * height */
@@ -29,7 +29,21 @@ body:not(.home) .site-header {
 }
 
 body {
-    padding-top:4.5em;
+    padding-top:6em;
+}
+
+.site-banner {
+    position:absolute;
+    top:0; left:0; right:0;
+    height:1.5em;
+    color:#fff;
+    background:#09d;
+    text-align:center;
+}
+
+.site-banner a {
+    color:#fff;
+    text-decoration: underline;
 }
 
 .site-logo {
