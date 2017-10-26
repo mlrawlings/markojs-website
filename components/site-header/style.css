@@ -1,13 +1,10 @@
 .site-header {
     position:absolute;
-    top:1.5em;
+    top:0;
     left:0;
     right:0;
-    flex-direction:row;
-    justify-content:space-between;
-    align-items:center;
     background-color:#fff;
-    height:4.5em;
+    height:6em;
     width:100%;
     border-bottom:1px solid #fff;
     transition:all 0.3s;
@@ -19,7 +16,13 @@
     transform:translate3d(0, -1.5em, 0);
 }
 .site-header.headspace--hidden {
-    transform:translate3d(0, -4.5em, 0); /* y value should be -1 * height */
+    transform:translate3d(0, -6em, 0); /* y value should be -1 * height */
+}
+.site-header .content {
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    flex:1;
 }
 
 .site-header.headspace--fixed,
@@ -33,8 +36,6 @@ body {
 }
 
 .site-banner {
-    position:absolute;
-    top:0; left:0; right:0;
     height:1.5em;
     color:#fff;
     background:#09d;
