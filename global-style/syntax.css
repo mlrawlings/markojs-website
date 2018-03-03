@@ -1,4 +1,5 @@
-.code-block-filename {
+.code-block-filename,
+.doc-content > .code-block-filename {
   font-size:0.75em;
   line-height: 1;
   background-color: #27292b;
