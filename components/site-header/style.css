@@ -13,7 +13,7 @@
 }
 .site-header.headspace--fixed {
     position:fixed;
-    transform:translate3d(0, -1.5em, 0);
+    transform:translate3d(0, 0, 0);
 }
 .site-header.headspace--hidden {
     transform:translate3d(0, -6em, 0); /* y value should be -1 * height */
