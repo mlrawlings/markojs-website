@@ -83,7 +83,7 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
     .replace(/\&/g, "&amp;")
     .replace(/\$/g, "&#36;")
     .replace(/https?:\/\/markojs\.com\//g, "/")
-    .replace(/\.\/([\w\d-\/]+)\.md/g, match => {
+    .replace(/([\w\d\-\/]+)\.md/g, match => {
       // Markdown documents from external sources do not have a file path
       if (filePath) {
         const linkpath = path.resolve(path.dirname(filePath), match);
