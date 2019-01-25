@@ -1,6 +1,6 @@
 var fs = require("fs");
 var Highlights = require("highlights");
-var prettyprint = require("marko-prettyprint");
+var prettyprint = require("@marko/prettyprint");
 var resolveFrom = require("resolve-from");
 var redent = require("redent");
 const localStorageUtil = require("~/util/localstorage");
