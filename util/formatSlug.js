@@ -1,6 +1,6 @@
 module.exports = name => {
   return name
-    .replace(/[^\w\d\s-]/g, "")
-    .replace(/\s+/g, "-")
+    .replace(/[^\w\d\s\.-]/g, "")
+    .replace(/[\s\.]+/g, "-")
     .toLowerCase();
 };
