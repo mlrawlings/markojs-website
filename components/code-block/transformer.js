@@ -71,6 +71,7 @@ module.exports = function(el, context) {
       .replace(/&#36;/g, "$")
       .replace(/&amp;/g, "&")
   ).trim();
+
   html = highlighter.highlightSync({
     fileContents: code,
     scopeName: scopeName
@@ -92,22 +93,20 @@ module.exports = function(el, context) {
   context.addDependency(require.resolve("~/global-style/syntax.css"));
 
   var prev = getPreviousNonWhitespaceNode(el);
-  var prevIsParagraph = prev && prev.tagName === "p";
-  var innerNode = getSingleInnerNode(prev);
+  var innerNode = getSingleInnerEmNode(prev);
   var innerIsLiteralText =
     innerNode &&
     innerNode.type === "Text" &&
     innerNode.argument.type === "Literal";
-  var innerIsFileName =
-    innerIsLiteralText && /^[\S]+$/.test(innerNode.argument.value);
 
-  if (innerIsFileName) {
+  if (innerIsLiteralText) {
     var fileNameDiv = context.createNodeForEl("div");
     fileNameDiv.setAttributeValue(
       "class",
       builder.literal("code-block-filename")
     );
     fileNameDiv.appendChild(innerNode);
+    innerNode.argument.value.replace(/\:$/, '');
     prev.replaceWith(fileNameDiv);
   }
 
@@ -138,14 +137,21 @@ module.exports = function(el, context) {
     return prev;
   }
 
-  function getSingleInnerNode(node) {
-    var next = node && node.firstChild;
-    while (next) {
-      if (node.body.length != 1) return;
-      node = next;
-      next = node.firstChild;
+  function getSingleInnerEmNode(node) {
+    if (is(node, 'p')) {
+      var child = onlyChild(node);
+      if (is(child, 'em')) {
+        return onlyChild(child);
+      }
     }
-    return node;
+
+    function is(node, tagName) {
+      return node && node.tagName === tagName;
+    }
+
+    function onlyChild(node) {
+      return node && node.body.length === 1 ? node.firstChild : undefined;
+    }
   }
 
   if (
