@@ -118,6 +118,12 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
     return output;
   };
 
+  markedRenderer.blockquote = function(quote) {
+    var match = /^<p><strong>(\w+):<\/strong>/.exec(quote);
+    var className = match && match[1].toLowerCase();
+    return `<blockquote class="${className}">${quote}</blockquote>`;
+  }
+
   markedRenderer.heading = function(text, level) {
     var anchorName = getAnchorName(text, anchorCache);
     var linkText = text
@@ -186,7 +192,7 @@ exports.toTemplate = function renderMarkdown(markdownDocument) {
 
 function getAnchorName(title, anchorCache) {
   var anchorName = title
-    .replace(/<[^>]*>|&[^;]*;/g, " ")
+    .replace(/<[^>]*>|&[^;]*;/g, "")
     .replace(/[^A-Z0-9\- ]+/gi, "")
     .trim()
     .replace(/[ \-]+/g, "-")

@@ -100,3 +100,8 @@ table.markdown-table td {
 table.markdown-table td:first-child {
   border-left: 1px solid #dbdddf;
 }
+
+blockquote.protip {
+  border-left-color: #ffc800;
+  background: #fff8f0;
+}
