@@ -12,9 +12,9 @@
             <body>
                 <h1>My favorite colors</h1>
                 <ul.colors>
-                    <li for(color in input.colors)>
-                        ${color}
-                    </li>
+                    <for|color| of=input.colors>
+                        <li>${color}</li>
+                    </for>
                 </ul>
             </body>
             </html>
@@ -30,8 +30,8 @@
                 body
                     h1 -- My favorite colors
                     ul.colors
-                        li for(color in input.colors)
-                            -- ${color}
+                        for|color| of=input.colors
+                            li -- ${color}
         </code-block>
     </div>
 </header>
