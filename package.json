@@ -13,7 +13,7 @@
     "flat-colors": "^3.3.7",
     "gh-got": "^5.0.0",
     "headspace": "^0.1.1",
-    "highlights": "^1.4.1",
+    "highlights": "^3.1.1",
     "html": "^1.0.0",
     "jshint": "^2.9.7",
     "language-css": "github:atom/language-css",

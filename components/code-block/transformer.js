@@ -7,29 +7,8 @@ const localStorageUtil = require("~/util/localstorage");
 const syntaxSwitchEnabled = true;
 
 var highlighter = new Highlights();
-
-highlighter.requireGrammarsSync({
-  modulePath: require.resolve("language-css/package.json")
-});
-
-highlighter.requireGrammarsSync({
-  modulePath: require.resolve("language-javascript/package.json")
-});
-
-highlighter.requireGrammarsSync({
-  modulePath: require.resolve("language-html/package.json")
-});
-
 highlighter.requireGrammarsSync({
   modulePath: require.resolve("language-marko/package.json")
-});
-
-highlighter.requireGrammarsSync({
-  modulePath: require.resolve("react/package.json")
-});
-
-highlighter.requireGrammarsSync({
-  modulePath: require.resolve("language-shellscript/package.json")
 });
 
 module.exports = function(el, context) {
