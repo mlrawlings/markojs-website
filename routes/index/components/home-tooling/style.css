@@ -7,7 +7,7 @@ header.home-tooling.solid-color {
 }
 
 .home-tooling h1 {
-    margin-top: -0.6rem; // Align better with image
+    margin-top: -0.6rem; /* Align better with image */
 }
 
 .home-tooling .wrapper {
