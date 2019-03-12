@@ -3,10 +3,10 @@
     margin-right:2em;
     position: absolute;
     padding:2.5rem;
-    padding-bottom:6rem;
+    padding-bottom:4rem;
     top:0; left:0; bottom:0;
     overflow:auto;
-    transform:translateY(4.5em) translateZ(0);
+    transform:translateY(4em) translateZ(0);
     display:none;
     z-index: 50;
     background-color: #fff;

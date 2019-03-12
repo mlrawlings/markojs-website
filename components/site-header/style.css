@@ -4,7 +4,7 @@
     left:0;
     right:0;
     background-color:#fff;
-    height:6em;
+    height:4em;
     width:100%;
     border-bottom:1px solid #fff;
     transition:all 0.3s;
@@ -16,7 +16,7 @@
     transform:translate3d(0, 0, 0);
 }
 .site-header.headspace--hidden {
-    transform:translate3d(0, -6em, 0); /* y value should be -1 * height */
+    transform:translate3d(0, -4em, 0); /* y value should be -1 * height */
 }
 .site-header .content {
     flex-direction:row;
@@ -32,7 +32,7 @@ body:not(.home) .site-header {
 }
 
 body {
-    padding-top:6em;
+    padding-top:4em;
 }
 
 .site-banner {

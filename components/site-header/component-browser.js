@@ -11,7 +11,7 @@ var tolerance = 3;
 module.exports = {
   onMount() {
     siteHeaderEvents.emit("create", this);
-    var scrollLast = window.pageYOffset;
+    var scrollLast = 0;
     var startOffset = this.getEl('header').offsetHeight;
     var bannerHeight = (this.getEl('banner') || { offsetHeight:0 }).offsetHeight;
 
@@ -32,6 +32,7 @@ module.exports = {
       scrollLast = scrollCurrent;
     });
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
   },
   reset() {
