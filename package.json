@@ -58,9 +58,10 @@
   "scripts": {
     "start": "marko-starter server",
     "build": "marko-starter build",
-    "serve-static": "marko-starter serve-static",
-    "build-prod": "LASSO_TIMEOUT=60000 NODE_ENV=production npm run build",
-    "publish": "LASSO_TIMEOUT=60000 NODE_ENV=production node ./publish.js"
+    "serve-static": "npm run clean && marko-starter serve-static",
+    "clean": "rm -rf dist/ .cache/",
+    "build-prod": "npm run clean && LASSO_TIMEOUT=60000 NODE_ENV=production npm run build",
+    "publish": "npm run clean && LASSO_TIMEOUT=60000 NODE_ENV=production node ./publish.js"
   },
   "static-repo": "git@github.com:mlrawlings/markojs-website.git#gh-pages",
   "baseurl": "/markojs-website"
