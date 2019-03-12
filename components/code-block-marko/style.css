@@ -18,16 +18,21 @@ body.concise .marko-code-block .code.html {
 }
 
 .marko-code-block .switch-syntax {
-    font-size: 0.8em;
+    font-size:1.2em;
     position:absolute;
     top:0.4em;
     right:0.4em;
-    padding:0.9em;
+    padding:0.2em 0.5em;
     border:0;
     background-color:rgba(78,80,82,0.8);
     color:#eceef0;
     cursor:pointer;
     outline:0;
+    border-radius:2px;
+}
+
+body.concise .marko-code-block .switch-syntax {
+    transform:rotateY(180deg);
 }
 
 .marko-code-block .switch-syntax:hover {

@@ -6,7 +6,7 @@ const localStorageUtil = require("~/util/localStorage");
 module.exports = {
   changeSyntax: function() {
     var header = getComponentForEl(document.querySelector(".site-header"));
-    var beforeScroll = document.body.scrollTop;
+    var beforeScroll = document.body.scrollTop || document.documentElement.scrollTop;
     var beforePosition = this.el.offsetTop;
 
     header.pause();
@@ -22,8 +22,9 @@ module.exports = {
     var afterPosition = this.el.offsetTop;
     var afterScroll = beforeScroll - beforePosition + afterPosition;
 
+    document.documentElement.scrollTop = afterScroll;
     document.body.scrollTop = afterScroll;
 
-    header.resume();
+    setTimeout(function() { header.resume(); }, 0);
   }
 };
