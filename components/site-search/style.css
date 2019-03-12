@@ -23,6 +23,7 @@
 }
 
 .site-search input {
+    -webkit-appearance: none;
     display:block;
     height:2em;
     padding:0.5em;
