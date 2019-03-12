@@ -47,19 +47,8 @@
 
 
 .doc-content .doc-footer {
-    border:1px solid #dbdddf;
-    border-radius: 0.2rem;
-}
-
-@media (max-width:45em) {
-  .doc-content .doc-footer {
-      border:0;
-      border-top:1px solid #dbdddf;
-      margin: -2em;
-      margin-top:0;
-      width:auto;
-      border-radius: 0;
-  }
+    background: transparent;
+    margin-bottom:-2em;
 }
 
 table.markdown-table {
