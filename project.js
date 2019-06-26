@@ -53,16 +53,11 @@ module.exports = require("marko-starter").projectConfig({
         module: require.resolve("./browser-shims/module")
       }
     },
-    minifyJS: false,
+    minifyJS: true,
     plugins: [
       "lasso-marko",
       "lasso-cson",
-      "lasso-less",
-      {
-        plugin: "lasso-babili",
-        config: getBabiliConfig(),
-        enabled: isProduction
-      }
+      "lasso-less"
     ]
   }
 });
