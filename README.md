@@ -1,6 +1,6 @@
-# Source code for markojs.com
+<img src="https://user-images.githubusercontent.com/1958812/62652399-2a314c80-b910-11e9-883b-196686708979.png"/>
 
-This repo contains the source code for markojs.com.
+
 
 ## Running markojs.com Locally
 
