@@ -2,18 +2,6 @@ const { startServerTasks, startBuildTasks } = require("./startup-tasks");
 
 const isProduction = process.env.NODE_ENV === "production";
 
-function getBabiliConfig() {
-  if (isProduction) {
-    return {
-      babelOptions: {
-        presets: [[require("@pnidem/babel-preset-babili")]]
-      }
-    };
-  } else {
-    return {};
-  }
-}
-
 var requireTransforms = [];
 
 if (isProduction) {
@@ -53,7 +41,7 @@ module.exports = require("marko-starter").projectConfig({
         module: require.resolve("./browser-shims/module")
       }
     },
-    minifyJS: true,
+    minifyJS: isProduction,
     plugins: [
       "lasso-marko",
       "lasso-cson",
