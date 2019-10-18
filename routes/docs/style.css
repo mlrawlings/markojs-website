@@ -1,16 +1,21 @@
-.doc-content {
-    display:block;
+.doc-container {
+    flex:1;
     width:100%;
     max-width:60em;
     padding-left:16em;
-    text-align:left;
-    position: relative;
 }
 
 @media (max-width:45em) {
-    .doc-content {
-        padding-left:0;
-    }
+  .doc-container {
+      padding-left:0;
+  }
+}
+
+.doc-content {
+    display:block;
+    width:100%;
+    text-align:left;
+    position: relative;
 }
 
 .doc-content > * {
@@ -37,12 +42,6 @@
     flex-direction:row;
     width:100%;
     padding:2em;
-}
-
-.doc-container {
-    flex:1;
-    /*align-items: center;*/
-    width:100%;
 }
 
 
