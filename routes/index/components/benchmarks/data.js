@@ -95,90 +95,90 @@ const benchmarks = {
 let resultsByBench = {
   colors: {
     node: {
-      inferno: 1792,
-      marko: 3262,
-      preact: 2841,
-      react: 212,
-      vue: 824
+      inferno: 21453,
+      marko: 24540,
+      preact: 4587,
+      react: 4300,
+      vue: 9120
     },
     safari: {
-      inferno: 5080,
-      marko: 9131,
-      preact: 2139,
-      react: 1824,
-      vue: 2531
+      inferno: 11046,
+      marko: 5516,
+      preact: 3432,
+      react: 6675,
+      vue: 2063
     },
     chrome: {
-      inferno: 6580,
-      marko: 8126,
-      preact: 4214,
-      react: 3105,
-      vue: 4362
+      inferno: 17078,
+      marko: 6008,
+      preact: 6435,
+      react: 7358,
+      vue: 4291
     },
     firefox: {
-      inferno: 1966,
-      marko: 2881,
-      preact: 1491,
-      react: 992,
-      vue: 1928
+      inferno: 8213,
+      marko: 3057,
+      preact: 2930,
+      react: 4062,
+      vue: 2852
     },
     ios: {
-      inferno: 568,
-      marko: 2308,
-      preact: 274,
-      react: 369,
-      vue: 287
+      inferno: 7895,
+      marko: 4128,
+      preact: 2607,
+      react: 4487,
+      vue: 1741
     },
     android: {
-      inferno: 737,
-      marko: 1283,
-      preact: 327,
-      react: 346,
-      vue: 509
+      inferno: 6348,
+      marko: 1897,
+      preact: 2215,
+      react: 2289,
+      vue: 1363
     }
   },
   "search-results": {
     node: {
-      inferno: 398,
-      marko: 1657,
-      preact: 496,
-      react: 31.49,
-      vue: 172
+      inferno: 3014,
+      marko: 6399,
+      preact: 746,
+      react: 765,
+      vue: 2657
     },
     safari: {
-      inferno: 406,
-      marko: 459,
-      preact: 200,
-      react: 211,
-      vue: 176
+      inferno: 513,
+      marko: 363,
+      preact: 245,
+      react: 454,
+      vue: 186
     },
     chrome: {
-      inferno: 409,
-      marko: 430,
-      preact: 302,
-      react: 284,
-      vue: 241
+      inferno: 239,
+      marko: 175,
+      preact: 132,
+      react: 210,
+      vue: 142
     },
     firefox: {
-      inferno: 115,
-      marko: 130,
-      preact: 96.82,
-      react: 79.79,
-      vue: 58.65
+      inferno: 121,
+      marko: 96.63,
+      preact: 89.21,
+      react: 122,
+      vue: 59.06
     },
     ios: {
-      inferno: 98.42,
-      marko: 107,
-      preact: 61.91,
-      react: 50.12,
-      vue: 31.32
+      inferno: 345,
+      marko: 240,
+      preact: 181,
+      react: 317,
+      vue: 140
     },
     android: {
-      inferno: 16.22,
-      marko: 20.08,
-      preact: 13.37,
-      react: 14.53,
-      vue: 12.01
+      inferno: 66.54,
+      marko: 50.36,
+      preact: 35.17,
+      react: 62.13,
+      vue: 41.21
     }
   }
 };
