@@ -29,7 +29,7 @@
     "lasso-marko": "^2.4.6",
     "lodash.debounce": "^4.0.8",
     "marked": "^0.6.0",
-    "marko": "^4.18.5",
+    "marko": "^4.21.1",
     "marko-color-picker": "github:marko-js-samples/marko-color-picker",
     "marko-language-guide": "github:marko-js-samples/marko-language-guide",
     "marko-starter": "^2.0.4",
