@@ -11,12 +11,14 @@ module.exports = function getContributorsForFile(file) {
     .then(res => {
       res.body.forEach(contribution => {
         var author = contribution.author;
-        contributors[author.login] = {
-          username: author.login,
-          photo: author.avatar_url,
-          profile: author.html_url,
-          commits: `https://github.com/${repo}/commits?path=${repoFilePath}&author=${author.login}`
-        };
+        if (author) {
+          contributors[author.login] = {
+            username: author.login,
+            photo: author.avatar_url,
+            profile: author.html_url,
+            commits: `https://github.com/${repo}/commits?path=${repoFilePath}&author=${author.login}`
+          };
+        }
       });
       return Object.keys(contributors)
         .sort()
