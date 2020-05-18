@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>${data.title ? data.title + ' | Marko' : 'Marko'}</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="Description" content="Marko is a friendly (and fast!) UI library that makes building web apps fun." />
+    <title><if(input.title)>${input.title} | </if>Marko</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+    <link rel="preconnect" href="https://api.github.com">
+    <link rel="preconnect" href="https://sidecar.gitter.im">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Marko is a friendly (and fast!) UI library that makes building web apps fun.">
     <script>
-        var scalingBodyFont = false;
-
         function scaleBodyFont() {
             var height = Math.max(window.outerHeight, window.screen.height);
             document.documentElement.style.fontSize = Math.pow(Math.min(window.innerWidth, height), 0.25)*19+'%';
-            scalingBodyFont = false;
         }
 
         window.addEventListener('resize', function() {
@@ -21,19 +21,22 @@
         scaleBodyFont();
     </script>
 </head>
-<body class=data.class>
+<body class=input.class>
     <site-header/>
     <doc-sidebar doc=input.doc toc=input.toc/>
-    <div class="content">
-        <include(data.renderBody)/>
+    <div.content>
+        <include(input.renderBody)/>
     </div>
-    <site-footer if(data.footer !== false)/>
+
+    <if(input.footer !== false)>
+        <site-footer/>
+    </if>
 
     <google-analytics tracking-id="UA-66854919-1" domain="markojs.com"/>
 
     <script>
     ((window.gitter = {}).chat = {}).options = {
-      room: 'marko-js/marko'
+        room: 'marko-js/marko'
     };
     </script>
     <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer/>

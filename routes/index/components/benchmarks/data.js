@@ -1,7 +1,7 @@
 const libraries = {
   inferno: {
     name: "Inferno",
-    logo: require.resolve("./logos/inferno.png"),
+    logo: require.resolve("./logos/inferno.svg"),
     color: "#e60022"
   },
   marko: {
@@ -11,24 +11,24 @@ const libraries = {
   },
   preact: {
     name: "Preact",
-    logo: require.resolve("./logos/preact.png"),
+    logo: require.resolve("./logos/preact.svg"),
     color: "#673ab8"
   },
   react: {
     name: "React",
-    logo: require.resolve("./logos/react.jpg"),
+    logo: require.resolve("./logos/react.svg"),
     color: "#61dafb"
   },
   vue: {
     name: "Vue",
-    logo: require.resolve("./logos/vue.png"),
+    logo: require.resolve("./logos/vue.svg"),
     color: "#4fc08d"
   }
 };
 
 const environments = {
   node: {
-    logo: require.resolve("./logos/node.jpg"),
+    logo: require.resolve("./logos/node.svg"),
     name: "Node.js",
     type: "server"
   },
