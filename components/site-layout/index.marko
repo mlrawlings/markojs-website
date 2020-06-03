@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>${data.title ? data.title + ' | Marko' : 'Marko'}</title>
+    <title><if(data.title)>$!{data.title} | </if>Marko</title>
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="Description" content="Marko is a friendly (and fast!) UI library that makes building web apps fun." />
