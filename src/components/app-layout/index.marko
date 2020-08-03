@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>${input.title ? input.title + " | Marko" : "Marko"}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta
+      name="Description"
+      content="Marko is a friendly (and fast!) UI library that makes building web apps fun."/>
+    <script>
+        var scalingBodyFont = false;
+
+        function scaleBodyFont() {
+            var height = Math.max(window.outerHeight, window.screen.height);
+            document.documentElement.style.fontSize = Math.pow(Math.min(window.innerWidth, height), 0.25)*19+'%';
+            scalingBodyFont = false;
+        }
+
+        window.addEventListener('resize', function() {
+            requestAnimationFrame(scaleBodyFont);
+        });
+
+        scaleBodyFont();
+    </script>
+  </head>
+
+  <body class=input.class>
+    <layout-header/>
+    <layout-sidebar currentDoc=input.currentDoc toc=input.toc/>
+    <div.content>
+      <${input.renderBody}/>
+    </div>
+    <if(input.footer !== false)>
+      <app-footer/>
+    </if>
+
+    <google-analytics tracking-id="UA-66854919-1" domain="markojs.com"/>
+
+    <if(input.discord !== false && process.env.NODE_ENV === "production")>
+      <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async>
+        new Crate({server:'725013179465203793',channel:'725013179926708226'})
+      </script>
+    </if>
+  </body>
+</html>

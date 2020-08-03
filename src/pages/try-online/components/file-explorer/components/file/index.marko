@@ -1,0 +1,10 @@
+import path from 'path'
+
+<li.file
+    class=[
+        { selected: input.selectedPath === input.path },
+        path.extname(input.name).substring(1)
+    ]
+    on-click("emit", "change", input.path)>
+    <span>${input.name}</span>
+</li>

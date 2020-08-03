@@ -1,0 +1,14 @@
+import path from "path"
+
+<div.file-explorer>
+  <ul>
+    <for|name, content| in=input.files>
+      <entry
+        path=path.join("/", name)
+        name=name
+        content=content
+        selected-path=input.selectedPath
+        on-change("emit", "change")/>
+    </for>
+  </ul>
+</div>

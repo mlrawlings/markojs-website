@@ -1,0 +1,9 @@
+{
+  "@tabs <tab>[]": {
+    "@value": "expression",
+    "@selected": "boolean"
+  },
+  "@body <body>": {},
+  "@class": "string",
+  "@selected-value": "expression"
+}

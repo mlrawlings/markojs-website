@@ -1,0 +1,75 @@
+import getContributors from "./get-contributors";
+
+$ var editPath = `https://github.com/${input.repo}/blob/master/${input.repoPath}`;
+
+style {
+    .contributors {
+        display: flex;
+        flex-direction:row;
+        flex-wrap:wrap;
+    }
+    .contributors .contributor {
+        display:flex;
+        flex-direction:column;
+        width:4em;
+        margin:1em;
+        align-items:center;
+        text-decoration:none;
+    }
+    .contributors .photo {
+        width:4em;
+        height:4em;
+        border-radius:0.2rem;
+        box-shadow:0 0 0.2em #c9cbcd;
+    }
+    .contributors .name {
+        width:150%;
+        text-align:center;
+        font-size:0.5em;
+        color:#595b5d;
+        margin-top:0.2rem;
+    }
+    .contributors .you .photo {
+        display: flex;
+        align-items:center;
+        justify-content:center;
+        background:#09d;
+    }
+    .contributors .you .icon {
+        font-size:2em;
+        color:#fff;
+        margin-top: -0.15em;
+    }
+}
+
+<await(getContributors(input.repo, input.repoPath))>
+    <@then|contributors|>
+        <h2 id="contributors">
+            <a name="contributors" class="anchor" href="#contributors">
+                <span class="header-link"/>
+            </a>
+            Contributors
+        </h2>
+        <p>
+            Helpful? You can thank these awesome people! You can also
+            <a href=editPath>
+                edit this doc
+            </a>
+            if you see any issues or want to improve it.
+        </p>
+        <div.contributors>
+            <for|contributor| of=contributors>
+                <a.contributor href=contributor.profile>
+                    <img.photo src=contributor.photo/>
+                    <span.name>${contributor.username}</span>
+                </a>
+            </for>
+            <a.contributor.you href=editPath>
+                <div.photo>
+                    <span class="icon">+</span>
+                </div>
+                <span.name>You?</span>
+            </a>
+        </div>
+    </@then>
+</await>

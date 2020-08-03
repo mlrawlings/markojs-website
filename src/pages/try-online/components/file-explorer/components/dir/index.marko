@@ -1,0 +1,34 @@
+import path from "path"
+
+class {
+  onCreate(input) {
+    this.state = {
+      expanded: (
+        input.name === "components" ||
+        input.name === "pages"
+      )
+    };
+  }
+
+  onInput(input) {
+    if (!this.state.expanded && input.selectedPath.startsWith(path.join(input.path, "/"))) {
+      this.state.expanded = true;
+    }
+  }
+}
+
+<li.dir class={ expanded: state.expanded }>
+  <label on-click("setState", "expanded", !state.expanded)>${input.name}</label>
+  <if(input.content)>
+    <ul>
+      <for|name, content| in=input.content>
+        <entry
+          path=path.join(input.path, name)
+          name=name
+          content=content
+          selected-path=input.selectedPath
+          on-change("emit", "change")/>
+      </for>
+    </ul>
+  </if>
+</li>

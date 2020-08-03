@@ -1,0 +1,23 @@
+import "<code-block-marko>";
+import documentLookup from "../../../utils/document-lookup";
+
+$ const { params } = input;
+$ const doc = documentLookup[params.name];
+
+<app-layout.docs title=doc.title currentDoc=params.name toc=doc.toc footer=false>
+    <div.doc-layout>
+        <div.doc-container>
+            <div.doc-content>
+                <if(!doc.overview)>
+                    <${doc.template}/>
+                    <edit-on-github ...doc/>
+                    <contributors ...doc/>
+                </if>
+                <else>
+                    <document-overview ...doc/>
+                </else>
+                <app-footer.doc-footer/>
+            </div>
+        </div>
+    </div>
+</app-layout>

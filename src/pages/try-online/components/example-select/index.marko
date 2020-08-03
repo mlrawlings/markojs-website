@@ -1,0 +1,33 @@
+class {
+  handleChange(_, el) {
+    this.emit("change", el.selectedIndex, el);
+  }
+}
+
+style {
+  .example-select {
+    display: flex;
+    flex-direction: column;
+    padding: 0.25em;
+  }
+
+  .example-select select {
+    border: 1px solid #202428;
+    background: #44484c;
+    color: #d4d8dc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+}
+
+<div.example-select>
+  <select on-change("handleChange")>
+    $ const activeExample = input.examples[input.selectedIndex || 0];
+
+    <for|example| of=input.examples>
+      <option selected=(example === activeExample)>${example.description}</option>
+    </for>
+  </select>
+</div>

@@ -1,0 +1,41 @@
+.file-explorer .file > span  {
+    position: relative;
+}
+
+.file-explorer .file > span:before {
+    width: 20px;
+    height: 16px;
+    background-size: contain;
+    display: inline-block;
+    line-height: 16px;
+    vertical-align: middle;
+    content: '';
+    background-repeat: no-repeat;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.file-explorer .file.marko > span:before {
+    background-image: url('./marko.svg');
+}
+
+.file-explorer .file.css > span:before {
+    background-size: 14px;
+    background-image: url('./css.svg');
+}
+
+.file-explorer .file.less > span:before {
+    background-size: 14px;
+    background-image: url('./css.svg');
+}
+
+.file-explorer .file.json > span:before {
+    background-size: 16px;
+    background-image: url('./json.svg');
+}
+
+.file-explorer .file.js > span:before {
+    background-size: 16px;
+    background-image: url('./js.svg');
+}

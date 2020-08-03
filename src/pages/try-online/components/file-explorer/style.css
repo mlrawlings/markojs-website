@@ -1,0 +1,39 @@
+.file-explorer {
+  font-size: .8em;
+  background-color: #21252b;
+  user-select: none;
+}
+
+.file-explorer li {
+  list-style: none;
+  list-style-image: none;
+  list-style-type: none;
+  line-height: 1.7em;
+  color: #9da5b4;
+  cursor: default;
+}
+
+.file-explorer li:hover,
+.file-explorer li.selected {
+  color: #adb5c4;
+}
+
+.file-explorer li:before{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.7em;
+}
+
+.file-explorer li.selected:before{
+  background-color: #3a3f4b;
+}
+
+.file-explorer li.selected > span{
+  color: #d7dae0;
+}
+
+.file-explorer ul {
+  padding-left: 1.5em;
+}

@@ -1,0 +1,250 @@
+import path from "path"
+import pEvent from "p-event"
+import fs, { vol } from "memfs"
+import { load } from "../../../../utils/monaco"
+import getExamples from "./examples.macro"
+
+static const LOAD_GIST_EXAMPLE = {
+  description: "Load Github Gist"
+};
+
+static let EXAMPLES = getExamples().concat(LOAD_GIST_EXAMPLE);
+
+static export const loading = load();
+
+static function getPreferredPreview(dirEntries, filePath) {
+  if (dirEntries.includes("demo.marko")) {
+    return path.join(filePath, "..", "demo.marko");
+  }
+
+  const relatedFile = filePath.replace(
+    /^(?:(.+)\.)?(?:marko|component\.js|style\.css)$/,
+    (_, name = "index") => `${name}.marko`
+  );
+  if (path.extname(relatedFile) === ".marko") {
+    return relatedFile;
+  }
+
+  if (dirEntries.includes("index.marko")) {
+    return path.join(filePath, "..", "index.marko");
+  }
+}
+
+static function getDefaultFile(files) {
+  return (
+    path.sep +
+    (files["demo.marko"]
+      ? "demo.marko"
+      : files["index.marko"]
+      ? "index.marko"
+      : files.pages
+      ? `pages${getDefaultFile(files.pages)}`
+      : Object.keys(files)[0])
+  );
+}
+
+class {
+  onCreate() {
+    this.state = {
+      selectedExampleIndex: undefined,
+      selectedFilePath: undefined
+    };
+
+    this.syncUrlAndState();
+  }
+
+  syncUrlAndState() {
+    let selectedExampleIndex = -1;
+    const { searchParams } = new URL(location);
+    const description = searchParams.get("example");
+    const gistId = searchParams.get("gist");
+
+    if (gistId) {
+      selectedExampleIndex = EXAMPLES.findIndex(example => example.gistId === gistId);
+
+      if (selectedExampleIndex === -1) {
+        this.loadGist(gistId);
+        return;
+      }
+    } else if (description) {
+      selectedExampleIndex = EXAMPLES.findIndex(example => example.description === description);
+    }
+
+    if (selectedExampleIndex === -1) {
+      selectedExampleIndex = 0;
+    }
+
+    const { files } = EXAMPLES[selectedExampleIndex];
+    let selectedFilePath = searchParams.get("file");
+    vol.fromNestedJSON(files);
+
+    if (!selectedFilePath || !fs.existsSync(selectedFilePath)) {
+      selectedFilePath = getDefaultFile(files);
+    }
+
+    this.state.selectedExampleIndex = selectedExampleIndex;
+    this.state.selectedFilePath = selectedFilePath;
+  }
+
+  handleExampleChange(newExampleIndex, el) {
+    const newExample = EXAMPLES[newExampleIndex];
+
+    if (newExample === LOAD_GIST_EXAMPLE) {
+      let gistId = prompt("Enter a github gist ID to load");
+      const finalPathPartIndex = gistId && gistId.lastIndexOf("/") + 1;
+
+      if (finalPathPartIndex) {
+        gistId = gistId.slice(finalPathPartIndex);
+      }
+
+      if (gistId) {
+        this.loadGist(gistId);
+      }
+
+      el.selectedIndex = this.state.selectedExampleIndex;
+      return;
+    }
+
+    const newFiles = newExample.files;
+    this.state.selectedExampleIndex = newExampleIndex;
+    this.handleFilePathChange(getDefaultFile(newFiles));
+    vol.fromNestedJSON(newFiles);
+  }
+
+  handleFilePathChange(newFilePath) {
+    const { selectedExampleIndex = 0 } = this.state;
+    const selectedExample = EXAMPLES[selectedExampleIndex];
+    const url = new URL(location);
+    this.state.selectedFilePath = newFilePath;
+
+    url.searchParams.delete("example");
+    url.searchParams.delete("gist");
+
+    if (selectedExample.gistId) {
+      url.searchParams.set("gist", selectedExample.gistId);
+    } else if (selectedExampleIndex !== 0) {
+      url.searchParams.set("example", selectedExample.description);
+    }
+
+    if (newFilePath === getDefaultFile(selectedExample.files)) {
+      url.searchParams.delete("file");
+    } else {
+      url.searchParams.set("file", newFilePath);
+    }
+
+    history.pushState(null, "", url.toString());
+  }
+
+  handleFileContentChange(content) {
+    fs.writeFileSync(this.state.selectedFilePath, content);
+    this.getComponent("preview").forceUpdate();
+    this.forceUpdate();
+  }
+
+  handleSyntaxError(error) {
+    this.getComponent("editor").showError(error);
+  }
+
+  async handleFocusFile({ file, line, column }) {
+    if (file !== this.state.selectedFilePath) {
+      this.handleFilePathChange(file);
+      await pEvent(this, "update");
+    }
+
+    this.getComponent("editor").focus(line, column);
+  }
+
+  async loadGist(gistId) {
+    let result;
+    try {
+      result = await (
+        await fetch(`https://api.github.com/gists/${gistId}`)
+      ).json();
+
+      if (!result.files) {
+        throw new Error("No files found in Gist response");
+      }
+    } catch (err) {
+      console.error("Unable to load gist", err);
+      alert("Unable to load gist.");
+      return;
+    }
+
+    const { description, files } = result;
+    const example = {
+      gistId,
+      description: `Gist: ${description || gistId}`,
+      files: {}
+    };
+
+    for (const fileName in files) {
+      example.files[fileName] = files[fileName].content;
+    }
+
+    const newExampleIndex = EXAMPLES.length - 1;
+    EXAMPLES.push(example, EXAMPLES.pop());
+    EXAMPLES = EXAMPLES.slice(); 
+    this.handleExampleChange(newExampleIndex);
+  }
+}
+
+<div.try-online>
+  <div.workspace>
+    $ const example = EXAMPLES[state.selectedExampleIndex];
+
+    <if(example)>
+      $ const selectedFileContent = fs.readFileSync(state.selectedFilePath, "utf-8");
+      $ const selectedFileExtension = path.extname(state.selectedFilePath).slice(1);
+      $ const selectedDirEntries = fs.readdirSync(path.dirname(state.selectedFilePath));
+      $ const previewFilePath = getPreferredPreview(
+        selectedDirEntries,
+        state.selectedFilePath
+      );
+      <div.file-explorer-container>
+        <example-select
+          on-change("handleExampleChange")
+          selected-index=state.selectedExampleIndex
+          examples=EXAMPLES/>
+        <file-explorer
+          on-change("handleFilePathChange")
+          selected-path=state.selectedFilePath
+          files=example.files/>
+      </div>
+      <div.divider/>
+      <div.editors-container>
+        <div.inputs-container>
+          <div.divider/>
+          <pane on-change("handleFilePathChange") selected-value=state.selectedFilePath>
+            <for|entry| of=selectedDirEntries>
+              $ const filePath = path.join(state.selectedFilePath, "..", entry);
+              <if(fs.statSync(filePath).isFile())>
+                <@tab value=filePath>${entry}</@tab>
+              </if>
+            </for>
+            <@body>
+              <editor
+                key="editor"
+                on-change(previewFilePath && "handleFileContentChange")
+                language=selectedFileExtension
+                value=selectedFileContent/>
+            </@body>
+          </pane>
+          <div.divider/>
+        </div>
+        <if(previewFilePath)>
+          <div.divider/>
+          <div.outputs-container>
+            <div.divider/>
+            <preview
+              key="preview"
+              on-syntax-error("handleSyntaxError")
+              on-focus-file("handleFocusFile")
+              preview-file-path=previewFilePath
+              selected-file-path=state.selectedFilePath/>
+            <div.divider/>
+          </div>
+        </if>
+      </div>
+    </if>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+class {
+  onCreate() {
+    this.state = {
+      component: undefined,
+      show: false
+    };
+  }
+  async onMount() {
+    const rootComponent = typeof window === "object" && await import("../root");
+    await rootComponent.loading;
+    this.state.component = rootComponent;
+    this.checkIfLargeEnough();
+  }
+  checkIfLargeEnough() {
+    var windowSize = document.body.innerWidth || document.body.clientWidth;
+    this.state.show = windowSize > 1000;
+  }
+}
+
+<if(state.component)>
+  <if(state.show)>
+    <${state.component} examples=input.examples/>
+  </if>
+  <else>
+    <subscribe to=window on-resize("checkIfLargeEnough")/>
+    <div.too-small>
+      <div.overlay>
+        <h1>Screen width too small</h1>
+        <h2>Please increase the window size or rotate to load.</h2>
+        <h3>If you are on a mobile phone, please open on a desktop</h3>
+        <h4>
+          <a href="/docs/getting-started/">View Docs</a>
+        </h4>
+      </div>
+    </div>
+  </else>
+</if>
+<else>
+  <div.try-loader-container>
+    <div.try-loader>
+      <span.green-loader/>
+    </div>
+  </div>
+</else>

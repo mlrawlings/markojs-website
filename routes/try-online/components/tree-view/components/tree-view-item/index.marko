@@ -1,9 +1,0 @@
-$ var file = input.file;
-$ var expanded = input.expanded;
-
-<if(file.isDirectory())>
-    <tree-view-directory dir=file key=file.path expanded=expanded/>
-</if>
-<else>
-    <tree-view-file file=file key=file.path/>
-</else>

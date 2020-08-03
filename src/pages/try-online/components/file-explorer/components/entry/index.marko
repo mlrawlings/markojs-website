@@ -1,0 +1,6 @@
+<if(typeof input.content === "string")>
+  <file ...input on-change("emit", "change")/>
+</if>
+<else>
+  <dir ...input/>
+</else>

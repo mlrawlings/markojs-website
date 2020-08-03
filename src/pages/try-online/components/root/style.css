@@ -1,0 +1,55 @@
+.try-online {
+  display: flex;
+  flex:1;
+  width: 100%;
+  text-align: left;
+}
+
+.workspace {
+  display: flex;
+  flex:1;
+  flex-direction: row;
+  width: 100%;
+  background-color: #21252b;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 3px;
+}
+
+.file-explorer-container {
+  display: flex;
+  height: 100%;
+  flex-basis: 250px;
+  flex-direction: column;
+  position: relative;
+}
+
+.editors-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.inputs-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 55%;
+}
+
+.inputs-container:only-child {
+  flex-basis: 100%;
+}
+
+.divider {
+  display: flex;
+  flex-basis: 3px;
+}
+
+.outputs-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+

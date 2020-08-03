@@ -1,0 +1,26 @@
+class {
+  handleTabClick(value) {
+    if (value !== this.input.selectedValue) {
+      this.emit("change", value);
+    }
+  }
+}
+
+<div.pane class=input.class>
+  <div.tabs>
+    <ul.tabs>
+      <for|tab, i| of=input.tabs>
+        <li.tab on-click("handleTabClick", tab.value) class={
+          selected: tab.value === input.selectedValue
+        }>
+          <span.tab-label>
+            <${tab}/>
+          </span>
+        </li>
+      </for>
+    </ul>
+  </div>
+  <div.pane-body>
+    <${input.body}/>
+  </div>
+</div>

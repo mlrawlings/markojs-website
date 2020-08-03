@@ -1,0 +1,70 @@
+.pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.pane > div.tabs {
+  display: flex;
+  flex-basis: 2em;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pane > .pane-body {
+  position: relative;
+  background-color: #282c34;
+  border: 1px solid #16191d;
+  margin-top: -1px;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.pane ul.tabs {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.pane li.tab {
+  position: relative;
+  background-color: #21252b;
+  top: 0;
+  max-width: 22em;
+  min-width: 7em;
+  height: 2em;
+  font-size: inherit;
+  color: rgba(157, 165, 180, 0.6);
+  line-height: 2em;
+  text-align: center;
+  margin: 0;
+  background-clip: content-box;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  border: 1px solid transparent;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  user-select:none;
+  white-space: nowrap;
+}
+
+.pane li.tab.selected {
+  background-color: #282c34;
+  background-image: linear-gradient(to bottom, #383c44 0%, #282c34 8%);
+  border: 1px solid #16191d;
+  border-bottom: 1px solid #282c34;
+  border-left: 2px solid #598cef;
+  color: #d7dae0;
+}
+
+.pane .tab-label {
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 0.75em;
+}

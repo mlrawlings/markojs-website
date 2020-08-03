@@ -1,20 +1,19 @@
 <img src="https://user-images.githubusercontent.com/1958812/62652399-2a314c80-b910-11e9-883b-196686708979.png"/>
 
-
-
 ## Running markojs.com Locally
 
 ``` bash
-git clone https://github.com/marko-js/markojs-website.git
-cd markojs-website
+git clone https://github.com/marko-js/website.git
+cd website
 npm install
-npm start
+npm run dev
 ```
 
 ## Serving a static build
 
 ```bash
-npm run serve-static
+npm run build
+npx http-server ./build
 ```
 
 ## Publishing

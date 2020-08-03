@@ -1,0 +1,271 @@
+import path from "path"
+import { format } from "prettier/standalone"
+import prettierHTML from "prettier/parser-html"
+import prettierBabel from "prettier/parser-babel"
+import highlight from "../../../../utils/highlight"
+import { bundle, compile } from "../../../../utils/compiler"
+
+static const SYNTAX_ERROR_REG = /(.+?)(?:\((\d+),(\d+)\)|:(\d+)): (.*(?=\s+\d+ | ))/;
+
+static const TABS = [
+  {
+    name: "Preview",
+    output: "vdom"
+  },
+  {
+    name: "HTML",
+    output: "vdom"
+  },
+  {
+    name: "Compiled (VDOM)",
+    output: "vdom"
+  },
+  {
+    name: "Compiled (HTML)",
+    output: "html"
+  }
+];
+
+class {
+  onCreate(input) {
+    this.state = {
+      tabIndex: 0,
+      error: null,
+      result: null
+    };
+
+    this.sync = this.sync.bind(this);
+  }
+
+  onInput(input) {
+    this.state.error = null;
+    if (
+      path.extname(input.selectedFilePath) !== ".marko" &&
+      this.state.tabIndex >= 2
+    ) {
+      this.state.tabIndex = 0;
+    }
+  }
+
+  onMount() {
+    this.sync();
+  }
+
+  onUpdate() {
+    this.cleanup();
+    this.sync();
+  }
+
+  onDestroy() {
+    this.cleanup();
+  }
+
+  cleanup() {
+    clearTimeout(this.syncTimeout);
+  }
+
+  handleTabChange(newIndex) {
+    this.state.tabIndex = newIndex;
+    this.state.error = null;
+  }
+
+  sync() {
+    if (this.state.error) {
+      return;
+    }
+
+    this.syncTimeout = setTimeout(async () => {
+      const { name, output } = TABS[this.state.tabIndex];
+      const markoOptions = { output };
+
+      try {
+        if (!name.startsWith("Compiled")) {
+          const bundleResult = await bundle({
+            entry: this.input.previewFilePath,
+            markoOptions
+          });
+          const template = (0, eval)(bundleResult.js);
+
+          const renderResult = template.renderSync({});
+
+          if (name === "Preview") {
+            const outputEl = this.getEl("output");
+            let shadowRoot = outputEl.shadowRoot;
+
+            if (shadowRoot) {
+              while (shadowRoot.firstChild) {
+                shadowRoot.removeChild(shadowRoot.firstChild);
+              }
+            } else {
+              shadowRoot = outputEl.attachShadow({ mode: "open" });
+            }
+
+            const style = document.createElement("style");
+            style.innerHTML = bundleResult.css;
+            shadowRoot.appendChild(style);
+            renderResult.appendTo(shadowRoot);
+          } else {
+            this.state.result = highlight(
+              "html",
+              format(String(renderResult), {
+                parser: "html",
+                plugins: [prettierHTML]
+              })
+            );
+          }
+        } else {
+          this.state.result = highlight(
+            "javascript",
+            format(
+              await compile({
+                entry: this.input.selectedFilePath,
+                markoOptions
+              }),
+              {
+                parser: "babel",
+                plugins: [prettierBabel]
+              }
+            )
+          );
+        }
+
+        this.state.error = null;
+      } catch (err) {
+        this.state.result = null;
+
+        const errorWithLocationMatch =
+          err.name === "SyntaxError" && SYNTAX_ERROR_REG.exec(err.message);
+        if (errorWithLocationMatch) {
+          let [match, file, line, column, lineOnly, message] = errorWithLocationMatch;
+          if (lineOnly) {
+            line = lineOnly;
+            column = 0;
+          }
+
+          file = path.resolve(file);
+          line = parseInt(line, 10);
+          column = parseInt(column, 10) + 1;
+          const codeFrame = err.message.slice(match.length);
+          this.state.error = {
+            name: err.name,
+            file,
+            message,
+            line,
+            column,
+            codeFrame
+          };
+
+          if (file === this.input.selectedFilePath) {
+            this.emit("syntax-error", this.state.error);
+          }
+        } else {
+          this.state.error = err;
+          setTimeout(() => {
+            throw err;
+          });
+        }
+      }
+    }, 150);
+  }
+}
+
+style {
+  .preview-error,
+  .preview-output,
+  .preview-compiled {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding-top: 8px;
+    padding-left: 16px;
+  }
+
+  .preview-output {
+    padding-right: 16px;
+  }
+
+  .preview-output,
+  .preview-error {
+    background: #fff;
+  }
+  .preview-compiled pre.highlighted {
+    padding: 0;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-weight: normal;
+    font-size: 12px;
+    font-feature-settings: "liga" 0, "calt" 0;
+    line-height: 18px;
+    letter-spacing: 0px;
+  }
+
+  .preview-error .error-name {
+    background: #f92672;
+    color: #f8f8f0;
+    margin-left: -16px;
+    margin-top: -8px;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .preview-error a {
+    color: #66d9ef;
+    font-weight: normal;
+  }
+
+  .preview-error pre {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .preview-error small {
+    font-style: italic;
+    font-size: 0.75 rem;
+  }
+}
+
+<pane selected-value=state.tabIndex on-change("handleTabChange")>
+  <for|tab, i| of=TABS>
+    <if(
+      path.extname(input.selectedFilePath) === ".marko" ||
+      !tab.name.startsWith("Compiled")
+    )>
+      <@tab value=i selected=(i === state.tabIndex)>${tab.name}</@tab>
+    </if>
+  </for>
+  <@body>
+    <if(state.error)>
+      <div.preview-error>
+        <h1.error-name>
+          ${state.error.name}<if(state.error.file)>
+            &nbsp;:&nbsp;
+            <a on-click("emit", "focus-file", state.error)>
+              ${state.error.file.slice(1)}(${state.error.line},${state.error.column})
+            </a>
+          </if>
+        </h1>
+        <div>${state.error.message}</div>
+        <if(input.selectedFilePath !== state.error.file)>
+          <if(state.error.codeFrame)>
+            <pre><code>${state.error.codeFrame}</code></pre>
+          </if>
+          <else>
+            <small>Open the dev tools to view the full error.</small>
+          </else>
+        </if>
+      </div>
+    </if>
+    <else>
+      <if(state.tabIndex === 0)>
+        <div.preview-output key="output" no-update/>
+      </if>
+      <else>
+        <div.preview-compiled>$!{state.result}</div>
+      </else>
+    </else>
+  </@body>
+</pane>

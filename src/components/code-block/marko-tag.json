@@ -1,0 +1,11 @@
+{
+    "parse-options": {
+        "state": "static-text",
+        "preserveWhitespace": true
+    },
+    "transformer":"./transformer",
+    "@file": "string",
+    "@lang": "string",
+    "@lines": "string",
+    "@no-switch": "boolean"
+}
