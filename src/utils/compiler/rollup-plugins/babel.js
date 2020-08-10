@@ -1,3 +1,4 @@
+import fs from "memfs";
 import path from "path";
 import MagicString from "magic-string";
 import { transform } from "@babel/core";
@@ -36,7 +37,7 @@ export default ({ output }) => {
       ];
 
       if (ext === ".marko") {
-        plugins.push([markoPlugin, { output, translator }]);
+        plugins.push([markoPlugin, { output, translator, fileSystem: fs }]);
       } else if (ext === ".js") {
         plugins.push(commonjsPlugin);
       } else {

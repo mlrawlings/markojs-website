@@ -16,7 +16,7 @@ require("monaco-editor/esm/vs/editor/contrib/wordOperations/wordOperations");
 require("monaco-editor/esm/vs/editor/contrib/hover/hover");
 
 const { languages, editor } = require("monaco-editor/esm/vs/editor/editor.api");
-const EditorWorker = require("monaco-editor/esm/vs/editor/editor.worker");
+const EditorWorker = require("monaco-editor/esm/vs/editor/editor.worker").default;
 const { load, getColorMap, getTokenizer, tmTheme, syntaxes } = require("./language-registry");
 const langToScope = require("./lang-to-scope");
 let loaded = false;
