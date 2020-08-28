@@ -142,7 +142,11 @@
               "begin": "\\s*(=)\\s*",
               "beginCaptures": {
                 "1": {
-                  "name": "punctuation.separator.key-value.marko"
+                  "patterns": [
+                    {
+                      "include": "source.js"
+                    }
+                  ]
                 }
               },
               "comment": "Attribute value",
@@ -748,7 +752,11 @@
           "begin": "\\s*(=)\\s*",
           "beginCaptures": {
             "1": {
-              "name": "punctuation.separator.key-value.marko"
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
             }
           },
           "comment": "Default attribute value",

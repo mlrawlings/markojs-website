@@ -57,6 +57,13 @@
       }
     },
     {
+      "name": "Assignment",
+      "scope": "keyword.operator.assignment",
+      "settings": {
+        "foreground": "#FFFFFF"
+      }
+    },
+    {
       "name": "Storage",
       "scope": "storage",
       "settings": {
