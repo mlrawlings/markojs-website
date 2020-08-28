@@ -227,6 +227,12 @@
       "settings": {
         "foreground": "#F83333"
       }
+    },
+    {
+      "scope": "punctuation.definition.template-expression",
+      "settings": {
+        "foreground": "#66D9EF"
+      }
     }
   ],
   "uuid": "D8D5E82E-3D5B-46B5-B38E-8C841C21347D",

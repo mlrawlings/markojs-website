@@ -6,7 +6,7 @@ module.exports = lang => {
   } else if (lang === "html") {
     return "text.html.basic";
   } else if (lang === "marko") {
-    return "source.marko";
+    return "text.marko";
   } else if (lang === "bash") {
     return "source.shell";
   } else {

@@ -2,398 +2,45 @@
   "fileTypes": [
     "marko"
   ],
+  "injections": {
+    "L:^text.marko meta.embedded.js": {
+      "patterns": [
+        {
+          "match": "(?<=\\b)(input|state|out|component)(?=\\b)",
+          "name": "variable.other.constant.object.js"
+        }
+      ]
+    }
+  },
   "name": "Marko",
   "patterns": [
     {
-      "include": "#scriptlet"
-    },
-    {
-      "include": "#special-js-tags"
-    },
-    {
-      "include": "#js-code-block"
-    },
-    {
-      "include": "#component-style"
-    },
-    {
-      "include": "#comment-concise-line"
-    },
-    {
-      "include": "#comment-concise-block"
-    },
-    {
-      "include": "#comment-html"
-    },
-    {
-      "include": "#comment-html-tag"
-    },
-    {
-      "include": "#html-block-concise"
-    },
-    {
-      "include": "#html-line-concise"
-    },
-    {
-      "include": "#cdata"
-    },
-    {
-      "include": "#doctype"
-    },
-    {
-      "include": "#tag-script-concise"
-    },
-    {
-      "include": "#tag-style-concise"
-    },
-    {
-      "include": "#tag-concise"
-    },
-    {
-      "include": "#tag-html"
-    },
-    {
-      "include": "#placeholder-patterns"
-    }
-  ],
-  "repository": {
-    "attr-assignment-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "(?:\\s+|[,])(?:(key)|([a-zA-Z][a-zA-Z]*)|([_a-zA-Z0-9][a-zA-Z0-9:_.-]*))\\s*([=])\\s*",
+      "begin": "^\\s*(style)\\s+(\\{)",
       "beginCaptures": {
         "1": {
-          "name": "support.function.marko-attribute"
+          "name": "storage.type.marko.css"
         },
         "2": {
-          "name": "entity.other.attribute-name.html"
-        },
-        "3": {
-          "name": "entity.other.attribute-name.html"
-        },
-        "4": {
-          "name": "punctuation.separator.key-value.html"
+          "name": "punctuation.section.scope.begin.marko.css"
         }
       },
-      "contentName": "source.js",
-      "end": "(?=([,;]|\\s|$))",
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "attr-assignment-html": {
-      "applyEndPatternLast": 1,
-      "begin": "(?:\\s+|[,])(?:(key)|([a-zA-Z][a-zA-Z]*)|([_a-zA-Z0-9][a-zA-Z0-9:_.-]*))\\s*([=])\\s*",
-      "beginCaptures": {
-        "1": {
-          "name": "support.function.marko-attribute"
-        },
-        "2": {
-          "name": "entity.other.attribute-name.html"
-        },
-        "3": {
-          "name": "entity.other.attribute-name.html"
-        },
-        "4": {
-          "name": "punctuation.separator.key-value.html"
-        }
-      },
-      "end": "(?=[,;]|\\s|/>|>)",
-      "patterns": [
-        {
-          "include": "#expression-no-gt"
-        }
-      ]
-    },
-    "attr-js-block": {
-      "applyEndPatternLast": 1,
-      "begin": "\\s\\{",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.section.scope.begin.js"
-        }
-      },
-      "contentName": "source.js",
+      "comment": "CSS style block, eg: style { color: green }",
+      "contentName": "source.css",
       "end": "\\}",
       "endCaptures": {
         "0": {
-          "name": "punctuation.section.scope.end.js"
+          "name": "punctuation.section.scope.end.marko.css"
         }
       },
+      "name": "meta.embedded.css",
       "patterns": [
         {
-          "include": "#js"
+          "include": "source.css"
         }
       ]
     },
-    "attr-no-value": {
-      "captures": {
-        "1": {
-          "name": "entity.other.attribute-name.html"
-        },
-        "2": {
-          "name": "entity.other.attribute-name.html"
-        },
-        "3": {
-          "name": "entity.other.attribute-name.html"
-        }
-      },
-      "match": "\\s+(?:([a-zA-Z][a-zA-Z]*)|(data-[a-zA-Z0-9-]*)|([a-zA-Z0-9][a-zA-Z0-9:_.-]+))(?=\\s|/>|>|$)"
-    },
-    "attr-semicolon": {
-      "applyEndPatternLast": 1,
-      "begin": "([;])",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.terminator.statement.js"
-        }
-      },
-      "end": "(?=\\n)",
-      "patterns": [
-        {
-          "include": "#comment-line"
-        },
-        {
-          "include": "#comment-block"
-        }
-      ]
-    },
-    "attr-special": {
-      "captures": {
-        "1": {
-          "name": "support.function.marko-attribute"
-        }
-      },
-      "match": "\\s+(else)\\b"
-    },
-    "attr-spread-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "(?:\\s+|[,])(\\.\\.\\.)\\s*",
-      "beginCaptures": {
-        "5": {
-          "name": "punctuation.separator.key-value.html"
-        }
-      },
-      "contentName": "source.js",
-      "end": "(?=([,;]|\\s|$))",
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "attr-spread-html": {
-      "applyEndPatternLast": 1,
-      "begin": "(?:\\s+|[,])(\\.\\.\\.)\\s*",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.separator.key-value.html"
-        }
-      },
-      "contentName": "source.js",
-      "end": "(?=[,;]|\\s|/>|>)",
-      "patterns": [
-        {
-          "include": "#expression-no-gt"
-        }
-      ]
-    },
-    "attr-stuff-concise": {
-      "patterns": [
-        {
-          "include": "#comment-line"
-        },
-        {
-          "include": "#comment-block"
-        },
-        {
-          "begin": "\\s[\\[]",
-          "end": "[\\]]",
-          "patterns": [
-            {
-              "include": "#attr-stuff-concise"
-            }
-          ]
-        },
-        {
-          "begin": "[,]\\s*$",
-          "end": "(?=\\s)"
-        },
-        {
-          "include": "#attr-with-arg"
-        },
-        {
-          "include": "#attr-assignment-concise"
-        },
-        {
-          "include": "#attr-spread-concise"
-        },
-        {
-          "include": "#attr-no-value"
-        },
-        {
-          "include": "#placeholder"
-        },
-        {
-          "include": "#attr-js-block"
-        },
-        {
-          "include": "#expression"
-        },
-        {
-          "include": "#attr-semicolon"
-        }
-      ]
-    },
-    "attr-stuff-html": {
-      "patterns": [
-        {
-          "include": "#comment-block"
-        },
-        {
-          "include": "#attr-special"
-        },
-        {
-          "include": "#attr-with-arg"
-        },
-        {
-          "include": "#attr-assignment-html"
-        },
-        {
-          "include": "#attr-spread-html"
-        },
-        {
-          "include": "#attr-no-value"
-        },
-        {
-          "include": "#placeholder"
-        },
-        {
-          "include": "#attr-js-block"
-        },
-        {
-          "include": "#expression-no-gt"
-        },
-        {
-          "include": "#attr-semicolon"
-        }
-      ]
-    },
-    "attr-with-arg": {
-      "applyEndPatternLast": 1,
-      "begin": "\\s+([_a-zA-Z0-9][a-zA-Z0-9:_.-]+)(\\()",
-      "beginCaptures": {
-        "1": {
-          "name": "support.function.marko-attribute"
-        },
-        "2": {
-          "name": "meta.brace.round.js"
-        }
-      },
-      "contentName": "source.js",
-      "end": "\\)",
-      "endCaptures": {
-        "1": {
-          "name": "meta.brace.round.js"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "cdata": {
-      "begin": "<!\\[CDATA\\[",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.begin.xml"
-        }
-      },
-      "end": "]]>",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.end.xml"
-        }
-      },
-      "name": "string.unquoted.cdata.xml"
-    },
-    "comment-block": {
-      "begin": "/\\*",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.definition.comment.begin.js"
-        }
-      },
-      "end": "\\*/",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.comment.end.js"
-        }
-      },
-      "name": "comment.block.js"
-    },
-    "comment-concise-block": {
-      "begin": "^(\\s*)/\\*",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.definition.comment.begin.js"
-        }
-      },
-      "end": "\\*/.*",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.comment.end.js"
-        }
-      },
-      "name": "comment.block.js"
-    },
-    "comment-concise-line": {
-      "begin": "^(\\s*)//",
-      "comment": "Single line comment (concise)",
-      "end": "$",
-      "name": "comment.line.double-slash.marko"
-    },
-    "comment-html": {
-      "begin": "\\s*<!--",
-      "captures": {
-        "0": {
-          "name": "punctuation.definition.comment.html"
-        }
-      },
-      "end": "-->",
-      "name": "comment.block.html"
-    },
-    "comment-html-tag": {
-      "begin": "\\s*<html-comment>",
-      "captures": {
-        "0": {
-          "name": "punctuation.definition.comment.html"
-        }
-      },
-      "end": "</html-comment>",
-      "name": "comment.block.html"
-    },
-    "comment-line": {
-      "begin": "(//)",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.comment.js"
-        }
-      },
-      "end": "(?=\\n)",
-      "name": "comment.line.double-slash.js"
-    },
-    "component-style": {
-      "patterns": [
-        {
-          "include": "#component-style-css"
-        }
-      ]
-    },
-    "component-style-css": {
-      "begin": "^(style)(?:\\.([a-z]+))?\\s+(\\{)",
+    {
+      "begin": "^\\s*(style)\\.(less)\\s+(\\{)",
       "beginCaptures": {
         "1": {
           "name": "storage.type.marko.css"
@@ -402,1290 +49,995 @@
           "name": "storage.modifier.marko.css"
         },
         "3": {
-          "name": "punctuation.section.scope.begin.css"
+          "name": "punctuation.section.scope.begin.marko.css"
         }
       },
-      "contentName": "source.css",
+      "comment": "Less style block, eg: style.less { color: green }",
+      "contentName": "source.less",
       "end": "\\}",
       "endCaptures": {
         "0": {
-          "name": "punctuation.section.scope.end.css"
+          "name": "punctuation.section.scope.end.marko.css"
         }
       },
+      "name": "meta.embedded.less",
       "patterns": [
         {
-          "include": "source.css"
+          "include": "source.css.less"
         }
       ]
     },
-    "doctype": {
-      "begin": "<!",
-      "captures": {
-        "0": {
-          "name": "punctuation.definition.marko-tag.html"
-        }
-      },
-      "end": ">",
-      "name": "meta.tag.sgml.html",
-      "patterns": [
-        {
-          "begin": "(?i:DOCTYPE)",
-          "captures": {
-            "1": {
-              "name": "entity.name.tag.doctype.html"
-            }
-          },
-          "end": "(?=>)",
-          "name": "meta.tag.sgml.doctype.html",
-          "patterns": [
-            {
-              "match": "\"[^\">]*\"",
-              "name": "string.quoted.double.doctype.identifiers-and-DTDs.html"
-            }
-          ]
-        }
-      ]
-    },
-    "expression": {
-      "comment": "A JavaScript expression",
-      "patterns": [
-        {
-          "include": "#comment-line"
-        },
-        {
-          "include": "#comment-block"
-        },
-        {
-          "include": "#expression-common"
-        },
-        {
-          "include": "#expression-operator-gt"
-        }
-      ]
-    },
-    "expression-common": {
-      "comment": "A JavaScript expression",
-      "patterns": [
-        {
-          "include": "#expression-string-single"
-        },
-        {
-          "include": "#expression-string-double"
-        },
-        {
-          "include": "#expression-string-template"
-        },
-        {
-          "include": "#expression-group-parens"
-        },
-        {
-          "include": "#expression-group-brackets"
-        },
-        {
-          "include": "#expression-group-braces"
-        },
-        {
-          "include": "#expression-constant"
-        },
-        {
-          "include": "#expression-hex"
-        },
-        {
-          "include": "#expression-numeric"
-        },
-        {
-          "include": "#expression-operator-unary"
-        },
-        {
-          "include": "#expression-operator-binary"
-        },
-        {
-          "include": "#expression-operator-special"
-        },
-        {
-          "match": "[.]([\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*)\\b"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "entity.name.type"
-            },
-            "2": {
-              "name": "entity.name.type"
-            }
-          },
-          "match": "\\b(out)[.](global)\\b"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "variable.language.js"
-            },
-            "2": {
-              "name": "entity.name.type"
-            }
-          },
-          "match": "\\b(this)[.](input|state)\\b"
-        },
-        {
-          "match": "\\b(input|state|component|JSON|out)\\b",
-          "name": "entity.name.type"
-        },
-        {
-          "match": "\\b(let|var|const)\\b",
-          "name": "storage.type.var.js"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "entity.name.type"
-            },
-            "2": {
-              "name": "entity.name.type"
-            }
-          },
-          "match": "\\b(require)[.](resolve)\\b"
-        },
-        {
-          "match": "\\b(console|JSON|event|window|setTimeout|setInterval|require)\\b",
-          "name": "entity.name.type"
-        },
-        {
-          "match": "\\b(this|arguments)\\b",
-          "name": "variable.language.js"
-        },
-        {
-          "include": "#expression-special-class"
-        }
-      ]
-    },
-    "expression-constant": {
-      "captures": {
+    {
+      "begin": "^\\s*(style)\\.(scss)\\s+(\\{)",
+      "beginCaptures": {
         "1": {
-          "name": "constant.language.boolean.true.js"
+          "name": "storage.type.marko.css"
         },
         "2": {
-          "name": "constant.language.boolean.false.js"
+          "name": "storage.modifier.marko.css"
         },
         "3": {
-          "name": "constant.language.infinity.js"
-        },
-        "4": {
-          "name": "constant.language.nan.js"
-        },
-        "5": {
-          "name": "constant.language.null.js"
-        },
-        "6": {
-          "name": "constant.language.undefined.js"
+          "name": "punctuation.section.scope.begin.marko.css"
         }
       },
-      "match": "(true)|(false)|(Infinity)|(NaN)|(null)|(undefined)"
-    },
-    "expression-group-braces": {
-      "applyEndPatternLast": 1,
-      "begin": "\\{",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.section.scope.begin.js"
-        }
-      },
-      "contentName": "source.js",
+      "comment": "SCSS style block, eg: style.scss { color: green }",
+      "contentName": "source.scss",
       "end": "\\}",
       "endCaptures": {
         "0": {
-          "name": "punctuation.section.scope.end.js"
+          "name": "punctuation.section.scope.end.marko.css"
         }
       },
+      "name": "meta.embedded.scss",
       "patterns": [
         {
-          "include": "#js"
+          "include": "source.css.scss"
         }
       ]
     },
-    "expression-group-brackets": {
-      "applyEndPatternLast": 1,
-      "begin": "\\[",
+    {
+      "begin": "^\\s*(?:(static )|(?=(?:class|import|export) ))",
       "beginCaptures": {
-        "0": {
-          "name": "meta.brace.square.js"
+        "1": {
+          "name": "keyword.control.static.marko"
         }
       },
+      "comment": "Top level blocks parsed as JavaScript",
       "contentName": "source.js",
-      "end": "\\]",
-      "endCaptures": {
-        "0": {
-          "name": "meta.brace.square.js"
-        }
-      },
+      "end": "(?=\\n|$)",
+      "name": "meta.embedded.js",
       "patterns": [
         {
-          "include": "#js"
+          "include": "#javascript-statement"
         }
       ]
     },
-    "expression-group-parens": {
-      "applyEndPatternLast": 1,
-      "begin": "\\(",
-      "beginCaptures": {
-        "0": {
-          "name": "meta.brace.round.js"
-        }
-      },
-      "contentName": "source.js",
-      "end": "\\)",
-      "endCaptures": {
-        "0": {
-          "name": "meta.brace.round.js"
-        }
-      },
+    {
+      "include": "#content-concise-mode"
+    }
+  ],
+  "repository": {
+    "attrs": {
       "patterns": [
         {
-          "include": "#js"
-        }
-      ]
-    },
-    "expression-hex": {
-      "match": "\\b0[xX][0-9A-Fa-f]+\\b",
-      "name": "constant.numeric.hex.js"
-    },
-    "expression-no-gt": {
-      "comment": "A JavaScript expression",
-      "patterns": [
-        {
-          "include": "#expression-common"
-        }
-      ]
-    },
-    "expression-numeric": {
-      "match": "(?x)\n\t\t\t\t(?<!\\w)\t\t\t\t\t\t\t\t\t# Ensure word boundry\n\t\t\t\t(?>\n\t\t\t\t\t(\n\t\t\t\t\t\t(0|[1-9][0-9]*)(\\.[0-9]*)?\t\t# 0 or 1 or 1. or 1.0\n\t\t\t\t\t  | \\.[0-9]+\t\t\t\t\t\t# .1\n\t\t\t\t\t)\n\t\t\t\t\t([eE][+-]?[0-9]+)?\t\t\t\t\t# Exponent\n\t\t\t\t)\n\t\t\t\t(?!\\w)\t\t\t\t\t\t\t\t\t# Ensure word boundry\n\t\t\t",
-      "name": "constant.numeric.js"
-    },
-    "expression-operator-binary": {
-      "captures": {
-        "2": {
-          "name": "keyword.operator.js"
-        }
-      },
-      "match": "(\\s+|\\b)(===|==|!==|!=|<=|<<|&&|\\|\\||<|\\+=|-=|\\*=|/=|%=|[=+*/%|&~^:])(\\s+|\\b)"
-    },
-    "expression-operator-gt": {
-      "captures": {
-        "2": {
-          "name": "keyword.operator.js"
-        }
-      },
-      "match": "(\\s+|\\b)(>=|>>|>)(\\s+|\\b)"
-    },
-    "expression-operator-special": {
-      "match": "(?<!\\.|\\$)\\b(delete|in|instanceof|new|typeof\\s*|void|with|from|to|step)\\b(?!\\$)",
-      "name": "keyword"
-    },
-    "expression-operator-unary": {
-      "match": "\\b(!|\\+\\+)\\b|\\b\\-\\-(?<!\\s)",
-      "name": "keyword.operator.js"
-    },
-    "expression-special-class": {
-      "match": "(?<!\\.|\\$)\\b(Array|Boolean|Date|Error|EvalError|Function|Number|Object|RangeError|ReferenceError|RegExp|String|SyntaxError|TypeError|URIError)\\b(?!\\$)",
-      "name": "support.class.js"
-    },
-    "expression-string-double": {
-      "begin": "\"",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.begin.js"
-        }
-      },
-      "end": "\"",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.end.js"
-        }
-      },
-      "name": "string.quoted.double.js",
-      "patterns": [
-        {
-          "match": "\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)",
-          "name": "constant.character.escape.js"
-        }
-      ]
-    },
-    "expression-string-escapes": {
-      "patterns": [
-        {
-          "match": "\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)",
-          "name": "constant.character.escape.js"
-        }
-      ]
-    },
-    "expression-string-single": {
-      "begin": "'",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.begin.js"
-        }
-      },
-      "end": "'",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.end.js"
-        }
-      },
-      "name": "string.quoted.single.js",
-      "patterns": [
-        {
-          "include": "#expression-string-escapes"
-        },
-        {
-          "include": "#placeholder-patterns"
-        }
-      ]
-    },
-    "expression-string-template": {
-      "begin": "`",
-      "beginCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.begin.js"
-        }
-      },
-      "end": "`",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.string.end.js"
-        }
-      },
-      "name": "string.quoted.other.template.js",
-      "patterns": [
-        {
-          "include": "#expression-string-escapes"
-        },
-        {
-          "begin": "\\$\\{",
+          "applyEndPatternLast": 1,
+          "begin": "(?:\\s+|,)(?:(key|no-update(?:-body)?(?:-if)?)|([a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*))",
           "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.embedded.begin.js"
-            }
-          },
-          "contentName": "source.js",
-          "end": "(\\})",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.embedded.end.js"
-            },
             "1": {
-              "name": "source.js"
+              "name": "support.function.attribute-name.marko"
+            },
+            "2": {
+              "name": "entity.other.attribute-name.marko"
             }
           },
-          "name": "meta.embedded.line.js",
+          "comment": "Attribute with optional value",
+          "end": "(?=.|$)",
+          "name": "meta.marko-attribute",
           "patterns": [
             {
-              "include": "#expression"
+              "include": "#javascript-args"
+            },
+            {
+              "applyEndPatternLast": 1,
+              "begin": "\\s*(=)\\s*",
+              "beginCaptures": {
+                "1": {
+                  "name": "punctuation.separator.key-value.marko"
+                }
+              },
+              "comment": "Attribute value",
+              "contentName": "source.js",
+              "end": "(?=.|$)",
+              "name": "meta.embedded.js",
+              "patterns": [
+                {
+                  "include": "#javascript-expression"
+                }
+              ]
             }
           ]
-        }
-      ]
-    },
-    "expression-ternary-if": {
-      "begin": "\\?",
-      "end": ":",
-      "name": "meta.ternary-if.js",
-      "patterns": [
+        },
         {
-          "include": "$self"
+          "applyEndPatternLast": 1,
+          "begin": "(?:\\s+|,)\\.\\.\\.",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.operator.spread.marko"
+            }
+          },
+          "comment": "A ...spread attribute",
+          "contentName": "source.js",
+          "end": "(?=.|$)",
+          "name": "meta.marko-spread-attribute",
+          "patterns": [
+            {
+              "include": "#javascript-expression"
+            }
+          ]
+        },
+        {
+          "begin": "\\s*(,(?!,))",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            }
+          },
+          "comment": "Consume any whitespace after a comma",
+          "end": "(?!\\S)"
         }
       ]
     },
-    "html-block-concise": {
-      "begin": "(\\s*)(-[-]+)\\n",
-      "captures": {
+    "concise-html-block": {
+      "begin": "\\s*(--+)\\s*$",
+      "beginCaptures": {
         "2": {
-          "name": "keyword.operator.marko"
+          "name": "punctuation.section.scope.begin.marko"
         }
       },
-      "end": "^(\\1\\2|(?!(\\1)))",
+      "comment": "--- HTML block within concise mode content. ---",
+      "end": "\\1",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.scope.end.marko"
+        }
+      },
       "name": "meta.section.marko-html-block",
       "patterns": [
         {
-          "include": "#cdata"
-        },
-        {
-          "include": "#comment-html"
-        },
-        {
-          "include": "#comment-html-tag"
-        },
-        {
-          "include": "#tag-html"
-        },
-        {
-          "include": "#js-code-line"
-        },
-        {
-          "include": "#js-code-block"
-        },
-        {
-          "include": "#placeholder-patterns"
+          "include": "#content-html-mode"
         }
       ]
     },
-    "html-line-block-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "\\s*([-][-]+)\\n",
-      "beginCaptures": {
+    "concise-html-line": {
+      "captures": {
         "1": {
-          "name": "keyword.operator.marko.blah"
-        }
-      },
-      "end": "(?!\\2)|(\\2\\1)",
-      "patterns": [
-        {
-          "include": "#cdata"
+          "name": "punctuation.section.scope.begin.marko"
         },
-        {
-          "include": "#comment-html"
-        },
-        {
-          "include": "#comment-html-tag"
-        },
-        {
-          "include": "#tag-html"
-        },
-        {
-          "include": "#placeholder-patterns"
-        }
-      ]
-    },
-    "html-line-concise": {
-      "begin": "\\s*([-][-]+)",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.operator.marko"
-        }
-      },
-      "end": "(?=\\n)",
-      "patterns": [
-        {
-          "include": "#cdata"
-        },
-        {
-          "include": "#comment-html"
-        },
-        {
-          "include": "#comment-html-tag"
-        },
-        {
-          "include": "#tag-html"
-        },
-        {
-          "include": "#placeholder-patterns"
-        }
-      ]
-    },
-    "js": {
-      "patterns": [
-        {
-          "include": "#comment-line"
-        },
-        {
-          "include": "#comment-block"
-        },
-        {
-          "applyEndPatternLast": 1,
-          "begin": "\\{",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.scope.begin.js"
-            }
-          },
-          "contentName": "source.js",
-          "end": "\\}",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.scope.end.js"
-            }
-          },
+        "2": {
           "patterns": [
             {
-              "include": "#js"
-            }
-          ]
-        },
-        {
-          "applyEndPatternLast": 1,
-          "begin": "\\(",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.scope.begin.js"
-            }
-          },
-          "contentName": "source.js",
-          "end": "\\)",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.scope.end.js"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#js"
-            }
-          ]
-        },
-        {
-          "applyEndPatternLast": 1,
-          "begin": "\\[",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.scope.begin.js"
-            }
-          },
-          "contentName": "source.js",
-          "end": "\\]",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.scope.end.js"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#js"
-            }
-          ]
-        },
-        {
-          "match": "[.]([\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*)\\b"
-        },
-        {
-          "include": "#expression"
-        },
-        {
-          "match": "\\b(break|case|catch|continue|default|do|else|export|finally|for|if|return|switch|throw|try|while|with|import|from|await|async)\\b",
-          "name": "keyword.control.js"
-        },
-        {
-          "match": "(\\s+|\\b)(\\=\\>)(\\s+|\\b)",
-          "name": "storage.type.function.arrow.js"
-        },
-        {
-          "match": "\\;",
-          "name": "punctuation.terminator.statement.js"
-        },
-        {
-          "match": "\\b(function)\\b",
-          "name": "storage.type.function.js"
-        },
-        {
-          "match": "\\b(class)\\b",
-          "name": "entity.name.type.class.js"
-        },
-        {
-          "match": "\\bextends\\b",
-          "name": "entity.other.inherited-class.js"
-        },
-        {
-          "begin": "([\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)",
-          "beginCaptures": {
-            "1": {
-              "name": "entity.name.function.js"
+              "include": "#html-comments"
             },
-            "2": {
-              "name": "punctuation.definition.parameters.begin.js"
+            {
+              "include": "#tag-html"
+            },
+            {
+              "match": "\\\\.",
+              "name": "string"
+            },
+            {
+              "include": "#placeholder"
+            },
+            {
+              "match": ".+?",
+              "name": "string"
             }
-          },
-          "end": "\\)",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.parameters.END.js"
-            }
-          },
-          "name": "meta.method.js"
+          ]
+        }
+      },
+      "comment": "-- HTML line within concise mode content. (content-html-mode w/o scriptlet)",
+      "match": "\\s*(--+)(?=\\s+\\S)(.*$)",
+      "name": "meta.section.marko-html-line"
+    },
+    "concise-script-block": {
+      "begin": "\\s*(--+)\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.section.scope.begin.marko"
+        }
+      },
+      "comment": "--- Embedded concise script content block. ---",
+      "end": "\\1",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.scope.end.marko"
+        }
+      },
+      "name": "meta.section.marko-script-block",
+      "patterns": [
+        {
+          "include": "#content-embedded-script"
         }
       ]
     },
-    "js-code-block": {
+    "concise-script-line": {
       "applyEndPatternLast": 1,
-      "begin": "^\\s*([$])\\s",
+      "begin": "\\s*(--+)",
       "beginCaptures": {
         "1": {
-          "name": "storage.modifier.embedded.js"
+          "name": "punctuation.section.scope.begin.marko"
         }
       },
-      "contentName": "source.js",
-      "end": "(?=\\n)",
+      "comment": "-- Embedded concise script content line.",
+      "end": "$",
+      "name": "meta.section.marko-script-line",
       "patterns": [
         {
-          "include": "#js"
+          "include": "#content-embedded-script"
         }
       ]
     },
-    "open-tag-end": {
-      "begin": "(>)",
+    "concise-style-block": {
+      "begin": "\\s*(--+)\\s*$",
       "beginCaptures": {
         "1": {
-          "name": "punctuation.definition.tag.end.open.html"
+          "name": "punctuation.section.scope.begin.marko"
         }
       },
-      "comment": "Concise style tag with CSS code.",
-      "end": "(?=</)",
+      "comment": "--- Embedded concise style content block. ---",
+      "contentName": "source.css",
+      "end": "\\1",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.scope.end.marko"
+        }
+      },
+      "name": "meta.section.marko-style-block",
       "patterns": [
         {
-          "include": "#cdata"
-        },
+          "include": "#content-embedded-style"
+        }
+      ]
+    },
+    "concise-style-line": {
+      "applyEndPatternLast": 1,
+      "begin": "\\s*(--+)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.section.scope.begin.marko"
+        }
+      },
+      "comment": "-- Embedded concise style content line.",
+      "contentName": "source.css",
+      "end": "$",
+      "name": "meta.section.marko-style-line",
+      "patterns": [
         {
-          "include": "#comment-html"
-        },
-        {
-          "include": "#comment-html-tag"
-        },
+          "include": "#content-embedded-style"
+        }
+      ]
+    },
+    "content-concise-mode": {
+      "comment": "Concise mode content block.",
+      "name": "meta.marko-concise-content",
+      "patterns": [
         {
           "include": "#scriptlet"
         },
         {
+          "include": "#javascript-comments"
+        },
+        {
+          "include": "#html-comments"
+        },
+        {
+          "include": "#concise-html-block"
+        },
+        {
+          "include": "#concise-html-line"
+        },
+        {
           "include": "#tag-html"
         },
         {
-          "include": "#js-code-block"
+          "comment": "A concise html tag.",
+          "patterns": [
+            {
+              "begin": "^(\\s*)(?=style\\b)",
+              "comment": "Concise style tag",
+              "patterns": [
+                {
+                  "include": "#open-tag-content"
+                },
+                {
+                  "include": "#concise-style-block"
+                },
+                {
+                  "include": "#concise-style-line"
+                }
+              ],
+              "while": "(?=^\\1\\s+(\\S|$))"
+            },
+            {
+              "begin": "^(\\s*)(?=script\\b)",
+              "comment": "Concise script tag",
+              "patterns": [
+                {
+                  "include": "#open-tag-content"
+                },
+                {
+                  "include": "#concise-script-block"
+                },
+                {
+                  "include": "#concise-script-line"
+                }
+              ],
+              "while": "(?=^\\1\\s+(\\S|$))"
+            },
+            {
+              "begin": "^(\\s*)(?=\\${|[@a-zA-Z_#.])",
+              "comment": "Normal concise tag",
+              "patterns": [
+                {
+                  "include": "#open-tag-content"
+                },
+                {
+                  "include": "#content-concise-mode"
+                }
+              ],
+              "while": "(?=^\\1\\s+(\\S|$))"
+            }
+          ],
+          "repository": {
+            "open-tag-content": {
+              "patterns": [
+                {
+                  "include": "#tag-before-attrs"
+                },
+                {
+                  "begin": "\\s*\\[",
+                  "beginCaptures": {
+                    "0": {
+                      "name": "punctuation.section.scope.begin.marko"
+                    }
+                  },
+                  "end": "]",
+                  "endCaptures": {
+                    "0": {
+                      "name": "punctuation.section.scope.end.marko"
+                    }
+                  },
+                  "patterns": [
+                    {
+                      "include": "#attrs"
+                    },
+                    {
+                      "include": "#invalid"
+                    }
+                  ]
+                },
+                {
+                  "begin": "(?!^)(?= )",
+                  "end": "(?=--)|(?<!,)(?=\\n)",
+                  "patterns": [
+                    {
+                      "include": "#attrs"
+                    },
+                    {
+                      "include": "#invalid"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
         },
         {
-          "include": "#placeholder-patterns"
+          "include": "#invalid"
         }
       ]
     },
-    "open-tag-end-script": {
-      "begin": "(>)",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.end.open.html"
-        }
-      },
-      "comment": "Concise style tag with CSS code.",
-      "end": "(?=</)",
+    "content-embedded-script": {
+      "name": "meta.embedded.js",
       "patterns": [
         {
-          "include": "#placeholder-patterns"
+          "include": "#placeholder"
         },
         {
-          "include": "#js"
+          "include": "source.js"
         }
       ]
     },
-    "open-tag-end-style": {
-      "begin": "(>)",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.end.open.html"
-        }
-      },
-      "comment": "Concise style tag with CSS code.",
-      "end": "(?=</)",
+    "content-embedded-style": {
+      "name": "meta.embedded.css",
       "patterns": [
         {
-          "include": "#placeholder-patterns"
+          "include": "#placeholder"
         },
         {
           "include": "source.css"
+        }
+      ]
+    },
+    "content-html-mode": {
+      "comment": "HTML mode content block.",
+      "patterns": [
+        {
+          "include": "#scriptlet"
+        },
+        {
+          "include": "#html-comments"
+        },
+        {
+          "include": "#tag-html"
+        },
+        {
+          "match": "\\\\.",
+          "name": "string"
+        },
+        {
+          "include": "#placeholder"
+        },
+        {
+          "match": ".+?",
+          "name": "string"
+        }
+      ]
+    },
+    "html-comments": {
+      "patterns": [
+        {
+          "begin": "\\s*(<!(--)?)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.comment.marko"
+            }
+          },
+          "comment": "HTML comments, doctypes & cdata",
+          "end": "\\2>",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.marko"
+            }
+          },
+          "name": "comment.block.marko"
+        },
+        {
+          "begin": "\\s*(<html-comment>)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.comment.marko"
+            }
+          },
+          "comment": "Preserved HTML comment tag",
+          "end": "</html-comment>",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.marko"
+            }
+          },
+          "name": "comment.block.marko"
+        }
+      ]
+    },
+    "invalid": {
+      "match": "[^\\s]",
+      "name": "invalid.illegal.character-not-allowed-here.marko"
+    },
+    "javascript-args": {
+      "begin": "(?=\\()",
+      "comment": "Javascript style arguments",
+      "contentName": "source.js",
+      "end": "(?<=\\))",
+      "name": "meta.embedded.js",
+      "patterns": [
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "javascript-comments": {
+      "patterns": [
+        {
+          "begin": "\\s*(?=/\\*)",
+          "comment": "JavaScript /* block comment */",
+          "contentName": "source.js",
+          "end": "(?<=\\*/)",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "captures": {
+            "0": {
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            }
+          },
+          "comment": "JavaScript // single line comment",
+          "contentName": "source.js",
+          "match": "\\s*//.*$"
+        }
+      ]
+    },
+    "javascript-enclosed": {
+      "comment": "Matches JavaScript content and ensures enclosed blocks are matched.",
+      "patterns": [
+        {
+          "include": "#javascript-comments"
+        },
+        {
+          "include": "#javascript-args"
+        },
+        {
+          "begin": "(?={)",
+          "end": "(?<=})",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?=\\[)",
+          "end": "(?<=])",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?=\")",
+          "end": "(?<=\")",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?=')",
+          "end": "(?<=')",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?=`)",
+          "end": "(?<=`)",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?=/)(?!<[\\]})A-Z0-9.<%]\\s*/)(?!/?>|$)",
+          "end": "(?<=/)",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?x)\\s*(?:\n\t\t\t\t\t\t\t\t(?:\\b(?:new|typeof|instanceof|in)\\b)| # Keyword operators\n\t\t\t\t\t\t\t\t\\&\\&|\\|\\|| # Logical operators\n\t\t\t\t\t\t\t\t[\\^|&]| # Bitwise operators\n\t\t\t\t\t\t\t\t[!=]=|[!=]==|<|<[=<]| # Comparison operators (Note you cannot use * or ? here)\n\t\t\t\t\t\t\t\t[?:]| # Ternary operators\n\t\t\t\t\t\t\t\t[-+*%](?!-) # Arithmetic operators\n\t\t\t\t\t\t\t)",
+          "captures": {
+            "0": {
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            }
+          },
+          "end": "(?=\\S)"
+        }
+      ]
+    },
+    "javascript-expression": {
+      "patterns": [
+        {
+          "include": "#javascript-enclosed"
+        },
+        {
+          "captures": {
+            "0": {
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            }
+          },
+          "comment": "Match identifiers and member expressions",
+          "match": "[0-9a-zA-Z$_.]+"
+        }
+      ]
+    },
+    "javascript-statement": {
+      "patterns": [
+        {
+          "include": "#javascript-enclosed"
+        },
+        {
+          "include": "source.js"
         }
       ]
     },
     "placeholder": {
-      "applyEndPatternLast": 1,
-      "begin": "[$][!]?\\{",
-      "captures": {
+      "begin": "\\$!?{",
+      "beginCaptures": {
         "0": {
-          "name": "keyword.operator.marko"
+          "name": "punctuation.definition.template-expression.begin.js"
         }
       },
-      "comment": "${ } placeholder note: should be punctuation.section.embedded.js",
+      "comment": "${ } placeholder",
       "contentName": "source.js",
-      "end": "\\}",
-      "name": "meta.section.marko-placeholder",
-      "patterns": [
-        {
-          "include": "#js"
+      "end": "}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.template-expression.end.js"
         }
-      ]
-    },
-    "placeholder-escaped": {
-      "comment": "\\${",
-      "match": "\\\\[$][!]?[{]"
-    },
-    "placeholder-escaped-escaped": {
-      "comment": "\\\\${",
-      "match": "\\\\\\\\(?=[$][!]?[{])"
-    },
-    "placeholder-patterns": {
+      },
       "patterns": [
         {
-          "include": "#placeholder-escaped-escaped"
-        },
-        {
-          "include": "#placeholder-escaped"
-        },
-        {
-          "include": "#placeholder"
+          "include": "source.js"
         }
       ]
     },
     "scriptlet": {
-      "applyEndPatternLast": 1,
-      "begin": "<%",
-      "captures": {
-        "0": {
-          "name": "keyword.operator.scriptlet.marko"
-        }
-      },
-      "comment": "Scriptlet block",
-      "contentName": "source.js",
-      "end": "%>",
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "special-js-tags": {
-      "applyEndPatternLast": 1,
-      "begin": "^\\s*(?:(class)|(static)|(import))\\s",
+      "begin": "^\\s*(\\$)\\s+",
       "beginCaptures": {
         "1": {
-          "name": "storage.type.class.js"
-        },
-        "2": {
-          "name": "storage.modifier.marko"
-        },
-        "3": {
-          "name": "storage.modifier.marko"
+          "name": "keyword.control.scriptlet.marko"
         }
       },
+      "comment": "An inline JavaScript scriptlet.",
       "contentName": "source.js",
-      "end": "(?=\\n)",
+      "end": "$",
+      "name": "meta.embedded.js",
       "patterns": [
         {
-          "include": "#js"
+          "include": "#javascript-statement"
         }
       ]
     },
-    "tag-concise": {
+    "tag-before-attrs": {
+      "comment": "Everything in a tag before the attributes content",
       "patterns": [
         {
-          "include": "#tag-name-custom-concise"
+          "include": "#tag-name"
         },
         {
-          "include": "#tag-name-dynamic-concise"
+          "comment": "Shorthand class or ID attribute",
+          "match": "[#.][a-zA-Z_$]+(?:\\-[a-zA-Z0-9_$]+)*",
+          "name": "entity.other.attribute-name.marko"
         },
         {
-          "include": "#tag-name-concise"
+          "begin": "/(?!/)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.separator.key-value.marko"
+            }
+          },
+          "comment": "Variable for a tag",
+          "contentName": "source.js",
+          "end": "(?=\\=|\\s|>|$|\\||\\()",
+          "name": "meta.embedded.js",
+          "patterns": [
+            {
+              "include": "#javascript-expression"
+            }
+          ]
+        },
+        {
+          "applyEndPatternLast": 1,
+          "begin": "\\s*(=)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.separator.key-value.marko"
+            }
+          },
+          "comment": "Default attribute value",
+          "contentName": "source.js",
+          "end": "(?=.|$)",
+          "name": "meta.embedded.js",
+          "patterns": [
+            {
+              "include": "#javascript-expression"
+            }
+          ]
+        },
+        {
+          "begin": "\\|",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.scope.begin.marko"
+            }
+          },
+          "comment": "Parameters for a tag",
+          "end": "\\|",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.scope.end.marko"
+            }
+          },
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "include": "#javascript-args"
         }
       ]
     },
     "tag-html": {
-      "comment": "HTML tag within the non-concise syntax",
+      "comment": "Matches an HTML tag and its contents",
       "patterns": [
         {
-          "include": "#tag-name-open-tag-only-html"
+          "begin": "\\s*(<)(?=(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)\\b)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.marko"
+            }
+          },
+          "comment": "HTML void elements",
+          "end": "/?>",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.marko"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#open-tag-content"
+            }
+          ]
         },
         {
-          "include": "#tag-name-script-html"
+          "begin": "\\s*(<)(?=style\\b)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.marko"
+            }
+          },
+          "comment": "HTML style tag",
+          "end": "/>|(?<=\\>)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.marko"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#open-tag-content"
+            },
+            {
+              "begin": ">",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.tag.end.marko"
+                }
+              },
+              "comment": "Style body content",
+              "contentName": "source.css",
+              "end": "\\s*(</)(style)?(>)",
+              "endCaptures": {
+                "1": {
+                  "name": "punctuation.definition.tag.end.marko"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#tag-name"
+                    }
+                  ]
+                },
+                "3": {
+                  "name": "punctuation.definition.tag.end.marko"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#content-embedded-style"
+                }
+              ]
+            }
+          ]
         },
         {
-          "include": "#tag-name-style-html"
+          "begin": "\\s*(<)(?=script\\b)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.marko"
+            }
+          },
+          "comment": "HTML script tag",
+          "end": "/>|(?<=\\>)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.marko"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#open-tag-content"
+            },
+            {
+              "begin": ">",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.tag.end.marko"
+                }
+              },
+              "comment": "Script body content",
+              "contentName": "source.js",
+              "end": "\\s*(</)(script)?(>)",
+              "endCaptures": {
+                "1": {
+                  "name": "punctuation.definition.tag.end.marko"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#tag-name"
+                    }
+                  ]
+                },
+                "3": {
+                  "name": "punctuation.definition.tag.end.marko"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#content-embedded-script"
+                }
+              ]
+            }
+          ]
         },
         {
-          "include": "#tag-name-shorthand-no-tag-name-html"
-        },
-        {
-          "include": "#tag-name-shorthand-html"
-        },
-        {
-          "include": "#tag-name-custom-html"
-        },
-        {
-          "include": "#tag-name-dynamic-html"
-        },
-        {
-          "include": "#tag-name-html"
+          "begin": "\\s*(<)(?=\\${|[@a-zA-Z_#.])",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.marko"
+            }
+          },
+          "comment": "HTML normal tag",
+          "end": "/>|(?<=\\>)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.marko"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#open-tag-content"
+            },
+            {
+              "begin": ">",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.tag.end.marko"
+                }
+              },
+              "comment": "Body content",
+              "end": "\\s*(</)(@?[a-zA-Z_]+(?:[:-]?[a-zA-Z0-9_]+)*)?(.*?)(>)",
+              "endCaptures": {
+                "1": {
+                  "name": "punctuation.definition.tag.end.marko"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#tag-name"
+                    }
+                  ]
+                },
+                "3": {
+                  "patterns": [
+                    {
+                      "include": "#invalid"
+                    }
+                  ]
+                },
+                "4": {
+                  "name": "punctuation.definition.tag.end.marko"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#content-html-mode"
+                }
+              ]
+            }
+          ]
         }
-      ]
+      ],
+      "repository": {
+        "open-tag-content": {
+          "patterns": [
+            {
+              "include": "#tag-before-attrs"
+            },
+            {
+              "begin": "(?= )",
+              "comment": "Attributes begin after the first space within the tag name",
+              "end": "(?=/?>)",
+              "patterns": [
+                {
+                  "include": "#attrs"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
-    "tag-name-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "^\\s*(([a-zA-Z0-9_-]+)([.#][a-zA-Z0-9_.#-]*)?)(?=(\\s+(?![=])|$|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "entity.name.tag.concise"
-        },
-        "3": {
-          "name": "entity.other.attribute-name.shorthand"
-        }
-      },
-      "comment": "A concise tag name",
-      "end": "(?=\\n)",
+    "tag-name": {
       "patterns": [
         {
-          "include": "#tag-params"
+          "begin": "\\${",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.begin.js"
+            }
+          },
+          "comment": "Dynamic tag.",
+          "end": "}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.end.js"
+            }
+          },
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
         },
         {
-          "include": "#html-line-block-concise"
-        },
-        {
-          "include": "#html-line-concise"
-        },
-        {
-          "include": "#attr-stuff-concise"
-        }
-      ]
-    },
-    "tag-name-custom-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "^\\s*(for|if|unless|while|else-if|else|var|assign|macro|invoke|include|await|[a-zA-Z0-9_]+([:])[a-zA-Z0-9_:-]*|[@][a-zA-Z0-9_-]+)(?=(\\s+(?![=])|$|[(]|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "support.function.marko-tag.concise"
-        }
-      },
-      "comment": "A concise custom tag name",
-      "end": "(?=\\n)",
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#html-line-concise"
-        },
-        {
-          "include": "#attr-stuff-concise"
-        }
-      ]
-    },
-    "tag-name-custom-html": {
-      "begin": "(<)(for|if|unless|while|else-if|else|var|assign|macro|invoke|include|await|[a-zA-Z0-9_]+[:][a-zA-Z0-9\\-_:]*|[@][a-zA-Z0-9_-]+)(?=(>|/>|\\s|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "2": {
-          "name": "support.function.marko-tag.open.html"
-        }
-      },
-      "comment": "The beginning of a custom/special HTML tag",
-      "end": "(</)(\\2)?(>)|(/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "2": {
-          "name": "support.function.marko-tag.close.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "4": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end"
-        }
-      ]
-    },
-    "tag-name-dynamic-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "^\\s*(?=\\$\\{.*\\})",
-      "comment": "A concise custom tag name",
-      "end": "(?=\\n)",
-      "patterns": [
-        {
-          "include": "#placeholder"
-        },
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#html-line-concise"
-        },
-        {
-          "include": "#attr-stuff-concise"
-        }
-      ]
-    },
-    "tag-name-dynamic-html": {
-      "begin": "(<)(?=\\$\\{.*\\})",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        }
-      },
-      "comment": "The beginning of a regular HTML tag in non-concise mode",
-      "end": "(</)(\\2)?(>)|(/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "2": {
-          "name": "support.function.marko-tag.close.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "4": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#placeholder"
-        },
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end"
-        }
-      ]
-    },
-    "tag-name-html": {
-      "begin": "(<)([a-zA-Z0-9-]+)(?=(>|/>|\\s|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "2": {
-          "name": "entity.name.tag.open.html"
-        }
-      },
-      "comment": "The beginning of a regular HTML tag in non-concise mode",
-      "end": "(</)(\\2)?(>)|(/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "2": {
-          "name": "entity.name.tag.close.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "4": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end"
-        }
-      ]
-    },
-    "tag-name-open-tag-only-html": {
-      "begin": "(<)(base|br|col|hr|embed|img|input|keygen|link|meta|param|source|track|wbr|lasso-img)(?=(>|/>|\\s|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "2": {
-          "name": "entity.name.tag.open.html"
-        }
-      },
-      "comment": "HTML tags that are open tag only",
-      "end": "(>|/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        }
-      ]
-    },
-    "tag-name-script-html": {
-      "begin": "(<)(script)(?=(>|/>|\\s|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "2": {
-          "name": "entity.name.tag.script.open.html"
-        }
-      },
-      "comment": "HTML script tag",
-      "contentName": "source.js",
-      "end": "(</)(script)?(>)|/>",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "2": {
-          "name": "entity.name.tag.script.close.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "4": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end-script"
-        }
-      ]
-    },
-    "tag-name-shorthand-html": {
-      "begin": "(<)(([a-zA-Z0-9_-]+)([#.][a-zA-Z0-9_#.:-]+))(?=(>|/>|\\s+(?![=])|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "3": {
-          "name": "entity.name.tag.open.html"
-        },
-        "4": {
-          "name": "entity.other.attribute-name.shorthand"
-        }
-      },
-      "comment": "HTML tag with shorthand ID/class parts",
-      "end": "(</)((\\3)(\\4)?)?(>)|(/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "3": {
-          "name": "entity.name.tag.close.html"
-        },
-        "4": {
-          "name": "entity.other.attribute-name.shorthand"
-        },
-        "5": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "6": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end"
-        }
-      ]
-    },
-    "tag-name-shorthand-no-tag-name-html": {
-      "begin": "(<)([#.][a-zA-Z0-9_#.:-]+)(?=(>|/>|\\s|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "2": {
-          "name": "entity.other.attribute-name.shorthand"
-        }
-      },
-      "comment": "HTML style tag",
-      "end": "(</)(\\2|div)(>)|(/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "2": {
-          "name": "entity.name.tag.close.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "4": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end"
-        }
-      ]
-    },
-    "tag-name-style-html": {
-      "begin": "(<)(style)(?=(>|/>|\\s|\\(|\\|))",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.open.html"
-        },
-        "2": {
-          "name": "entity.name.tag.style.open.html"
-        }
-      },
-      "comment": "HTML style tag",
-      "contentName": "source.css",
-      "end": "(</)(style)?(>)|(/>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.close.html"
-        },
-        "2": {
-          "name": "entity.name.tag.style.close.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.close.html"
-        },
-        "4": {
-          "name": "punctuation.definition.tag.end.self-close.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#tag-params"
-        },
-        {
-          "include": "#attr-stuff-html"
-        },
-        {
-          "include": "#open-tag-end-style"
-        }
-      ]
-    },
-    "tag-params": {
-      "applyEndPatternLast": 0,
-      "begin": "\\|",
-      "beginCaptures": {
-        "0": {
-          "name": "meta.pipe.js"
-        }
-      },
-      "contentName": "source.js",
-      "end": "\\|",
-      "endCaptures": {
-        "0": {
-          "name": "meta.pipe.js"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "tag-script-body-block": {
-      "begin": "(\\s*-[-]+)",
-      "comment": "HTML script tag with nested JavaScript code",
-      "end": "(\\1)[.]*$",
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "tag-script-body-line": {
-      "begin": "\\s+-[-]+\\s",
-      "comment": "HTML script tag with nested JavaScript code",
-      "contentName": "source.js",
-      "end": "(?=\\n)",
-      "patterns": [
-        {
-          "include": "#js"
-        }
-      ]
-    },
-    "tag-script-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "^(\\s*)(script)(?=(\\s|$|\\())",
-      "beginCaptures": {
-        "2": {
-          "name": "entity.name.tag.script.marko.concise"
-        }
-      },
-      "comment": "HTML script tag with nested JavaScript code",
-      "contentName": "source.js",
-      "end": "^(?!(\\1\\s)|\\s*$)",
-      "patterns": [
-        {
-          "include": "#attr-stuff-concise"
-        },
-        {
-          "include": "#tag-script-body-line"
-        },
-        {
-          "include": "#tag-script-body-block"
-        }
-      ]
-    },
-    "tag-style-body-block": {
-      "begin": "(\\s*[-][-]+)",
-      "comment": "HTML script tag with nested CSS code",
-      "end": "(\\1)[.]*$",
-      "patterns": [
-        {
-          "include": "source.css"
-        }
-      ]
-    },
-    "tag-style-body-line": {
-      "begin": "\\s[-][-]+\\s",
-      "comment": "HTML style tag with nested CSS code",
-      "end": "(?=\\n)",
-      "patterns": [
-        {
-          "include": "source.css"
-        }
-      ]
-    },
-    "tag-style-concise": {
-      "applyEndPatternLast": 1,
-      "begin": "^(\\s*)(style)(?=(\\s|$|\\())",
-      "beginCaptures": {
-        "2": {
-          "name": "entity.name.tag.style.marko.concise"
-        }
-      },
-      "comment": "style tag with CSS code.",
-      "end": "^(?!(\\1\\s)|\\s*$)",
-      "name": "meta.tag.other.style",
-      "patterns": [
-        {
-          "include": "#attr-stuff-concise"
-        },
-        {
-          "include": "#tag-style-body-line"
-        },
-        {
-          "include": "#tag-style-body-block"
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "comment": "Core tag.",
+                  "match": "(for|if|while|else-if|else|macro|await|let|const|effect)(?=\\b)",
+                  "name": "support.function.marko"
+                },
+                {
+                  "comment": "Attribute tag.",
+                  "match": "@.*",
+                  "name": "entity.other.attribute-name.marko"
+                },
+                {
+                  "comment": "Native or userland tag.",
+                  "match": ".*",
+                  "name": "entity.name.tag.marko"
+                }
+              ]
+            }
+          },
+          "match": "(@?[a-zA-Z_]+(?:[:-]?[a-zA-Z0-9_]+)*)"
         }
       ]
     }
   },
-  "scopeName": "source.marko",
-  "uuid": "BC8F1816-9AB4-4571-97E8-787F6C925E07"
+  "scopeName": "text.marko",
+  "uuid": "46c8c3f8-cabe-466a-a633-5deafdc51253"
 }
