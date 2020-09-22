@@ -121,7 +121,7 @@
       "patterns": [
         {
           "applyEndPatternLast": 1,
-          "begin": "(?:\\s+|,)(?:(key|no-update(?:-body)?(?:-if)?)|([a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*))",
+          "begin": "(?:\\s+|,)(?:(key|on(?:-?[a-zA-Z_$]+)+|no-update(?:-body)?(?:-if)?)|([a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*))",
           "beginCaptures": {
             "1": {
               "name": "support.function.attribute-name.marko"
@@ -192,6 +192,9 @@
           },
           "comment": "Consume any whitespace after a comma",
           "end": "(?!\\S)"
+        },
+        {
+          "include": "#invalid"
         }
       ]
     },
@@ -637,7 +640,7 @@
           ]
         },
         {
-          "begin": "(?x)\\s*(?:\n\t\t\t\t\t\t\t\t(?:\\b(?:new|typeof|instanceof|in)\\b)| # Keyword operators\n\t\t\t\t\t\t\t\t\\&\\&|\\|\\|| # Logical operators\n\t\t\t\t\t\t\t\t[\\^|&]| # Bitwise operators\n\t\t\t\t\t\t\t\t[!=]=|[!=]==|<|<[=<]| # Comparison operators (Note you cannot use * or ? here)\n\t\t\t\t\t\t\t\t[?:]| # Ternary operators\n\t\t\t\t\t\t\t\t[-+*%](?!-) # Arithmetic operators\n\t\t\t\t\t\t\t)",
+          "begin": "(?x)\\s*(?:\n\t\t\t\t\t\t\t\t(?:\\b(?:new|typeof|instanceof|in)\\b)| # Keyword operators\n\t\t\t\t\t\t\t\t\\&\\&|\\|\\|| # Logical operators\n\t\t\t\t\t\t\t\t[\\^|&]| # Bitwise operators\n\t\t\t\t\t\t\t\t[!=]=|[!=]==|<|<[=<]|=>| # Comparison operators (Note you cannot use * or ? here)\n\t\t\t\t\t\t\t\t[?:]| # Ternary operators\n\t\t\t\t\t\t\t\t[-+*%](?!-) # Arithmetic operators\n\t\t\t\t\t\t\t)",
           "captures": {
             "0": {
               "patterns": [
@@ -743,6 +746,18 @@
           "name": "meta.embedded.js",
           "patterns": [
             {
+              "include": "source.js#comment"
+            },
+            {
+              "include": "source.js#destructuring-variable"
+            },
+            {
+              "include": "source.js#var-single-variable"
+            },
+            {
+              "include": "source.js#variable-initializer"
+            },
+            {
               "include": "#javascript-expression"
             }
           ]
@@ -784,6 +799,21 @@
             }
           },
           "patterns": [
+            {
+              "include": "source.js#comment"
+            },
+            {
+              "include": "source.js#destructuring-parameter"
+            },
+            {
+              "include": "source.js#parameter-name"
+            },
+            {
+              "include": "source.js#type-annotation"
+            },
+            {
+              "include": "source.js#variable-initializer"
+            },
             {
               "include": "source.js"
             }

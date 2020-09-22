@@ -4,8 +4,7 @@ const marked = require("marked");
 module.exports = function markodown(source) {
   const filePath = this.resourcePath;
   const markdown = source
-    .replace(/\&/g, "&amp;")
-    .replace(/\$/g, "&#36;")
+    .replace(/\&(?!\S+;)/g, "&amp;")
     .replace(/https?:\/\/markojs\.com\//g, "/")
     .replace(/\.*([\w\d\-\/]+)\.md/g, match => {
       // Markdown documents from external sources do not have a file path
@@ -81,8 +80,8 @@ module.exports = function markodown(source) {
 
   const markoSource = marked(markdown, {
     renderer: markedRenderer
-  });
-  
+  }).replace(/\$/g, "&#36;");
+
   return `import tocRegistry from ${JSON.stringify(`./${path.relative(path.dirname(filePath), require.resolve("./toc-registry"))}`)};\n` +
   `static tocRegistry.set(${JSON.stringify(path.relative(__dirname, filePath))}, ${JSON.stringify(toc.toHTML())});\n` + "-----\n" + markoSource + "\n-----\n";
 }
