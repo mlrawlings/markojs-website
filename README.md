@@ -24,4 +24,4 @@ npm run publish
 
 ## Contributing
 
-Pull Requests greatly appreciated!
+Pull Requests greatly appreciated! - "for whom who show their creativity to the world".
