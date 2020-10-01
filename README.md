@@ -22,6 +22,12 @@ npx http-server ./build
 npm run publish
 ```
 
+## Why Marco
+Its a friendly and fast UI library which help making apps fun.
+if you know Html Css and JS then its easy to work on marco with better speed and no worry to loose data. 
+Marco help you to work faster with its new syntax.
+Marco is so powerfull that it can render your awesome animation at @60FPS without any lag.
+
 ## Contributing
 
 Pull Requests greatly appreciated!
