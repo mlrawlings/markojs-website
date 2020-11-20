@@ -5,7 +5,7 @@
     "@babel/core": "^7.12.3",
     "@marko-tags/subscribe": "^0.3.2",
     "@marko/build": "^2.2.5",
-    "@marko/compiler": "^5.0.0-next.56",
+    "@marko/compiler": "^5.0.0-next.58",
     "@marko/prettyprint": "^2.2.3",
     "@marko/serve": "^2.2.5",
     "babel-plugin-transform-commonjs": "^1.1.6",
@@ -17,7 +17,7 @@
     "import-all.macro": "^3.1.0",
     "magic-string": "^0.25.7",
     "marked": "^1.2.4",
-    "marko": "^5.0.0-next.56",
+    "marko": "^5.0.0-next.58",
     "md5": "^2.3.0",
     "memfs": "^3.2.0",
     "monaco-editor": "^0.21.2",
@@ -34,8 +34,8 @@
   },
   "private": true,
   "scripts": {
-    "build": "marko-build ./src/pages --static",
+    "build": "NODE_ENV=production marko-build ./src/pages --static",
     "dev": "marko-serve ./src/pages",
-    "publish": "NODE_ENV=production node ./publish"
+    "publish": "node ./publish"
   }
 }
