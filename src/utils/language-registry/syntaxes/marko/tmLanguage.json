@@ -121,13 +121,16 @@
       "patterns": [
         {
           "applyEndPatternLast": 1,
-          "begin": "(?:\\s+|,)(?:(key|on(?:-?[a-zA-Z_$]+)+|no-update(?:-body)?(?:-if)?)|([a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*))",
+          "begin": "(?:\\s+|,)(?:(key|on(?:-?[a-zA-Z_$]+)+|no-update(?:-body)?(?:-if)?)|([a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*))(:[a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*)?",
           "beginCaptures": {
             "1": {
-              "name": "support.function.attribute-name.marko"
+              "name": "support.type.attribute-name.marko"
             },
             "2": {
               "name": "entity.other.attribute-name.marko"
+            },
+            "3": {
+              "name": "support.function.attribute-name.marko"
             }
           },
           "comment": "Attribute with optional value",
@@ -742,7 +745,7 @@
           },
           "comment": "Variable for a tag",
           "contentName": "source.js",
-          "end": "(?=\\=|\\s|>|$|\\||\\()",
+          "end": "(?=\\=|\\s|>|$|\\||\\(|/)",
           "name": "meta.embedded.js",
           "patterns": [
             {
@@ -1055,7 +1058,7 @@
               "patterns": [
                 {
                   "comment": "Core tag.",
-                  "match": "(for|if|while|else-if|else|macro|await|let|const|effect)(?=\\b)",
+                  "match": "(for|if|while|else-if|else|macro|await|let|const|effect|provide|receive|import|yield)(?=\\b)",
                   "name": "support.function.marko"
                 },
                 {

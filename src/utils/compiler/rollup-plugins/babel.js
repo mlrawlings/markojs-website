@@ -16,12 +16,15 @@ taglib.register(
 
 export default ({ output }) => {
   let cssContent;
+  let buildCache;
   return {
     name: "babel",
     buildStart(config) {
+      buildCache = new Map();
       cssContent = config.cssContent;
     },
     buildEnd() {
+      buildCache = undefined;
       taglib.clearCaches();
     },
     transform(source, id) {
@@ -37,7 +40,7 @@ export default ({ output }) => {
       ];
 
       if (ext === ".marko") {
-        plugins.push([markoPlugin, { output, translator, fileSystem: fs }]);
+        plugins.push([markoPlugin, { output, translator, fileSystem: fs, cache: buildCache || new Map() }]);
       } else if (ext === ".js") {
         plugins.push(commonjsPlugin);
       } else {

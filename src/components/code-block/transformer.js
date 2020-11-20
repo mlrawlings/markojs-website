@@ -3,6 +3,7 @@ const nodePath = require("path");
 const redent = require("redent");
 const highlight = require("../../utils/highlight");
 const prettyprint = require("@marko/prettyprint");
+const { importDefault } = require("@marko/babel-utils");
 const { getMarkoWebsiteKey } = require("../../utils/localstorage");
 const ADDED_SYNTAX_SWITCH_SCRIPT = new WeakSet();
 
@@ -22,7 +23,7 @@ module.exports = function (path, t) {
 
     const unresolvedPath = fileNodePath.node.value;
     const filePath = nodePath.resolve(
-      path.hub.file.opts.filename,
+      path.hub.file.opts.sourceFileName,
       "..",
       unresolvedPath
     );
@@ -131,15 +132,15 @@ module.exports = function (path, t) {
         next.remove();
       } else {
         concise = highlight(lang, prettyprint(code, {
-          filename: `${path.hub.file.opts.filename}.inline-code-block.marko`,
+          filename: `${path.hub.file.opts.sourceFileName}.inline-code-block.marko`,
           syntax: "concise"
         }).trim());
       }
 
       path.replaceWith(
         t.markoTag(
-          path.hub.file.importDefault(
-            path,
+          importDefault(
+            path.hub.file,
             nodePath.join(__dirname, "../code-block-marko/index.marko"),
             "marko_code_block"
           ),
