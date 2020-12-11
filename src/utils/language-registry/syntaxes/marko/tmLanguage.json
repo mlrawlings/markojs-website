@@ -634,9 +634,18 @@
           ]
         },
         {
-          "begin": "(?=/)(?!<[\\]})A-Z0-9.<%]\\s*/)(?!/?>|$)",
-          "end": "(?<=/)",
+          "begin": "/(?!<[\\]})A-Z0-9.<%]\\s*/)(?!/?>|$)",
+          "captures": {
+            "0": {
+              "name": "string.regexp.js"
+            }
+          },
+          "contentName": "source.js",
+          "end": "/[gimsuy]*",
           "patterns": [
+            {
+              "include": "source.js#regexp"
+            },
             {
               "include": "source.js"
             }
@@ -749,16 +758,12 @@
           "name": "meta.embedded.js",
           "patterns": [
             {
-              "include": "source.js#comment"
+              "comment": "Match identifiers",
+              "match": "[a-zA-Z$_][0-9a-zA-Z$_]*",
+              "name": "variable.other.constant.object.js"
             },
             {
               "include": "source.js#destructuring-variable"
-            },
-            {
-              "include": "source.js#var-single-variable"
-            },
-            {
-              "include": "source.js#variable-initializer"
             },
             {
               "include": "#javascript-expression"
@@ -803,19 +808,7 @@
           },
           "patterns": [
             {
-              "include": "source.js#comment"
-            },
-            {
-              "include": "source.js#destructuring-parameter"
-            },
-            {
-              "include": "source.js#parameter-name"
-            },
-            {
-              "include": "source.js#type-annotation"
-            },
-            {
-              "include": "source.js#variable-initializer"
+              "include": "source.js#function-parameters-body"
             },
             {
               "include": "source.js"
@@ -1058,7 +1051,7 @@
               "patterns": [
                 {
                   "comment": "Core tag.",
-                  "match": "(for|if|while|else-if|else|macro|await|let|const|effect|provide|receive|import|yield)(?=\\b)",
+                  "match": "(for|if|while|else-if|else|macro|tag|await|let|const|effect|mount|set|get|import|yield)(?=\\b)",
                   "name": "support.function.marko"
                 },
                 {
