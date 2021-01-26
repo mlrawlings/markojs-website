@@ -86,7 +86,7 @@ class {
           });
           const template = (0, eval)(bundleResult.js);
 
-          const renderResult = template.renderSync({});
+          const renderResult = await template.render({});
 
           if (name === "Preview") {
             const outputEl = this.getEl("output");

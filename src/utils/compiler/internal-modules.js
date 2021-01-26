@@ -6,6 +6,8 @@ const internalModuleLookup = (global.__INTERNAL_MODULES__ = {});
 
 internalModuleLookup.events = () => require("events-light");
 internalModuleLookup.marked = () => require("marked");
+internalModuleLookup.path = () => require("path");
+internalModuleLookup.url = () => require("url");
 
 [
   require.context("@marko/translator-default/dist", true, /\.(js(on)?)$/),

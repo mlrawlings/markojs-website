@@ -43,6 +43,7 @@ module.exports = function markodown(source) {
   markedRenderer.heading = function(text, level) {
     var anchorName = getAnchorName(text, anchorCache);
     var linkText = text
+      .replace(/\s+\([^\)]+\)/g, "")
       .replace(/\([^\)]+\)/g, "()")
       .replace(/<\/?code\>/g, "")
       .replace(/&amp;lt;/g, "&lt;");
@@ -74,7 +75,7 @@ module.exports = function markodown(source) {
   };
 
   markedRenderer.image = function(href, title, text) {
-    let imageCode = `<img src=${JSON.stringify(href)} alt=${JSON.stringify(text || "")} />`;
+    let imageCode = `<img src=${JSON.stringify(href)} alt=${JSON.stringify(text || "")} style="max-width:100%"/>`;
     return imageCode;
   };
 
