@@ -57,11 +57,27 @@ module.exports = [
     config.resolve = {
       ...config.resolve,
       alias: {
-        ...config.resolve.alias,
+        util: require.resolve("util/"),
+        buffer: require.resolve("buffer"),
+        assert: require.resolve("assert/"),
+        path: require.resolve("path-browserify"),
+        crypto: require.resolve("crypto-browserify"),
         fs: path.join(__dirname, "browser-shims/fs"),
-        module: path.join(__dirname, "browser-shims/module")
+        module: path.join(__dirname, "browser-shims/module"),
+        process: path.join(__dirname, "browser-shims/process"),
+        stream: false,
+        http: false
       }
     };
+
+    config.plugins.push(new webpack.ProvidePlugin({
+      Buffer: [require.resolve("buffer"), "Buffer"],
+      process: path.join(__dirname, "browser-shims/process")
+    }));
+
+    config.plugins.push(new webpack.DefinePlugin({
+      "process.env.NODE_DEBUG": undefined
+    }));
 
     if (production) {
       // Needed for the tryonline page.
@@ -105,7 +121,7 @@ function shared(config) {
     });
   });
 
-  const fileLoader = config.module.rules.find(({ loader }) => loader && loader.includes("file-loader"));
+  const fileLoader = config.module.rules.find(({ test }) => typeof test === "function");
   const originalTest = fileLoader.test;
   fileLoader.test = file => !/\.(md)$/.test(file) && originalTest(file);
   
