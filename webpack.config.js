@@ -76,12 +76,13 @@ module.exports = [
     }));
 
     config.plugins.push(new webpack.DefinePlugin({
-      "process.env.NODE_DEBUG": undefined
+      "process.env.NODE_DEBUG": undefined,
+      "process.env.MARKO_DEBUG": undefined
     }));
 
     if (production) {
       // Needed for the tryonline page.
-      config.plugins.push(new webpack.NamedModulesPlugin());
+      config.optimization.moduleIds = "named";
     }
 
     return config;

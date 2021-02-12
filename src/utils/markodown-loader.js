@@ -6,7 +6,7 @@ module.exports = function markodown(source) {
   const markdown = source
     .replace(/\&(?!\S+;)/g, "&amp;")
     .replace(/https?:\/\/markojs\.com\//g, "/")
-    .replace(/\.*([\w\d\-\/]+)\.md/g, match => {
+    .replace(/(?<=\]\()\.*([\w\d\-\/]+)\.md/g, match => {
       // Markdown documents from external sources do not have a file path
       if (filePath) {
         const linkpath = path.resolve(path.dirname(filePath), match);
