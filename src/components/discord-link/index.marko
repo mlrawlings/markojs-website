@@ -1,0 +1,35 @@
+style {
+  .discord-button {
+    position: fixed;
+    bottom:0.25em;
+    right: 1em;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+  }
+  .discord-button:hover {
+    animation-name: bounce;
+  }
+  .discord-button:active {
+    opacity: 0.8;
+  }
+  .discord-button img {
+    height: 3.5em;
+  }
+  @keyframes bounce {
+    0%, 100%, 20%, 50%, 80% {
+      transform:         translateY(0)
+    }
+    40% {
+      transform:         translateY(-20px)
+    }
+    60% {
+      transform:         translateY(-10px)
+    }
+  }
+}
+
+<a.discord-button href="https://discord.gg/marko" target="_blank">
+  <img src="./discord-icon.svg" alt="Chat in Marko's Discord Server"/>
+</a>

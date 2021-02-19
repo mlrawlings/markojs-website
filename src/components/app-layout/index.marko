@@ -37,10 +37,8 @@
 
     <google-analytics tracking-id="UA-66854919-1" domain="markojs.com"/>
 
-    <if(input.discord !== false && process.env.NODE_ENV === "production")>
-      <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async>
-        new Crate({server:'725013179465203793',channel:'725013179926708226'})
-      </script>
+    <if(input.discord !== false)>
+      <discord-link/>
     </if>
   </body>
 </html>
