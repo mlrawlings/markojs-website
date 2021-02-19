@@ -2,16 +2,6 @@
   "fileTypes": [
     "marko"
   ],
-  "injections": {
-    "L:^text.marko meta.embedded.js": {
-      "patterns": [
-        {
-          "match": "(?<=\\b)(input|state|out|component)(?=\\b)",
-          "name": "variable.other.constant.object.js"
-        }
-      ]
-    }
-  },
   "name": "Marko",
   "patterns": [
     {
@@ -121,7 +111,7 @@
       "patterns": [
         {
           "applyEndPatternLast": 1,
-          "begin": "(?:\\s+|,)(?:(key|on(?:-?[a-zA-Z_$]+)+|no-update(?:-body)?(?:-if)?)|([a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*))(:[a-zA-Z_$]+(?:\\-[a-zA-Z_$]+)*)?",
+          "begin": "(?:\\s+|,)(?:(key|on[a-zA-Z0-9_$-]+|no-update(?:-body)?(?:-if)?)|([a-zA-Z0-9_$][a-zA-Z0-9_$-]*))(:[a-zA-Z0-9_$][a-zA-Z0-9_$-]*)?",
           "beginCaptures": {
             "1": {
               "name": "support.type.attribute-name.marko"
@@ -197,6 +187,9 @@
           "end": "(?!\\S)"
         },
         {
+          "include": "#javascript-comment-multiline"
+        },
+        {
           "include": "#invalid"
         }
       ]
@@ -252,6 +245,47 @@
       "comment": "-- HTML line within concise mode content. (content-html-mode w/o scriptlet)",
       "match": "\\s*(--+)(?=\\s+\\S)(.*$)",
       "name": "meta.section.marko-html-line"
+    },
+    "concise-open-tag-content": {
+      "patterns": [
+        {
+          "include": "#tag-before-attrs"
+        },
+        {
+          "begin": "\\s*\\[",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.scope.begin.marko"
+            }
+          },
+          "end": "]",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.scope.end.marko"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#attrs"
+            },
+            {
+              "include": "#invalid"
+            }
+          ]
+        },
+        {
+          "begin": "(?!^)(?= )",
+          "end": "(?=--)|(?<!,)(?=\\n)",
+          "patterns": [
+            {
+              "include": "#attrs"
+            },
+            {
+              "include": "#invalid"
+            }
+          ]
+        }
+      ]
     },
     "concise-script-block": {
       "begin": "\\s*(--+)\\s*$",
@@ -361,7 +395,7 @@
               "comment": "Concise style tag",
               "patterns": [
                 {
-                  "include": "#open-tag-content"
+                  "include": "#concise-open-tag-content"
                 },
                 {
                   "include": "#concise-style-block"
@@ -377,7 +411,7 @@
               "comment": "Concise script tag",
               "patterns": [
                 {
-                  "include": "#open-tag-content"
+                  "include": "#concise-open-tag-content"
                 },
                 {
                   "include": "#concise-script-block"
@@ -389,11 +423,11 @@
               "while": "(?=^\\1\\s+(\\S|$))"
             },
             {
-              "begin": "^(\\s*)(?=\\${|[@a-zA-Z_#.])",
+              "begin": "^(\\s*)(?=[a-zA-Z0-9_$:@-])",
               "comment": "Normal concise tag",
               "patterns": [
                 {
-                  "include": "#open-tag-content"
+                  "include": "#concise-open-tag-content"
                 },
                 {
                   "include": "#content-concise-mode"
@@ -401,50 +435,7 @@
               ],
               "while": "(?=^\\1\\s+(\\S|$))"
             }
-          ],
-          "repository": {
-            "open-tag-content": {
-              "patterns": [
-                {
-                  "include": "#tag-before-attrs"
-                },
-                {
-                  "begin": "\\s*\\[",
-                  "beginCaptures": {
-                    "0": {
-                      "name": "punctuation.section.scope.begin.marko"
-                    }
-                  },
-                  "end": "]",
-                  "endCaptures": {
-                    "0": {
-                      "name": "punctuation.section.scope.end.marko"
-                    }
-                  },
-                  "patterns": [
-                    {
-                      "include": "#attrs"
-                    },
-                    {
-                      "include": "#invalid"
-                    }
-                  ]
-                },
-                {
-                  "begin": "(?!^)(?= )",
-                  "end": "(?=--)|(?<!,)(?=\\n)",
-                  "patterns": [
-                    {
-                      "include": "#attrs"
-                    },
-                    {
-                      "include": "#invalid"
-                    }
-                  ]
-                }
-              ]
-            }
-          }
+          ]
         },
         {
           "include": "#invalid"
@@ -550,32 +541,38 @@
         }
       ]
     },
-    "javascript-comments": {
-      "patterns": [
-        {
-          "begin": "\\s*(?=/\\*)",
-          "comment": "JavaScript /* block comment */",
-          "contentName": "source.js",
-          "end": "(?<=\\*/)",
+    "javascript-comment-line": {
+      "captures": {
+        "0": {
           "patterns": [
             {
               "include": "source.js"
             }
           ]
+        }
+      },
+      "comment": "JavaScript // single line comment",
+      "contentName": "source.js",
+      "match": "\\s*//.*$"
+    },
+    "javascript-comment-multiline": {
+      "begin": "\\s*(?=/\\*)",
+      "comment": "JavaScript /* block comment */",
+      "contentName": "source.js",
+      "end": "(?<=\\*/)",
+      "patterns": [
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "javascript-comments": {
+      "patterns": [
+        {
+          "include": "#javascript-comment-multiline"
         },
         {
-          "captures": {
-            "0": {
-              "patterns": [
-                {
-                  "include": "source.js"
-                }
-              ]
-            }
-          },
-          "comment": "JavaScript // single line comment",
-          "contentName": "source.js",
-          "match": "\\s*//.*$"
+          "include": "#javascript-comment-line"
         }
       ]
     },
@@ -696,6 +693,23 @@
         }
       ]
     },
+    "open-tag-content": {
+      "patterns": [
+        {
+          "include": "#tag-before-attrs"
+        },
+        {
+          "begin": "(?= )",
+          "comment": "Attributes begin after the first space within the tag name",
+          "end": "(?=/?>)",
+          "patterns": [
+            {
+              "include": "#attrs"
+            }
+          ]
+        }
+      ]
+    },
     "placeholder": {
       "begin": "\\$!?{",
       "beginCaptures": {
@@ -742,7 +756,7 @@
         },
         {
           "comment": "Shorthand class or ID attribute",
-          "match": "[#.][a-zA-Z_$]+(?:\\-[a-zA-Z0-9_$]+)*",
+          "match": "[#.][a-zA-Z0-9_$-]*",
           "name": "entity.other.attribute-name.marko"
         },
         {
@@ -946,7 +960,7 @@
           ]
         },
         {
-          "begin": "\\s*(<)(?=\\${|[@a-zA-Z_#.])",
+          "begin": "\\s*(<)(?=[a-zA-Z0-9_$:@-])",
           "beginCaptures": {
             "1": {
               "name": "punctuation.definition.tag.begin.marko"
@@ -971,7 +985,7 @@
                 }
               },
               "comment": "Body content",
-              "end": "\\s*(</)(@?[a-zA-Z_]+(?:[:-]?[a-zA-Z0-9_]+)*)?(.*?)(>)",
+              "end": "\\s*(</)([a-zA-Z0-9_$:@-]+)?(.*?)(>)",
               "endCaptures": {
                 "1": {
                   "name": "punctuation.definition.tag.end.marko"
@@ -1002,26 +1016,7 @@
             }
           ]
         }
-      ],
-      "repository": {
-        "open-tag-content": {
-          "patterns": [
-            {
-              "include": "#tag-before-attrs"
-            },
-            {
-              "begin": "(?= )",
-              "comment": "Attributes begin after the first space within the tag name",
-              "end": "(?=/?>)",
-              "patterns": [
-                {
-                  "include": "#attrs"
-                }
-              ]
-            }
-          ]
-        }
-      }
+      ]
     },
     "tag-name": {
       "patterns": [
@@ -1047,7 +1042,7 @@
         },
         {
           "captures": {
-            "1": {
+            "0": {
               "patterns": [
                 {
                   "comment": "Core tag.",
@@ -1056,18 +1051,18 @@
                 },
                 {
                   "comment": "Attribute tag.",
-                  "match": "@.*",
+                  "match": "@.+",
                   "name": "entity.other.attribute-name.marko"
                 },
                 {
                   "comment": "Native or userland tag.",
-                  "match": ".*",
+                  "match": ".+",
                   "name": "entity.name.tag.marko"
                 }
               ]
             }
           },
-          "match": "(@?[a-zA-Z_]+(?:[:-]?[a-zA-Z0-9_]+)*)"
+          "match": "[a-zA-Z0-9_$:@-]+"
         }
       ]
     }
