@@ -423,7 +423,7 @@
               "while": "(?=^\\1\\s+(\\S|$))"
             },
             {
-              "begin": "^(\\s*)(?=[a-zA-Z0-9_$:@-])",
+              "begin": "^(\\s*)(?=[a-zA-Z0-9_$@])",
               "comment": "Normal concise tag",
               "patterns": [
                 {
@@ -756,7 +756,7 @@
         },
         {
           "comment": "Shorthand class or ID attribute",
-          "match": "[#.][a-zA-Z0-9_$-]*",
+          "match": "[#.][a-zA-Z0-9_$][a-zA-Z0-9_$-]*",
           "name": "entity.other.attribute-name.marko"
         },
         {
@@ -960,7 +960,7 @@
           ]
         },
         {
-          "begin": "\\s*(<)(?=[a-zA-Z0-9_$:@-])",
+          "begin": "\\s*(<)(?=[a-zA-Z0-9_$@])",
           "beginCaptures": {
             "1": {
               "name": "punctuation.definition.tag.begin.marko"
@@ -1062,7 +1062,7 @@
               ]
             }
           },
-          "match": "[a-zA-Z0-9_$:@-]+"
+          "match": "[a-zA-Z0-9_$@][a-zA-Z0-9_$@:-]*"
         }
       ]
     }
