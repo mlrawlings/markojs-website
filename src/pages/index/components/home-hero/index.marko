@@ -3,7 +3,12 @@
   <div.header-content>
       <img.logo-text src="./marko-text.svg" alt="Marko"/>
       <h1 key="tagline">
-          A declarative, HTML-based language that makes building web apps fun
+          <span>A declarative, HTML-based language<br>that makes building web apps fun</span>
+          <!--
+          <span>It's like HTML and JS had a perfect<br/>baby that grew up to be awesome</span>
+          <span>Yes, you can copy and paste<br/>HTML from StackOverflow</span>
+          <span>Server-side rendering + Client-side<br/>rendering = <b>Awesomorphic</b></span>
+          <span>Bringing back progressive<br>HTML rendering to the masses</span>
           <!-- A language for the web that brings together the best of HTML, CSS, & JS -->
       </h1>
       <div.actions>
@@ -44,14 +49,20 @@ style {
   }
 
   .home-header h1 {
-      font-size:2em;
+      font-size: min(3.2vw, 2em);
       font-weight:300;
       margin:0.5em 0 0.6em;
       padding:0;
       border:0;
       color:#46484a;
-      max-width:17em;
+      width:17em;
       transform: translateZ(-1px); /* Force new compositing layer to prevent jank in safari */
+      position: relative;
+  }
+  .home-header h1 span:not(:first-child) {
+      position: absolute;
+      top:0; right:0; left:0; bottom:0;
+      opacity:0;
   }
 
   .home-fade-in {
@@ -115,6 +126,7 @@ style {
           align-items:center;
       }
       .home-header h1 {
+          font-size: min(5.2vw, 2em);
           text-align:center;
       }
       .home-header img.logo {
