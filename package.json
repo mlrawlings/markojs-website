@@ -43,8 +43,5 @@
     "build": "NODE_ENV=production marko-build ./src/pages --static",
     "dev": "marko-serve ./src/pages",
     "publish": "node ./publish"
-  },
-  "dependencies": {
-    "twilio": "^3.52.0"
   }
 }

@@ -75,7 +75,7 @@ body.docs .doc-sidebar {
 }
 
 .doc-sidebar ul a {
-  color:#76787a;
+  color:#626467;
   display:block;
   position: relative;
 }
@@ -84,10 +84,6 @@ body.docs .doc-sidebar {
   font-size:0.9em;
   margin-left:1rem;
 
-}
-.doc-sidebar ul.toc a,
-.doc-sidebar ul.toc a code {
-  color:#87898b;
 }
 
 .doc-sidebar ul a:hover,
@@ -161,6 +157,6 @@ body.docs .doc-sidebar {
   }
   .doc-sidebar > .search {
       display: flex;
-      flex-direction: column;
+      width: 12em;
   }
 }

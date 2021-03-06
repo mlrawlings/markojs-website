@@ -8,29 +8,14 @@
     <meta
       name="Description"
       content="Marko is a friendly (and fast!) UI library that makes building web apps fun."/>
-    <script>
-        var scalingBodyFont = false;
-
-        function scaleBodyFont() {
-            var height = Math.max(window.outerHeight, window.screen.height);
-            document.documentElement.style.fontSize = Math.pow(Math.min(window.innerWidth, height), 0.25)*19+'%';
-            scalingBodyFont = false;
-        }
-
-        window.addEventListener('resize', function() {
-            requestAnimationFrame(scaleBodyFont);
-        });
-
-        scaleBodyFont();
-    </script>
   </head>
 
   <body class=input.class>
     <layout-header/>
     <layout-sidebar currentDoc=input.currentDoc toc=input.toc/>
-    <div.content>
+    <main.content>
       <${input.renderBody}/>
-    </div>
+    </main>
     <if(input.footer !== false)>
       <app-footer/>
     </if>

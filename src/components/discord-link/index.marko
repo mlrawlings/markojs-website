@@ -18,18 +18,30 @@ style {
     height: 3.5em;
   }
   @keyframes bounce {
-    0%, 100%, 20%, 50%, 80% {
-      transform:         translateY(0)
+    0% {
+      transform: translateY(0)
+    }
+    10% {
+      transform: translateY(0) scale(1.1, 0.9);
+    }
+    30% {
+      transform: translateY(-20px) scale(0.95, 1.05);
     }
     40% {
-      transform:         translateY(-20px)
+      transform: translateY(0) scale(1.05, 0.95);
     }
-    60% {
-      transform:         translateY(-10px)
+    50% {
+      transform: translateY(-10px) scale(0.98, 1.02);
+    }
+    70% {
+      transform: translateY(0) scale(1.02, 0.98);
+    }
+    100% {
+      transform: translateY(0)
     }
   }
 }
 
 <a.discord-button href="https://discord.gg/marko" target="_blank">
-  <img src="./discord-icon.svg" alt="Chat in Marko's Discord Server"/>
+  <img src="../../logos/discord.svg" alt="Chat in Marko's Discord Server"/>
 </a>
