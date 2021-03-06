@@ -3,22 +3,22 @@
   "settings": [
     {
 			"settings": {
-				"foreground": "#e0e0e0",
-				"background": "#282c34"
+				"foreground": "#d0d0e0",
+				"background": "#202034"
 			}
     },
     {
       "name": "Comment",
       "scope": "comment",
       "settings": {
-        "foreground": "#75715E"
+        "foreground": "#8f8f9e"
       }
     },
     {
       "name": "String",
       "scope": "string",
       "settings": {
-        "foreground": "#E6DB74"
+        "foreground": "#fff066"
       }
     },
     {
@@ -46,14 +46,14 @@
       "name": "Variable",
       "scope": "variable",
       "settings": {
-        "fontStyle": ""
+        "foreground": "#ffffff"
       }
     },
     {
       "name": "Keyword",
       "scope": "keyword",
       "settings": {
-        "foreground": "#F92672"
+        "foreground": "#ff4185"
       }
     },
     {
@@ -68,7 +68,7 @@
       "scope": "storage",
       "settings": {
         "fontStyle": "",
-        "foreground": "#F92672"
+        "foreground": "#ff4185"
       }
     },
     {
@@ -108,7 +108,7 @@
       "scope": "variable.parameter",
       "settings": {
         "fontStyle": "italic",
-        "foreground": "#FD971F"
+        "foreground": "#ffac4d"
       }
     },
     {
@@ -116,7 +116,7 @@
       "scope": "entity.name.tag",
       "settings": {
         "fontStyle": "",
-        "foreground": "#F92672"
+        "foreground": "#ff4185"
       }
     },
     {
@@ -162,7 +162,7 @@
       "name": "Invalid",
       "scope": "invalid",
       "settings": {
-        "background": "#F92672",
+        "background": "#ff4185",
         "fontStyle": "",
         "foreground": "#F8F8F0"
       }
@@ -193,14 +193,14 @@
       "name": "diff.header",
       "scope": "meta.diff, meta.diff.header",
       "settings": {
-        "foreground": "#75715E"
+        "foreground": "#8f8f9e"
       }
     },
     {
       "name": "diff.deleted",
       "scope": "markup.deleted",
       "settings": {
-        "foreground": "#F92672"
+        "foreground": "#ff4185"
       }
     },
     {
@@ -214,7 +214,7 @@
       "name": "diff.changed",
       "scope": "markup.changed",
       "settings": {
-        "foreground": "#E6DB74"
+        "foreground": "#fff066"
       }
     },
     {
@@ -226,7 +226,7 @@
     {
       "scope": "entity.name.filename",
       "settings": {
-        "foreground": "#E6DB74"
+        "foreground": "#fff066"
       }
     },
     {

@@ -6,10 +6,11 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-size: min(calc(1vmin + 50%), 100%);
 }
 
 body {
-  color: #37393b;
+  color: #1d1924;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "SF UI Text", "Helvetica Neue",
     "Roboto", "Arial Nova", "Segoe UI", "Arial", sans-serif;
@@ -67,12 +68,13 @@ p {
 
 pre {
   font-family: Monaco, Menlo, Consolas, monospace;
-  font-size: 0.85em;
+  font-size: 0.9em;
   margin: 0;
   border-radius: 0.2em;
 }
 
 code {
+  font-family: Monaco, Menlo, Consolas, monospace;
   padding: 0;
   margin: 0;
 }
@@ -81,8 +83,8 @@ code {
 .doc-content > .code-block-filename {
   font-size:0.75em;
   line-height: 1;
-  background-color: #27292b;
-  background-image: linear-gradient(to bottom, #09d 0%, #27292b 10%);
+  background-color: #202134;
+  background-image: linear-gradient(to bottom, #09d 0%, #202134 10%);
   color:#bbbdbf;
   padding:0.4em 0.6em;
   display:table;
@@ -123,11 +125,17 @@ h6 code {
 
 a,
 a code {
-  color: #09d;
+  color: inherit;
   text-decoration: none;
 }
 
+p a,
+span a {
+  text-decoration: underline;
+}
+
 a:hover {
+  color: #09d;
   text-decoration: underline;
 }
 

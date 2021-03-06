@@ -69,6 +69,8 @@ body {
 .site-header .stuff {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  flex:1;
 }
 @media (max-width:45em) {
   .site-header button.menu {
@@ -97,5 +99,14 @@ body {
 @media (max-width:45em) {
   .site-menu > .search {
       display:none;
+  }
+  .site-menu {
+    align-items: stretch;
+    flex:1;
+    max-width: 20em;
+  }
+  .site-menu > a {
+    padding:0;
+    flex:1;
   }
 }
