@@ -27,6 +27,7 @@ Object.keys(docsByRepo).forEach(repo => {
       repo,
       repoPath,
       template: doc.default,
+      title: doc.title,
       toc: tocRegistry.get(filePath)
     };
   });

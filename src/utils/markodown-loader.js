@@ -84,7 +84,7 @@ module.exports = function markodown(source) {
   }).replace(/\$/g, "&#36;");
 
   return `import tocRegistry from ${JSON.stringify(`./${path.relative(path.dirname(filePath), require.resolve("./toc-registry"))}`)};\n` +
-  `static tocRegistry.set(${JSON.stringify(path.relative(__dirname, filePath))}, ${JSON.stringify(toc.toHTML())});\n` + "-----\n" + markoSource + "\n-----\n";
+  `static tocRegistry.set(${JSON.stringify(path.relative(__dirname, filePath))}, ${JSON.stringify(toc.toHTML())});\n` + `export const title = ${JSON.stringify(title)};\n` + "-----\n" + markoSource + "\n-----\n";
 }
 
 function getAnchorName(title, anchorCache) {
