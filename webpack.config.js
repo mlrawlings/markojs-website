@@ -57,6 +57,7 @@ module.exports = [
     config.resolve = {
       ...config.resolve,
       alias: {
+        "@marko/compiler": path.join(__dirname, "browser-shims/compiler"),
         util: require.resolve("util/"),
         buffer: require.resolve("buffer"),
         assert: require.resolve("assert/"),
@@ -79,6 +80,8 @@ module.exports = [
       "process.env.NODE_DEBUG": undefined,
       "process.env.MARKO_DEBUG": undefined
     }));
+
+    config.optimization.runtimeChunk = "single";
 
     if (production) {
       // Needed for the tryonline page.
