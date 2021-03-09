@@ -102,6 +102,11 @@ class {
 
             const style = document.createElement("style");
             style.innerHTML = bundleResult.css;
+            // TODO: this is because of bug in Marko when rendering in shadow roots that
+            // should be removed once fixed.
+            shadowRoot.createElementNS = document.createElementNS.bind(document);
+            shadowRoot.createTextNode = document.createTextNode.bind(document);
+
             shadowRoot.appendChild(style);
             renderResult.appendTo(shadowRoot);
           } else {
