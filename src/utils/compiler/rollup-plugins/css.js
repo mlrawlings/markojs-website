@@ -29,10 +29,20 @@ export default () => {
         bundle.addSource(content);
       }
 
+      // Strips out css @imports (since they need to be before everything else to load)
+      // We replace the existing import with whitespace to preserve source map positions.
+      let imports = "";
+      let bundleString = bundle.toString().replace(/@import[^;]+(?:;|$)/g, m => {
+        imports += `${m}\n`;
+        return m.replace(/\S/g, " ");
+      });
+
+      bundleString = `${imports}${bundleString}`;
+
       this.emitFile({
         type: "asset",
         fileName: path.basename(options.file, path.extname(options.file)) + ".css",
-        source: `${bundle.toString()}\n/*# sourceMappingURL=${bundle
+        source: `${bundleString}\n/*# sourceMappingURL=${bundle
           .generateMap()
           .toUrl()}*/`
       });

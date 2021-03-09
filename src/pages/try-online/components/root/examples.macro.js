@@ -11,19 +11,18 @@ module.exports = babelMacros.createMacro(
     nodePath.parentPath.replaceWith(
       t.arrayExpression(
         [
-          "language-guide",
-          "color-picker",
-          "tic-tac-toe",
+          ["language-guide", "Language Guide"],
+          ["color-picker", "Color Picker"],
+          ["tic-tac-toe", "Tic Tac Toe"],
+          ["todomvc", "Todo MVC"]
           // "ui-components-playground"
-        ].map(name => {
+        ].map(([name, title]) => {
           const examplePath = path.join(EXAMPLES_DIR, name);
-          const { description } = JSON.parse(
-            fs.readFileSync(path.join(examplePath, "package.json"))
-          );
+
           return t.objectExpression([
             t.objectProperty(
               t.identifier("description"),
-              t.stringLiteral(description)
+              t.stringLiteral(title)
             ),
             t.objectProperty(
               t.identifier("files"),
