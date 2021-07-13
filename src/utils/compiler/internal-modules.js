@@ -26,25 +26,15 @@ internalModuleLookup.url = () => require("url");
     const file = path.resolve(req.resolve(key));
     const dir = path.dirname(file);
     internalModuleLookup[file] = () => req(key);
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
-    // Hackily ignore the fact that we are remapping files for the browser.
-    const nonRemappedVersion = file.replace(/-browser(?=\.)/, "");
-    if (nonRemappedVersion !== file) {
-      internalModuleLookup[nonRemappedVersion] = internalModuleLookup[file];
-      fs.writeFileSync(nonRemappedVersion, "");
-    }
-
-    fs.writeFileSync(file, "");
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(file, path.extname(file) === ".json" ? JSON.stringify(req(key)) : "");
   });
 });
 
 markoModules.require = (request) => {
   const resolved = path.resolve(request);
-  const getInternalModule = internalModuleLookup[request] || internalModuleLookup[resolved];
+  const getInternalModule =
+    internalModuleLookup[request] || internalModuleLookup[resolved];
 
   if (getInternalModule) {
     return getInternalModule();
@@ -59,9 +49,7 @@ markoModules.require = (request) => {
   }
 
   const module = { exports: {} };
-  (0, eval)(
-    `(function(exports, require, module, __filename, __dirname){${code}})`
-  )(
+  new Function("exports", "require", "module", "__filename", "__dirname", code)(
     module.exports,
     markoModules.require,
     module,

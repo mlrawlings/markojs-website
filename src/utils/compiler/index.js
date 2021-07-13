@@ -10,7 +10,7 @@ export async function bundle({ entry, markoOptions }) {
     input: entry,
     external: internalModules,
     inlineDynamicImports: true,
-    plugins: [memFSPlugin(), cssPlugin(), babelPlugin(markoOptions)],
+    plugins: [memFSPlugin(markoOptions.output !== "html"), cssPlugin(), babelPlugin(markoOptions)],
     onwarn(warning, warn) {
       if (
         warning.code === "MISSING_NODE_BUILTINS" &&

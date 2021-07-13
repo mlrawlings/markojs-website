@@ -1,10 +1,10 @@
 const fs = require("fs");
 const nodePath = require("path");
 const redent = require("redent");
-const highlight = require("../../utils/highlight");
+const highlight = require("./highlight");
 const prettyprint = require("@marko/prettyprint");
 const { importDefault } = require("@marko/babel-utils");
-const { getMarkoWebsiteKey } = require("../../utils/localstorage");
+const { getMarkoWebsiteKey } = require("./localstorage");
 const ADDED_SYNTAX_SWITCH_SCRIPT = new WeakSet();
 
 module.exports = function (path, t) {
@@ -141,7 +141,7 @@ module.exports = function (path, t) {
         t.markoTag(
           importDefault(
             path.hub.file,
-            nodePath.join(__dirname, "../code-block-marko/index.marko"),
+            nodePath.join(__dirname, "../components/code-block-marko/index.marko"),
             "marko_code_block"
           ),
           [

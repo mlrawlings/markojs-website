@@ -15,7 +15,7 @@ taglib.register(
   "code-block",
   {
     "<code-block>": {
-      transformer: require.resolve("./src/components/code-block/transformer"),
+      transformer: require.resolve("./src/utils/code-block-transformer"),
       "parse-options": {
           state: "static-text",
           preserveWhitespace: true
@@ -58,6 +58,7 @@ module.exports = [
       ...config.resolve,
       alias: {
         "@marko/compiler": path.join(__dirname, "browser-shims/compiler"),
+        "enhanced-resolve": path.join(__dirname, "browser-shims/enhanced-resolve"),
         util: require.resolve("util/"),
         buffer: require.resolve("buffer"),
         assert: require.resolve("assert/"),
@@ -112,17 +113,6 @@ function shared(config) {
       "LoadLanguageRegistry",
       () => loadingRegistry
     );
-
-    // Hide expected warnings from webpack.
-    compiler.hooks.done.tap("HideKnownWarnings", result => {
-      result.compilation.warnings = result.compilation.warnings.filter(
-        warning =>
-          !(
-            warning.message.endsWith("dependency is an expression") &&
-            warning.origin.resource.includes("@babel/core")
-          )
-      );
-    });
   });
 
   const fileLoader = config.module.rules.find(({ test }) => typeof test === "function");

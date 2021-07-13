@@ -71,7 +71,7 @@ module.exports = function markodown(source) {
       lang = lang.slice(0, index);
     }
 
-    return `<code-block lang="${lang}" lines="${lines}">${code}</code-block>`;
+    return `<code-block lang="${lang}" lines="${lines}">${code.replace(/<(\/(?:code-block)?>)/g, "&lt;$1")}</code-block>\n`;
   };
 
   markedRenderer.image = function(href, title, text) {

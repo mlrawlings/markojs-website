@@ -12,6 +12,8 @@
   margin-right:2em;
   transition: width 0.3s;
   margin-left: 1em;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .site-search.large {
